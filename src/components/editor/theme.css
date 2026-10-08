@@ -1,0 +1,166 @@
+.editor-indent {
+  --lexical-indent-base-value: 32px;
+}
+
+.editor-mark {
+  background-color: var(--warning-subtle);
+  border-bottom: 2px solid color-mix(in oklab, var(--warning) 45%, transparent);
+  padding-bottom: 1px;
+  cursor: pointer;
+}
+
+.editor-mark.selected {
+  background-color: color-mix(in oklab, var(--warning) 45%, transparent);
+  border-bottom-color: var(--warning);
+}
+
+.editor-mark-overlap {
+  background-color: color-mix(in oklab, var(--warning) 35%, transparent);
+}
+
+.editor-mark-overlap.selected {
+  background-color: color-mix(in oklab, var(--warning) 60%, transparent);
+}
+
+.editor-code {
+  direction: ltr;
+  unicode-bidi: isolate;
+  background-color: var(--muted) !important;
+  border-color: var(--border);
+}
+
+.editor-code::before {
+  content: attr(data-gutter);
+  position: sticky;
+  inset-inline-start: 0;
+  top: 0;
+  float: left;
+  z-index: 1;
+  min-width: 1.75rem;
+  margin-inline-end: 1rem;
+  padding-inline: 0.5rem;
+  color: var(--muted-fg);
+  text-align: right;
+  white-space: pre-wrap;
+  user-select: none;
+  background-color: var(--muted);
+}
+
+.editor-card [data-lexical-slot="title"] {
+  outline: none;
+  font-weight: 500;
+}
+
+.editor-card > *:not([data-lexical-slot]) {
+  color: var(--muted-fg);
+}
+
+.editor-card [data-lexical-slot="title"] > p:has(br:only-child),
+.editor-card > p:only-of-type:has(br:only-child) {
+  position: relative;
+}
+
+.editor-card [data-lexical-slot="title"] > p:has(br:only-child)::before {
+  content: "Title";
+}
+
+.editor-card > p:only-of-type:has(br:only-child)::before {
+  content: "Body";
+}
+
+.editor-card [data-lexical-slot="title"] > p:has(br:only-child)::before,
+.editor-card > p:only-of-type:has(br:only-child)::before {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  color: var(--muted-fg);
+  opacity: 0.7;
+  pointer-events: none;
+  user-select: none;
+}
+
+.editor-ruby::after {
+  content: attr(data-ruby-annotation);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.75em;
+  font-size: 0.5em;
+  line-height: 1;
+  color: var(--muted-fg);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.editor-collapsible > summary::marker,
+.editor-collapsible > summary::-webkit-details-marker {
+  display: none;
+}
+
+.editor-collapsible > summary::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0.5rem;
+  top: 50%;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--muted-fg);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
+}
+
+.editor-collapsible[open] > summary::before {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+details.editor-collapsible::details-content {
+  interpolate-size: allow-keywords;
+  overflow: hidden;
+  transition:
+    height 0.2s ease-out,
+    opacity 0.2s ease-out,
+    content-visibility 0.2s ease-out allow-discrete;
+}
+
+details.editor-collapsible:not([open])::details-content {
+  height: 0;
+  opacity: 0;
+  content-visibility: hidden;
+  transition:
+    height 0.2s ease-in,
+    opacity 0.2s ease-in,
+    content-visibility 0.2s ease-in allow-discrete;
+}
+
+.editor-table-scrollable-wrapper {
+  scrollbar-width: none;
+}
+
+.editor-table-scrollable-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.editor-table-selection *::selection {
+  background-color: transparent;
+}
+
+[contenteditable]:focus-within .editor-table-selected {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.editor-table-cell-selected {
+  caret-color: transparent;
+}
+
+[contenteditable]:focus-within .editor-table-cell-selected::after {
+  position: absolute;
+  inset: 0;
+  background-color: var(--primary);
+  opacity: 0.2;
+  content: "";
+  pointer-events: none;
+}

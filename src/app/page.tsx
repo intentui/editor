@@ -1,52 +1,9 @@
-import { twJoin } from "tailwind-merge";
+import { DemoEditor } from "@/components/editor/editor";
 
-export default function Home() {
+export default function Page() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div>
-        <h1 className="text-4xl text-center tracking-tight">
-          Intent <span className="text-muted-fg">UI</span> Starter Kit
-        </h1>
-
-        <div
-          className={twJoin(
-            "mt-6 gap-x-4 flex items-center justify-center",
-            "*:hover:underline *:font-medium *:text-primary-subtle-fg",
-          )}
-        >
-          <a target="_blank" href="https://intentui.com/docs" rel="noopener">
-            Docs
-          </a>
-          <a
-            target="_blank"
-            href="https://design.intentui.com/blocks"
-            rel="noopener"
-          >
-            Blocks
-          </a>
-          <a
-            target="_blank"
-            href="https://design.intentui.com/patterns"
-            rel="noopener"
-          >
-            Patterns
-          </a>
-          <a
-            target="_blank"
-            href="https://design.intentui.com/products"
-            rel="noopener"
-          >
-            Templates
-          </a>
-          <a
-            target="_blank"
-            href="https://design.intentui.com/docs"
-            rel="noopener"
-          >
-            Docs
-          </a>
-        </div>
-      </div>
+    <div className="p-4">
+      <DemoEditor />
     </div>
   );
 }

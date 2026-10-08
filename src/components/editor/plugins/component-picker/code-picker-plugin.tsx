@@ -1,0 +1,32 @@
+import { useMemo } from "react";
+
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+
+import { CodeBracketIcon } from "@heroicons/react/16/solid";
+
+import { insertCodeBlock } from "@/components/editor/extensions/code";
+import {
+  type ComponentPickerItem,
+  useComponentPickerItems,
+} from "@/components/editor/plugins/component-picker/component-picker-plugin";
+
+export function CodePickerPlugin() {
+  const [editor] = useLexicalComposerContext();
+
+  const items = useMemo<ComponentPickerItem[]>(
+    () => [
+      {
+        value: "code-block",
+        label: "Insert code block",
+        icon: <CodeBracketIcon className="text-muted-fg" />,
+        keywords: ["code", "codeblock", "javascript", "python", "js"],
+        onSelect: () => insertCodeBlock(editor),
+      },
+    ],
+    [editor],
+  );
+
+  useComponentPickerItems(items);
+
+  return null;
+}
