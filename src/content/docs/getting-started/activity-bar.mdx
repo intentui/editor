@@ -9,7 +9,7 @@ The activity bar is a thin strip below the content area. It is a container: you 
 
 ## Usage
 
-`ActivityBar` renders a horizontally scrollable row with a top border, a fixed height of `h-10` and `text-xs text-muted-fg` text. Put it after the content area and place plugins inside.
+`ActivityBar` renders a horizontally scrollable row with a top border, a fixed height of `h-10` and `text-xs text-muted-foreground` text. Put it after the content area and place plugins inside.
 
 ```tsx title="components/editor/editor.tsx"
 import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin"
@@ -46,7 +46,7 @@ The inner row uses `justify-between`, so with two groups the first sits at the s
 The bar is styled in `activitybar-plugin.tsx`. Change the classes there to adjust height, padding or text color.
 
 - Outer wrapper: `w-full shrink-0 border-t border-border`. It accepts a `className` that is merged over these.
-- Inner row: `flex h-10 w-max min-w-full items-center justify-between gap-3 px-4 text-xs whitespace-nowrap text-muted-fg`.
+- Inner row: `flex h-10 w-max min-w-full items-center justify-between gap-3 px-4 text-xs whitespace-nowrap text-muted-foreground`.
 
 The row uses `w-max`, so on narrow screens it scrolls horizontally instead of wrapping.
 

@@ -91,7 +91,7 @@ export function DraggableBlockPlugin() {
           >
             <PlusIcon />
           </Button>
-          <div className="flex size-5 items-center justify-center rounded-sm text-muted-fg hover:bg-secondary hover:text-secondary-fg">
+          <div className="flex size-5 items-center justify-center rounded-sm text-muted-foreground hover:bg-secondary hover:text-secondary-foreground">
             <EllipsisVerticalIcon className="size-4" />
           </div>
         </div>

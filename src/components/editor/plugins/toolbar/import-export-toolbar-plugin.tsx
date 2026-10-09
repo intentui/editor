@@ -6,9 +6,9 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
 import { DocumentArrowDownIcon, DocumentArrowUpIcon } from "@heroicons/react/16/solid";
 
-import { Button, buttonStyles } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
-import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/components/ui/menu";
+import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 
 function toSafeFileName(value: string) {
@@ -74,22 +74,19 @@ export function ImportExportToolbarPlugin({
         </Button>
         <TooltipContent>Import file</TooltipContent>
       </Tooltip>
-      <Menu>
+      <MenuTrigger>
         <Tooltip>
-          <MenuTrigger
-            aria-label="Export as"
-            className={buttonStyles({ intent: "outline", size: "sq-xs" })}
-          >
+          <Button intent="outline" size="sq-xs" aria-label="Export as">
             <DocumentArrowDownIcon />
-          </MenuTrigger>
+          </Button>
           <TooltipContent>Export as</TooltipContent>
         </Tooltip>
-        <MenuContent placement="bottom end">
+        <Menu placement="bottom end">
           <MenuItem onAction={exportLexical}>Lexical JSON</MenuItem>
           <MenuItem onAction={exportMarkdown}>Markdown</MenuItem>
           <MenuItem onAction={exportHtml}>HTML</MenuItem>
-        </MenuContent>
-      </Menu>
+        </Menu>
+      </MenuTrigger>
     </ToolbarGroup>
   );
 }

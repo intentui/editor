@@ -108,7 +108,7 @@ export function PackageCommand(props: PackageCommandProps) {
       selectedKey={selectedPM}
       onSelectionChange={handleSelectionChange}
     >
-      <SnippetTabsList className="bg-shiki-bg" items={items} aria-label="Package manager">
+      <SnippetTabsList className="bg-shiki-background" items={items} aria-label="Package manager">
         {(cmd) => (
           <SnippetTab id={cmd.id} key={cmd.id}>
             {cmd.id}
@@ -117,7 +117,7 @@ export function PackageCommand(props: PackageCommandProps) {
       </SnippetTabsList>
       <SnippetTabPanels items={items}>
         {(cmd) => (
-          <SnippetTabPanel className="dark:bg-shiki-bg" id={cmd.id}>
+          <SnippetTabPanel className="dark:bg-shiki-background" id={cmd.id}>
             {cmd.command}
           </SnippetTabPanel>
         )}

@@ -11,7 +11,7 @@ export function BrandLogoLink({ className }: { className?: string }) {
     >
       <BrandIntentuiIcon className="size-6 shrink-0" />
       <span className="hidden min-w-0 sm:inline">
-        <span>Intent</span> <span className="text-muted-fg">Editor</span>
+        <span>Intent</span> <span className="text-muted-foreground">Editor</span>
       </span>
     </Link>
   )

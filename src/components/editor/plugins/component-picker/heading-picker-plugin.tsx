@@ -34,7 +34,7 @@ export function HeadingPickerPlugin() {
         label: label,
         group: "Basic blocks",
         description,
-        icon: <Icon className="text-muted-fg" />,
+        icon: <Icon className="text-muted-foreground" />,
         keywords: ["heading", "header", tag],
         onSelect: () =>
           editor.update(() => {

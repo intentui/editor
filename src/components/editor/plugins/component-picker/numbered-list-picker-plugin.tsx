@@ -22,7 +22,7 @@ export function NumberedListPickerPlugin() {
         label: "Numbered list",
         group: "Basic blocks",
         description: "Create a list with numbering.",
-        icon: <NumberedListIcon className="text-muted-fg" />,
+        icon: <NumberedListIcon className="text-muted-foreground" />,
         keywords: ["numbered list", "ordered list", "ol"],
         onSelect: () => {
           editor.update(() => {

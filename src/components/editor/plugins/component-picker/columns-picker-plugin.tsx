@@ -52,7 +52,7 @@ export function ColumnsPickerPlugin() {
         label: label,
         group: "Advanced",
         description,
-        icon: <Icon className="text-muted-fg" />,
+        icon: <Icon className="text-muted-foreground" />,
         keywords: ["columns", "layout", "grid"],
         onSelect: () => {
           editor.update(() => {

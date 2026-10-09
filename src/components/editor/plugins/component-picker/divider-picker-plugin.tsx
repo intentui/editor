@@ -22,7 +22,7 @@ export function DividerPickerPlugin() {
         label: "Insert divider",
         group: "Basic blocks",
         description: "Visually divide blocks.",
-        icon: <MinusIcon className="text-muted-fg" />,
+        icon: <MinusIcon className="text-muted-foreground" />,
         keywords: ["horizontal rule", "divider", "hr", "separator"],
         onSelect: () => {
           editor.update(() => {

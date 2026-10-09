@@ -47,7 +47,7 @@ export function FontFamilyToolbarPlugin() {
     >
       <ComboBoxInput className="h-7 py-0 sm:py-0 sm:text-xs" />
       <ComboBoxContent
-        renderEmptyState={() => <span className="block p-2 text-sm text-muted-fg">No matches</span>}
+        renderEmptyState={() => <span className="block p-2 text-sm text-muted-foreground">No matches</span>}
       >
         {(family: { id: string }) => (
           <ComboBoxItem id={family.id} textValue={family.id}>

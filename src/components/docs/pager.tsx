@@ -25,7 +25,7 @@ export function Pager({
         <div className="group w-40">
           <Link className={buttonStyles({ intent: "plain", isCircle: true })} href={previous.url}>
             <ChevronLeftIcon className="transition-transform group-hover:-translate-x-0.5" />
-            <span className="line-clamp-1 text-fg">{previous.title}</span>
+            <span className="line-clamp-1 text-foreground">{previous.title}</span>
           </Link>
         </div>
       )}
@@ -33,7 +33,7 @@ export function Pager({
       {next && (
         <div className="group ml-auto flex w-40 justify-end">
           <Link className={buttonStyles({ intent: "plain", isCircle: true })} href={next.url}>
-            <span className="line-clamp-1 text-fg">{next.title}</span>
+            <span className="line-clamp-1 text-foreground">{next.title}</span>
             <ChevronRightIcon className="transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>

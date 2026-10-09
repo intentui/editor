@@ -11,11 +11,11 @@ These tokens drive most of the editor. Change them in your global CSS and the ed
 
 | Token | Used for |
 | --- | --- |
-| `--bg`, `--fg` | Editor surface and text |
+| `--background`, `--foreground` | Editor surface and text |
 | `--border`, `--input` | Editor frame, tables, code blocks, dividers |
-| `--muted`, `--muted-fg` | Code blocks, placeholders, quotes, secondary text |
+| `--muted`, `--muted-foreground` | Code blocks, placeholders, quotes, secondary text |
 | `--primary`, `--primary-subtle` | Links, selection, hashtags, checked items, focus rings |
-| `--overlay`, `--overlay-fg` | Menus, popovers, floating toolbars |
+| `--overlay`, `--overlay-foreground` | Menus, popovers, floating toolbars |
 | `--warning-subtle` | Highlights and special text |
 
 ## Content styles
@@ -25,7 +25,7 @@ How each kind of content looks is defined in `theme.ts` as Tailwind classes. Edi
 ```ts title="components/editor/theme.ts"
 export const editorTheme: EditorThemeClasses = {
   paragraph: "relative m-0 mb-2 last:mb-0",
-  quote: "relative my-4 border-s-2 ps-6 text-muted-fg italic first:mt-0 last:mb-0",
+  quote: "relative my-4 border-s-2 ps-6 text-muted-foreground italic first:mt-0 last:mb-0",
   link: "cursor-pointer text-primary underline underline-offset-2 hover:text-primary/80",
   text: {
     bold: "font-bold",

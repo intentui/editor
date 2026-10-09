@@ -1,8 +1,7 @@
 "use client"
 
 import { ComputerDesktopIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline"
-import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { useTheme } from "@/components/theme-provider"
 import { Button } from "@/components/ui/button"
 
 export function ThemeSwitcher({
@@ -12,16 +11,11 @@ export function ThemeSwitcher({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : theme === "dark" ? "system" : "light"
     setTheme(nextTheme)
   }
-
-  // The stored theme is unknown on the server, so show the system icon until mounted.
-  const current = mounted ? theme : "system"
 
   return (
     <Button
@@ -33,7 +27,7 @@ export function ThemeSwitcher({
       onPress={toggleTheme}
       {...props}
     >
-      {current === "light" ? <SunIcon /> : current === "dark" ? <MoonIcon /> : <ComputerDesktopIcon />}
+      {theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <ComputerDesktopIcon />}
     </Button>
   )
 }

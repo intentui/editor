@@ -21,7 +21,7 @@ const contentEditableVariants = tv({
 });
 
 const placeholderVariants = tv({
-  base: "pointer-events-none absolute text-sm text-muted-fg select-none",
+  base: "pointer-events-none absolute text-sm text-muted-foreground select-none",
   variants: {
     variant: {
       default: "start-2.5 top-2",

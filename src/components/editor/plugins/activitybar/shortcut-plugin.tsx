@@ -7,7 +7,7 @@ import {
 } from "@/components/editor/extensions/shortcuts";
 import { Button } from "@/components/ui/button";
 import { Keyboard } from "@/components/ui/keyboard";
-import { Modal, ModalBody, ModalContent, ModalHeader, ModalTitle } from "@/components/ui/modal";
+import { Dialog, DialogBody, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 
 type ShortcutRow = {
@@ -70,21 +70,21 @@ const LABEL = "Keyboard shortcuts";
 
 export function ShortcutPlugin() {
   return (
-    <Modal>
+    <DialogTrigger>
       <Tooltip>
         <Button intent="plain" size="sq-xs" aria-label={LABEL}>
           <CommandLineIcon />
         </Button>
         <TooltipContent>{LABEL}</TooltipContent>
       </Tooltip>
-      <ModalContent>
-        <ModalHeader>
-          <ModalTitle>{LABEL}</ModalTitle>
-        </ModalHeader>
-        <ModalBody className="max-h-[60vh] space-y-4">
+      <Dialog>
+        <DialogHeader>
+          <DialogTitle>{LABEL}</DialogTitle>
+        </DialogHeader>
+        <DialogBody className="max-h-[60vh] space-y-4">
           {SHORTCUT_GROUPS.map(({ title, rows }) => (
             <section key={title}>
-              <h3 className="mb-1.5 text-xs font-medium text-muted-fg">{title}</h3>
+              <h3 className="mb-1.5 text-xs font-medium text-muted-foreground">{title}</h3>
               <div className="divide-y divide-border rounded-lg border border-border">
                 {rows.map(({ name, label }) => (
                   <div
@@ -94,7 +94,7 @@ export function ShortcutPlugin() {
                     <span>{label}</span>
                     <span className="flex items-center gap-1">
                       {formatShortcut(name).map((segment, index) => (
-                        <Keyboard key={index} className="inline text-fg">
+                        <Keyboard key={index} className="inline text-foreground">
                           {segment}
                         </Keyboard>
                       ))}
@@ -104,8 +104,8 @@ export function ShortcutPlugin() {
               </div>
             </section>
           ))}
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </DialogBody>
+      </Dialog>
+    </DialogTrigger>
   );
 }

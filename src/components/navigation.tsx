@@ -31,7 +31,7 @@ export function Navigation({
   return (
     <>
       <CommandPalette setOpen={setOpen} openCmd={open} items={searchItems} />
-      <div className="xnw2 sticky top-0 z-40 hidden overflow-hidden bg-bg/70 border-page border-b backdrop-blur-3xl lg:block">
+      <div className="xnw2 sticky top-0 z-40 hidden overflow-hidden bg-background/70 border-page border-b backdrop-blur-3xl lg:block">
         <PageContainer>
           <div className="relative flex items-center justify-between border-page border-x pl-5 pr-3 py-2">
             <div className="flex items-center gap-x-1.5">
@@ -94,7 +94,7 @@ export function Navigation({
                   intent: "plain",
                   size: "sq-sm",
                   isCircle: true,
-                  className: "**:data-[slot=icon]:text-fg",
+                  className: "**:data-[slot=icon]:text-foreground",
                 })}
                 target="_blank"
                 href={app.links.twitter}

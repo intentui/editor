@@ -15,7 +15,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
   const page = source.getPage(slug)
   if (!page) return new Response("Not found", { status: 404 })
 
-  const text = await readFile(path.join(process.cwd(), "src/content/docs", page.path), "utf8")
+  const text = await readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), "src/content/docs", page.path), "utf8")
   return new Response(text, {
     headers: { "Content-Type": "text/markdown; charset=utf-8" },
   })

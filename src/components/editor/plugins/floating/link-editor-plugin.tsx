@@ -33,7 +33,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/components/ui/link";
-import { PopoverContent } from "@/components/ui/popover";
+import { Popover } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { TextField } from "@/components/ui/text-field";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
@@ -220,7 +220,7 @@ export function LinkEditorPlugin() {
         className="pointer-events-none fixed top-0 left-0 opacity-0"
         style={{ transform: "translate(-10000px, -10000px)" }}
       />
-      <PopoverContent
+      <Popover
         ref={contentRef}
         isOpen={isOpen}
         isNonModal
@@ -283,7 +283,7 @@ export function LinkEditorPlugin() {
                 href={sanitizeUrl(linkUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="max-w-64 truncate ps-2 text-sm font-normal text-primary-subtle-fg underline underline-offset-2"
+                className="max-w-64 truncate ps-2 text-sm font-normal text-primary-subtle-foreground underline underline-offset-2"
               >
                 {linkUrl}
               </Link>
@@ -314,7 +314,7 @@ export function LinkEditorPlugin() {
             </>
           )}
         </div>
-      </PopoverContent>
+      </Popover>
     </>
   );
 }

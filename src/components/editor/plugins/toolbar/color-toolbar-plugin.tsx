@@ -18,7 +18,8 @@ import { ColorSlider, ColorSliderTrack } from "@/components/ui/color-slider";
 import { ColorSwatch } from "@/components/ui/color-swatch";
 import { ColorThumb } from "@/components/ui/color-thumb";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverBody, PopoverContent } from "@/components/ui/popover";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { Popover, PopoverBody } from "@/components/ui/popover";
 import { ToolbarGroup } from "@/components/ui/toolbar";
 import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 
@@ -57,7 +58,7 @@ function EditorColorPicker({
         });
       }}
     >
-      <Popover>
+      <DialogTrigger>
         <Tooltip>
           <Button intent="outline" size="sq-xs" aria-label={label} isDisabled={!isEditable}>
             <span className="flex flex-col items-center gap-0.5 *:[svg]:text-(--btn-icon)">
@@ -67,7 +68,7 @@ function EditorColorPicker({
           </Button>
           <TooltipContent>{label}</TooltipContent>
         </Tooltip>
-        <PopoverContent className="[--gutter:--spacing(1)]" placement="bottom start">
+        <Popover className="[--gutter:--spacing(1)]" placement="bottom start">
           <PopoverBody>
             <div className="space-y-(--gutter)">
               <ColorArea
@@ -89,8 +90,8 @@ function EditorColorPicker({
               </div>
             </div>
           </PopoverBody>
-        </PopoverContent>
-      </Popover>
+        </Popover>
+      </DialogTrigger>
     </ColorPicker>
   );
 }

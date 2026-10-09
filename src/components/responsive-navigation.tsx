@@ -17,9 +17,8 @@ import { BrandGithubIcon } from "@/components/icons/brand-github-icon"
 import { BrandXIcon } from "@/components/icons/brand-x-icon"
 import { Logo } from "@/components/logo"
 import { ThemeSwitcher } from "@/components/theme-switcher"
-import { Button, buttonStyles } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { app } from "@/config/app"
 import type { SidebarSection } from "@/lib/docs-nav"
 
@@ -47,8 +46,8 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
   return (
     <nav
       className={cn(
-        "sticky top-0 z-40 flex items-center bg-bg px-2 py-2 lg:hidden",
-        pathname === "/" && "bg-bg",
+        "sticky top-0 z-40 flex items-center bg-background px-2 py-2 lg:hidden",
+        pathname === "/" && "bg-background",
         className
       )}
     >
@@ -58,19 +57,27 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
         style={{ opacity: scrollDecorationOpacity }}
       />
       <div className="flex items-center gap-x-2">
-        <Sheet isOpen={open} onOpenChange={setOpen}>
+        <Logo />
+        <Link href="/" className="font-semibold text-base text-foreground">
+          Intent <span className="text-muted-foreground">Editor</span>
+        </Link>
+      </div>
+      <div className="flex-1" aria-hidden />
+      <div className="flex items-center gap-x-0.5">
+        <ThemeSwitcher className="**:data-[slot=icon]:size-5" intent="plain" />
+        <SheetTrigger isOpen={open} onOpenChange={setOpen}>
           <Button size="sq-sm" intent="plain" className="pressed:bg-transparent outline-hidden">
             <span className="relative flex h-8 w-(--width) items-center justify-center [--width:--spacing(4.5)]">
               <span className="relative size-(--width)">
                 <span
                   className={twJoin(
-                    "absolute left-0 block h-0.5 w-(--width) bg-fg transition-all duration-100",
+                    "absolute left-0 block h-0.5 w-(--width) bg-foreground transition-all duration-100",
                     open ? "top-[0.4rem] -rotate-45" : "top-1"
                   )}
                 />
                 <span
                   className={twJoin(
-                    "absolute left-0 block h-0.5 w-(--width) bg-fg transition-all duration-100",
+                    "absolute left-0 block h-0.5 w-(--width) bg-foreground transition-all duration-100",
                     open ? "top-[0.4rem] rotate-45" : "top-[--spacing(2.6)]"
                   )}
                 />
@@ -78,9 +85,8 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
               <span className="sr-only">Toggle Menu</span>
             </span>
           </Button>
-          <SheetContent
-            side="left"
-            isFloat={false}
+          <Sheet
+            position="right"
             aria-label="Navigation"
             className="w-[min(22rem,90vw)] sm:max-w-88 **:data-[slot=dialog]:h-full **:data-[slot=dialog]:max-h-full [--visual-viewport-vertical-padding:0px]"
           >
@@ -88,7 +94,7 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
               <SheetTitle className="flex items-center gap-x-3">
                 <Logo />{" "}
                 <span>
-                  Intent <span className="text-muted-fg">Editor</span>
+                  Intent <span className="text-muted-foreground">Editor</span>
                 </span>
               </SheetTitle>
             </SheetHeader>
@@ -113,41 +119,21 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
                 </AsideLink>
               ))}
             </Aside>
-          </SheetContent>
-        </Sheet>
-        <Separator orientation="vertical" className="mr-1 h-4" />
-        <Link href="/" className="font-semibold text-base text-fg">
-          Intent <span className="text-muted-fg">Editor</span>
-        </Link>
-      </div>
-      <div className="flex-1" aria-hidden />
-      <div className="flex items-center gap-x-0.5">
-        <Link
-          aria-label="Follow on X"
-          className={buttonStyles({ intent: "plain", size: "sq-sm" })}
-          href={app.links.twitter}
-          target="_blank"
-        >
-          <BrandXIcon className="size-5" />
-        </Link>
-        <Link
-          aria-label="Join Discord"
-          className={buttonStyles({ intent: "plain", size: "sq-sm" })}
-          href={app.links.discord}
-          target="_blank"
-        >
-          <BrandDiscordIcon className="size-5" />
-        </Link>
-        <Link
-          aria-label="GitHub"
-          className={buttonStyles({ intent: "plain", size: "sq-sm" })}
-          href={app.repo.url}
-          target="_blank"
-        >
-          <BrandGithubIcon className="size-5" />
-        </Link>
-        <Separator orientation="vertical" className="mr-1.5 ml-2.5 h-5" />
-        <ThemeSwitcher className="**:data-[slot=icon]:size-5" intent="plain" />
+            <SheetFooter className="p-2 border-t bg-background/60">
+              <ul className="rounded-lg mt-2 p-2 bg-overlay border">
+                <AsideLink href={app.links.twitter} target="_blank" onPress={() => setOpen(false)}>
+                  <BrandXIcon /> Twitter
+                </AsideLink>
+                <AsideLink href={app.links.discord} target="_blank" onPress={() => setOpen(false)}>
+                  <BrandDiscordIcon /> Discord
+                </AsideLink>
+                <AsideLink href={app.links.github} target="_blank" onPress={() => setOpen(false)}>
+                  <BrandGithubIcon /> Github
+                </AsideLink>
+              </ul>
+            </SheetFooter>
+          </Sheet>
+        </SheetTrigger>
       </div>
     </nav>
   )

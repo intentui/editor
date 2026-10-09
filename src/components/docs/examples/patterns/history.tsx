@@ -49,7 +49,7 @@ export function HistoryEditor() {
 
   return (
     <LexicalExtensionComposer extension={app} contentEditable={null}>
-      <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-lg border border-border bg-bg">
+      <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-lg border border-border bg-background">
         <Toolbar>
           <HistoryToolbarPlugin />
         </Toolbar>
