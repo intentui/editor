@@ -1,0 +1,70 @@
+---
+title: Code block
+description: Multi-line code with syntax highlighting, line numbers and light and dark themes.
+references:
+  - https://lexical.dev/docs/packages/lexical-code
+---
+
+Code blocks use a monospace font on a `muted` background, with a line-number gutter. Highlighting is done by Shiki and follows your light or dark theme.
+
+<ComponentPreview name="code-block" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `CodeExtension` | Registers the code nodes, Shiki highlighting, Tab indentation and the light and dark theme sync. |
+| `ShortcutsExtension` | Provides the <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>C</Kbd> shortcut. Remove it and the block still works, but without that shortcut. |
+| `registerMarkdownShortcuts(editor, MULTILINE_ELEMENT_TRANSFORMERS)` | Turns three backticks into a code block. Without it only the button, slash menu and shortcut insert code blocks. |
+| `InsertCodeBlockPlugin` | The toolbar button. |
+| `CodePickerPlugin` | The "Insert code block" slash menu item. |
+| `ComponentPicker`, `BlockInsert`, `Toolbar` | Containers for the slash menu and the button. |
+
+## Inserting a code block
+
+| Method | How |
+| --- | --- |
+| Toolbar | The "Insert code block" button. |
+| Slash menu | Type `/` and choose "Insert code block" (keywords: code, codeblock, javascript, python, js). |
+| Markdown | Type three backticks, optionally followed by a language such as `js`, then <Kbd>Space</Kbd> or <Kbd>Enter</Kbd>. |
+| Shortcut | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>C</Kbd> (<Kbd>Cmd</Kbd> <Kbd>Option</Kbd> <Kbd>C</Kbd> on macOS). |
+
+With a collapsed cursor the current block becomes a code block. With selected text, the selection is replaced by a code block containing that text. Inserting inside an existing code block does nothing.
+
+## Behavior
+
+- <Kbd>Tab</Kbd> indents by 2 spaces.
+- Arrow keys let you leave the block when it is the first or last block in the document.
+- The theme is `github-light` or `github-dark`, chosen from whether `<html>` has the `dark` class. The extension watches the class and updates existing blocks when you switch themes.
+
+For single words inside a sentence use inline code instead. See [Text format](/docs/patterns/text-format).
+
+## Styling
+
+`theme.ts`:
+
+```ts title="components/editor/theme.ts"
+code: "editor-code relative mb-3 block overflow-x-auto rounded-lg border border-border bg-muted ...",
+codeHighlight: {
+  inserted: "bg-success-subtle text-success-subtle-fg",
+  deleted: "bg-danger-subtle text-danger-subtle-fg",
+},
+```
+
+`theme.css` adds the `.editor-code` rules: the background is forced to `var(--muted)`, and `.editor-code::before` draws the sticky line-number gutter from the `data-gutter` attribute. Edit that rule to restyle or hide the gutter.
+
+To change the highlighter themes or tab size, edit `LIGHT_CODE_THEME`, `DARK_CODE_THEME` and `tabSize` in `extensions/code.tsx`. Languages and tokenizing belong to Lexical, see [lexical.dev](https://lexical.dev/docs/packages/lexical-code).
+
+## Related patterns
+
+- [Block format](/docs/patterns/block-format) for the block type dropdown.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) for other things you can type.
+- [Text format](/docs/patterns/text-format) for inline code.

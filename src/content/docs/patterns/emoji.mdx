@@ -1,0 +1,47 @@
+---
+title: Emoji
+description: Insert emoji from a picker, with shortcodes, or with text emoticons.
+---
+
+Emoji are inline and behave as a single character. Type `:` and a few letters to search, or use the toolbar button.
+
+<ComponentPreview name="emoji" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `EmojiExtension` | Registers `EmojiNode`, the insert command and the emoticon conversion. Remove it and the picker and button stop working. |
+| `registerMarkdownShortcuts(editor, [EMOJI])` | Converts a full shortcode such as `:smile:` when you type the closing colon. Without it only the picker and emoticons work. |
+| `EmojiPickerPlugin` | The `:` suggestion menu. It sits in the content area wrapper so the menu is positioned against the text. |
+| `InsertEmojiPlugin` | A toolbar button that types a `:` for you, which opens the picker. |
+| `BlockInsert`, `Toolbar` | Containers for the button. See [Toolbar](/docs/getting-started/toolbar). |
+
+## Inserting emoji
+
+| Method | How |
+| --- | --- |
+| Picker | Type `:` and a few letters, for example `:smi`. Up to 8 matches show, searched by name and keywords. Press <Kbd>Enter</Kbd> or <Kbd>Tab</Kbd> to choose. |
+| Toolbar | The "Insert emoji" button inserts a `:` at the cursor, which opens the picker. |
+| Shortcode | Type a full name between colons, such as `:smile:`. It converts when you type the closing colon. |
+| Emoticon | Text emoticons such as `:)` convert automatically. Single-character ones that are easy to type by accident, like `:D`, are skipped. |
+
+Emoji data comes from `emojibase-data`. The picker leaves out emojibase group `2` (components such as skin tone modifiers), set in `EXCLUDED_GROUPS` in `plugins/emoji-picker-plugin.tsx`.
+
+## Styling
+
+Emoji nodes get the class `editor-emoji` (`EMOJI_CLASS_NAME`). No styles are attached to it, so target it from your own CSS to change size or alignment. The picker uses `bg-overlay text-overlay-fg`, and the highlighted row uses `bg-accent text-accent-fg`.
+
+## Related patterns
+
+- [Mention](/docs/patterns/mention) for the `@` picker.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) for the other shortcuts that run while you type.
+- [Insert block menu](/docs/patterns/insert-block-menu) for the toolbar group that holds the button.

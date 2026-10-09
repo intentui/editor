@@ -1,0 +1,70 @@
+---
+title: Table
+description: Insert tables from a size grid, the slash menu or Markdown, and add or remove rows and columns on hover.
+references:
+  - https://lexical.dev/docs/packages/lexical-table
+---
+
+Tables sit in a rounded, bordered wrapper that scrolls horizontally when it is wider than the content. Cells are editable, and the buttons that add and remove rows and columns appear on hover.
+
+<ComponentPreview name="table" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `TableExtension` | Registers the table nodes, cell selection and keyboard navigation. Remove it and `INSERT_TABLE_COMMAND` does nothing. |
+| `registerMarkdownShortcuts(editor, [TABLE])` | Converts a typed Markdown row into a table, and converts the seed content in this demo. |
+| `InsertTablePlugin` | The toolbar button with the size grid. |
+| `TablePickerPlugin` | The slash menu items, including sizes. |
+| `TableHoverActionsPlugin` | The add and delete buttons shown when you hover a table. |
+| `ComponentPicker`, `BlockInsert`, `Toolbar` | Containers for the slash menu and the button. |
+
+## Inserting a table
+
+| Method | How |
+| --- | --- |
+| Toolbar | The "Insert table" button opens a grid of up to 10 columns by 8 rows. Hover to choose a size, click to insert. |
+| Slash menu | Type `/`, then choose "Insert table" for a 3x3 table. |
+| Slash menu with size | Type `/` then a size such as `/4x5`. Sizes are rows by columns, from 1 to 10. A partial number like `/4` suggests five sizes. |
+| Markdown | Type a row such as `\| a \| b \|` and press <Kbd>Enter</Kbd>. A following `\| --- \| --- \|` row marks the previous row as the header. |
+
+Inserted tables have a header row and a header column. Empty paragraphs directly before and after a new table are removed.
+
+## Editing a table
+
+Hover a table to get buttons from `TableHoverActionsPlugin`:
+
+- Over the top row, "Add column" and "Delete column" appear on the top edge, above the closest column.
+- Over the first column, "Add row" and "Delete row" appear on the left edge.
+- Delete buttons are hidden when only one row or column is left.
+
+The buttons are not rendered in [read-only mode](/docs/patterns/read-only).
+
+## Styling
+
+`theme.ts` keys:
+
+| Key | Default |
+| --- | --- |
+| `tableScrollableWrapper` | `editor-table-scrollable-wrapper relative my-3 w-full overflow-x-auto rounded-lg border border-border ...` |
+| `table` | `w-full min-w-full table-fixed caption-bottom text-sm/6` |
+| `tableRow` | `[&:last-child>*]:border-b-0` |
+| `tableCell` | `editor-table-cell relative border-b border-s border-border px-4 py-2 ...` |
+| `tableCellHeader` | `text-start font-medium text-muted-fg` |
+
+`theme.css` handles selection: `.editor-table-selected` gets a `2px` `var(--primary)` outline, and `.editor-table-cell-selected::after` overlays a `var(--primary)` tint.
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu) for the size shortcuts.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) for the other transformers.
+- [Import and export](/docs/patterns/import-export) to save tables as Markdown.

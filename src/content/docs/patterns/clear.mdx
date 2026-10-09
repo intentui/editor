@@ -1,0 +1,50 @@
+---
+title: Clear
+description: Buttons to strip formatting from the selection or empty the whole editor.
+references:
+  - https://lexical.dev/docs/concepts/commands
+---
+
+Two buttons with different scopes: clear formatting on the selection, and clear the whole editor.
+
+<ComponentPreview name="clear" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `ClearEditorExtension` | Handles the clear editor command. Remove it and the trash button does nothing. |
+| `ShortcutsExtension` | Registers the clear formatting shortcut. Remove it and the buttons still work, but the shortcut does not. |
+| `ClearToolbarPlugin` | The two buttons. It takes no props. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+## Buttons
+
+| Button | What it does |
+| --- | --- |
+| Clear formatting | Removes inline formatting from the selection. |
+| Clear editor | Removes all content and returns focus to the editor. |
+
+### Clear formatting
+
+It turns off every format that [Text format](/docs/patterns/text-format) can toggle, and removes the inline font family, font size, text color and background color. It does not change the block type, alignment or links.
+
+Shortcut: <Kbd>Ctrl</Kbd> <Kbd>{"\\"}</Kbd> (<Kbd>Cmd</Kbd> on macOS).
+
+### Clear editor
+
+It is disabled when the editor is already empty, which means a single empty paragraph. It has no confirmation step and no shortcut, so consider whether you want it in your toolbar. Because it goes through the editor history, <Kbd>Ctrl</Kbd> <Kbd>Z</Kbd> restores the content when [History](/docs/patterns/history) is installed.
+
+## Related patterns
+
+- [Text format](/docs/patterns/text-format) for the formats that clear formatting removes.
+- [Font](/docs/patterns/font) and [Color](/docs/patterns/color), whose inline styles are also cleared.
+- [History](/docs/patterns/history) to undo a clear.

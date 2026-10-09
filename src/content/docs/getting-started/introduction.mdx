@@ -1,0 +1,32 @@
+---
+title: Introduction
+description: A rich text editor for React, built with Intent UI. You own the code.
+references:
+  - https://lexical.dev
+---
+
+Intent UI Editor is a rich text editor you add to your project with the shadcn CLI. It ships as source files, not as a package, so the toolbar, menus and blocks live in your repo and you can change any of them.
+
+<ComponentPreview name="full-editor" />
+
+## Built on Lexical
+
+The editing engine is [Lexical](https://lexical.dev). It handles the document model, selection, history, serialization and the plugin system. This documentation covers the **UI that sits on top of it**: the toolbar, floating menus, insert menus, activity bar and the look of each block.
+
+When a topic belongs to Lexical, such as node classes, commands, editor state or the JSON format, we link to the Lexical docs instead of repeating them.
+
+## Built with
+
+- [Lexical](https://lexical.dev) for the editor core.
+- [React Aria Components](https://react-spectrum.adobe.com/react-aria/) for accessible menus, popovers, dialogs and color pickers.
+- [Tailwind CSS](https://tailwindcss.com) v4 for styling, using the Intent UI design tokens.
+
+## How these docs are organized
+
+**Getting started** covers installing the editor, how the files are structured, and the three layout regions every editor is made of: the [toolbar](/docs/getting-started/toolbar), the [content area](/docs/getting-started/content-area) and the [activity bar](/docs/getting-started/activity-bar).
+
+**Patterns** are copy-and-paste editors, one per feature. The [full editor](/docs/patterns/full-editor) is the editor you get from the CLI, and every other pattern is a smaller piece of it: a text format toolbar, a slash menu, a table editor, and so on. Each pattern is a complete component. Copy one as is, or lift the parts you need into your own editor.
+
+<Note intent="info">
+  Intent UI Editor needs the Intent UI theme tokens (`bg`, `fg`, `primary`, `muted`, and so on). If your project does not use Intent UI yet, follow [Installation](/docs/getting-started/installation).
+</Note>

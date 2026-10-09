@@ -1,0 +1,75 @@
+---
+title: Image
+description: Insert images from a file, by pasting or dropping, or with Markdown, and resize them in place.
+references:
+  - https://lexical.dev/docs/concepts/nodes
+---
+
+Images fit the width of the content area. Click one to select it, then drag the handle in its corner to resize it.
+
+<ComponentPreview name="image" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `ImageExtension` | Registers `ImageNode` and the `INSERT_IMAGE_COMMAND` handler. Remove it and every other piece fails. |
+| `DragDropPasteExtension` | Inserts images that are pasted or dropped into the editor. Without it only the toolbar and slash menu add images. |
+| `registerMarkdownShortcuts(editor, [IMAGE])` | Converts `![alt](url)` as soon as you type the closing parenthesis. |
+| `InsertImagePlugin` | The toolbar button that opens a file picker. |
+| `ImagePickerPlugin` | The "Insert image" item in the slash menu. It also renders the hidden file input. |
+| `ComponentPicker`, `BlockInsert`, `Toolbar` | Containers for the slash menu item and the button. |
+
+## Adding images
+
+| Method | How |
+| --- | --- |
+| Toolbar | The "Insert image" button opens a file picker. |
+| Slash menu | Type `/`, then choose "Insert image" (keywords: image, photo, picture, file, img). |
+| Paste or drop | Paste or drop image files into the content. |
+| Markdown | Type `![alt text](https://example.com/photo.png)`. |
+
+The file picker accepts `image/*` and inserts one file at a time. Paste and drop accept any `image/` type, including GIF, WebP, HEIC and HEIF, and insert every image file.
+
+## Where the file goes
+
+The editor does not upload anything. Picked, pasted and dropped files are read in the browser with `FileReader.readAsDataURL`, and the data URL is stored as the image `src` with the file name as the alt text. Images therefore live inside the editor content itself, which makes large images expensive to save and export.
+
+To upload instead, replace the data URL with your own URL before the image is inserted. There are two places to change:
+
+- `useImageFilePicker` in `plugins/block-insert/insert-image-plugin.tsx`: `onChange` calls `readFileAsDataUrl(file)` and passes the result as `src`.
+- `extensions/drag-drop-paste.ts`: the handler reads files with `mediaFileReader` and dispatches `INSERT_IMAGE_COMMAND` with `src: result`.
+
+```ts title="extensions/drag-drop-paste.ts"
+editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
+  altText: file.name,
+  src: await uploadFile(file), // your function, returns a URL
+});
+```
+
+`INSERT_IMAGE_COMMAND` accepts `altText` and `src` (required), and optional `width`, `height` and `maxWidth`.
+
+## Selecting and resizing
+
+- Click an image to select it. It gets a `2px` primary outline. <Kbd>Shift</Kbd> click toggles the selection.
+- A round handle at the bottom corner appears when you hover the image. Drag it to resize. The aspect ratio is kept, the width is clamped between `100` and `maxWidth` (`500` by default), and the size is saved on the image.
+- The handle is not shown in [read-only mode](/docs/patterns/read-only).
+- If the `src` fails to load, a dashed placeholder with an icon and the alt text is shown instead.
+
+## Styling
+
+The image is styled in `nodes/image-node.tsx`, not in `theme.ts`. The wrapper is `group/image relative inline-block max-w-full align-top leading-none`, the image is `block h-auto max-w-full rounded-lg select-none`, and the selection outline is `outline-2 outline-offset-2 outline-primary`. The default width cap is `maxWidth = 500` in `$createImageNode`.
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu) for the menu that lists "Insert image".
+- [Insert block menu](/docs/patterns/insert-block-menu) for the toolbar group.
+- [Import and export](/docs/patterns/import-export) to save images as Markdown.

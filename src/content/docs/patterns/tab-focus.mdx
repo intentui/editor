@@ -1,0 +1,34 @@
+---
+title: Tab focus
+description: Keeps the selection when focus arrives by pressing Tab.
+---
+
+An extension with no UI. When a user tabs into the editor from the page, the previous selection is restored instead of being dropped.
+
+<ComponentPreview name="tab-focus" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `TabFocusExtension` | Listens for focus. If a <Kbd>Tab</Kbd> keydown happened within 100 ms before the focus, it re-applies the current selection. Remove it and tabbing in leaves the selection to the browser. |
+
+## What you see
+
+The effect is subtle and there is nothing to click. Focus an input before the editor, press <Kbd>Tab</Kbd>, and the caret or selection appears in the editor. Clicking into the editor is not affected.
+
+The extension adds one capturing `keydown` listener on `window` to record when Tab was pressed. It registers it once, however many editors the page has.
+
+## Related patterns
+
+- [Autocomplete](/docs/patterns/autocomplete), where <Kbd>Tab</Kbd> accepts a suggestion.
+- [Alignment and indent](/docs/patterns/alignment-and-indent) for indentation.
+- [Shortcuts](/docs/patterns/shortcuts).

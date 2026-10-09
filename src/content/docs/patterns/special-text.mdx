@@ -1,0 +1,51 @@
+---
+title: Special text
+description: A custom text node that highlights any word typed in square brackets.
+references:
+  - https://lexical.dev/docs/concepts/nodes
+---
+
+Text inside square brackets turns into a highlighted inline chip. The brackets are removed. It is a small example of a custom text node that you can adapt.
+
+<ComponentPreview name="special-text" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `SpecialTextExtension` | Registers `SpecialTextNode` and the transform that converts `[text]` into it. Remove it and brackets stay as plain text. |
+| `ContentEditable` | The editing surface. This pattern has no toolbar. |
+
+## Behavior
+
+- Typing `[word]` replaces it with a chip showing `word`.
+- Text already in the document, including the initial content, is converted too.
+- The brackets must contain at least one character and no nested brackets.
+- Text typed right after a chip starts a regular text node instead of extending the chip.
+- The brackets are not kept. The chip contains only the text between them.
+
+## Change what matches
+
+The pattern is the `BRACKETED_TEXT_REGEX` in `components/editor/extensions/special-text.ts`. Change it, for example to match `{{name}}`, to turn other syntax into chips. The first capture group becomes the chip text.
+
+## Styling
+
+The chip uses the `specialText` entry in `components/editor/theme.ts`.
+
+```ts title="components/editor/theme.ts"
+specialText: "rounded bg-warning-subtle px-1 font-semibold text-warning-subtle-fg",
+```
+
+## Related patterns
+
+- [Mention](/docs/patterns/mention) for chips picked from a menu.
+- [Emoji](/docs/patterns/emoji) for inline nodes created from `:` shortcodes.
+- [Text format](/docs/patterns/text-format) for inline formats.

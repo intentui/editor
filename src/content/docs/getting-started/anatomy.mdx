@@ -1,0 +1,61 @@
+---
+title: Anatomy
+description: The regions every editor is made of, and how extensions and UI plugins fit together.
+---
+
+Every editor, from the full editor to the smallest pattern, is built from the same two ingredients: **extensions** that give the editor behavior, and **UI plugins** that render controls and menus.
+
+<ComponentPreview name="full-editor" />
+
+## Regions
+
+The editor is a vertical stack inside one framed container.
+
+```txt
+LexicalExtensionComposer
+└── frame (border, rounded corners)
+    ├── Toolbar                 formatting controls
+    ├── Content area            the editable surface
+    │   └── overlays            floating toolbar, menus, drag handles
+    └── Activity bar            counts and tools
+```
+
+| Region | Component | Folder | Page |
+| --- | --- | --- | --- |
+| Toolbar | `Toolbar` and the toolbar plugins | `plugins/toolbar/` | [Toolbar](/docs/getting-started/toolbar) |
+| Content area | `ContentEditable` | `plugins/content-editable.tsx` | [Content area](/docs/getting-started/content-area) |
+| Overlays | Floating toolbar, link editor, table actions, context menu, pickers | `plugins/floating/`, `plugins/component-picker/` and others | [Floating toolbar](/docs/patterns/floating-toolbar), [Slash menu](/docs/patterns/slash-menu) |
+| Activity bar | `ActivityBar` and its plugins | `plugins/activitybar/` | [Activity bar](/docs/getting-started/activity-bar) |
+
+Overlays render inside the content area's `relative` container, because they position themselves against it. Everything else is optional: an editor can be only a content area.
+
+## Extensions and plugins
+
+An editor is declared once with `defineExtension`. Its `dependencies` list is the set of behaviors the editor has: rich text, history, lists, links, tables, images, and so on.
+
+```tsx title="components/editor/editor.tsx"
+const app = useMemo(
+  () =>
+    defineExtension({
+      name: "@intentui-editor/demo",
+      namespace: "intentui-editor",
+      dependencies: [RichTextExtension, HistoryExtension, ListExtension /* ... */],
+      theme: editorTheme,
+    }),
+  [],
+)
+```
+
+The UI plugins are the JSX you place inside the composer. A plugin is usually the face of an extension: `HistoryToolbarPlugin` renders undo and redo buttons, and `HistoryExtension` provides the history they call.
+
+| You want to | Edit |
+| --- | --- |
+| Add or remove a behavior | The `dependencies` list |
+| Add or remove a control or menu | The JSX |
+| Change how content looks | `theme.ts` and `theme.css`, see [Theming](/docs/getting-started/theming) |
+
+Removing only the plugin hides the UI and keeps the behavior, for example keyboard shortcuts. Removing only the extension can leave a plugin that does nothing. Each [pattern](/docs/patterns/full-editor) lists which extensions and plugins belong together.
+
+## Next steps
+
+Read about each region: [Toolbar](/docs/getting-started/toolbar), [Content area](/docs/getting-started/content-area) and [Activity bar](/docs/getting-started/activity-bar).

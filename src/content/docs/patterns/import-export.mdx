@@ -1,0 +1,82 @@
+---
+title: Import and export
+description: Import a saved document and export the content as Lexical JSON, Markdown or HTML.
+references:
+  - https://lexical.dev/docs/packages/lexical-file
+  - https://lexical.dev/docs/packages/lexical-markdown
+---
+
+An import button and an export menu. Export downloads a file in the browser.
+
+<ComponentPreview name="import-export" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `ListExtension`, `CheckListExtension` | Register list nodes, so lists survive import and appear in Markdown. |
+| `LinkExtension` | Registers link nodes. |
+| `CodeExtension` | Registers code block nodes. |
+| `TableExtension` | Registers table nodes. |
+| `HorizontalRuleExtension` | Registers the divider node. |
+| `ImageExtension` | Registers the image node. |
+| `EmojiExtension` | Registers the emoji node. |
+| `EDITOR_TRANSFORMERS` | The Markdown transformer list passed to the plugin. See below. |
+| `ImportExportToolbarPlugin` | The import button and export menu. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+A file can only be imported if the editor registers every node type in it. If you remove an extension above, files containing that block fail to import.
+
+## Formats
+
+| Control | Result |
+| --- | --- |
+| Import file | Opens a file picker and loads a Lexical file into the editor. |
+| Export as, Lexical JSON | Downloads a Lexical file that Import can read back. |
+| Export as, Markdown | Downloads a `.md` file. |
+| Export as, HTML | Downloads an `.html` file with the content inside `body`. |
+
+Import reads Lexical files only. It does not read Markdown or HTML. File names are the editor namespace plus the current ISO timestamp, with unsafe characters replaced. See the [file](https://lexical.dev/docs/packages/lexical-file) and [markdown](https://lexical.dev/docs/packages/lexical-markdown) docs for the formats.
+
+## Markdown transformers
+
+Markdown export uses a list of transformers. If you pass none, the plugin falls back to Lexical's stock `TRANSFORMERS`, which do not know about tables, dividers, images or emoji, so those blocks do not round-trip. `editor.tsx` defines a fuller list and passes it, and this pattern does the same:
+
+```tsx
+const EDITOR_TRANSFORMERS: Transformer[] = [
+  TABLE,
+  HR,
+  IMAGE,
+  EMOJI,
+  CHECK_LIST,
+  ...ELEMENT_TRANSFORMERS,
+  ...MULTILINE_ELEMENT_TRANSFORMERS,
+  ...TEXT_FORMAT_TRANSFORMERS,
+  ...TEXT_MATCH_TRANSFORMERS,
+];
+
+<ImportExportToolbarPlugin transformers={EDITOR_TRANSFORMERS} />
+```
+
+If you add a block that should appear in Markdown, add its transformer to the list. The full editor passes the same list to `registerMarkdownShortcuts`, so the same transformers also power [Markdown shortcuts](/docs/patterns/markdown-shortcuts) while typing. This pattern does not register those.
+
+## API
+
+<ApiParameters>
+  <ApiDescription>Props of `ImportExportToolbarPlugin`.</ApiDescription>
+  <ApiParameter name="transformers" type="Transformer[]" defaultValue="TRANSFORMERS">Transformers used for Markdown export. Defaults to `TRANSFORMERS` from `@lexical/markdown`.</ApiParameter>
+</ApiParameters>
+
+## Related patterns
+
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) for the same transformers while typing.
+- [Table](/docs/patterns/table), [Image](/docs/patterns/image) and [Divider](/docs/patterns/divider) for the blocks the transformers cover.
+- [Clear](/docs/patterns/clear) to empty the editor before importing.

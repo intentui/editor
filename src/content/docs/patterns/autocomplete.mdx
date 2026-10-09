@@ -1,0 +1,75 @@
+---
+title: Autocomplete
+description: Inline ghost-text word suggestions that you accept with Tab or the right arrow.
+---
+
+As you type, a faint completion appears after the word. Press <Kbd>Tab</Kbd> or <Kbd>Right</Kbd> to accept it.
+
+<ComponentPreview name="autocomplete" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `AutocompleteExtension` | Watches the word before the cursor, looks it up in a dictionary and shows the rest as ghost text. It has no component: remove it and there are no suggestions. |
+
+There is no toolbar or other UI. The suggestion is drawn inside the text by the extension.
+
+## What you see
+
+- Type at least 4 letters of a word, such as `inter`. After a short delay (about 200 ms) the rest of a matching word appears in muted text, followed by `(TAB)`. On touch devices the hint reads `(swipe ⮕)`.
+- <Kbd>Tab</Kbd> or <Kbd>Right</Kbd> accepts it. A swipe to the right on touch devices does the same.
+- After you accept, a longer word can be suggested straight away, for example `inter` becomes `international` and then offers `ly`. Keep pressing <Kbd>Tab</Kbd> or keep typing.
+- The suggestion only shows when the cursor is collapsed, at the end of a plain text node, and the editor is focused and editable. Blur, composition start or moving away clears it.
+- The ghost text is not part of the document. It is not counted, saved or exported.
+
+## Changing the suggestions
+
+The default source is a bundled English word list in `dictionaries/english.ts`, wrapped by `createWordlistDictionary` with a minimum prefix length of 4. Pass your own words with `configExtension`:
+
+```tsx
+import { configExtension } from "lexical";
+
+import {
+  AutocompleteExtension,
+  createWordlistDictionary,
+} from "@/components/editor/extensions/autocomplete";
+
+const dictionary = createWordlistDictionary(["Intent UI", "Lexical", "extension"], {
+  minPrefixLength: 2,
+});
+
+dependencies: [
+  RichTextExtension,
+  configExtension(AutocompleteExtension, {
+    dictionaries: { en: () => Promise.resolve(dictionary) },
+  }),
+]
+```
+
+A dictionary is any object with `minPrefixLength` and `query(prefix)`, where `query` returns the remaining characters or `null`. Because the loader returns a promise, you can fetch words from your own API.
+
+<ApiParameters>
+  <ApiDescription>Config of `AutocompleteExtension`.</ApiDescription>
+  <ApiParameter name="disabled" type="boolean" defaultValue="false">Turns the extension off.</ApiParameter>
+  <ApiParameter name="dictionaries" type="Record&lt;string, () =&gt; Promise&lt;AutocompleteDictionary&gt;&gt;" defaultValue="{ en }">Loaders by language code. Your entries are merged over the defaults.</ApiParameter>
+  <ApiParameter name="detectLanguage" type="(text: string) =&gt; string" defaultValue="() =&gt; &quot;en&quot;">Picks the dictionary for a word. The default always returns `en`.</ApiParameter>
+  <ApiParameter name="compositionIdleDebounceMs" type="number" defaultValue="200">Delay before suggesting while an IME is composing. `0` or less disables it.</ApiParameter>
+</ApiParameters>
+
+## Styling
+
+The ghost text uses `autocomplete` in `theme.ts`, which is `text-muted-fg select-none`.
+
+## Related patterns
+
+- [Tab focus](/docs/patterns/tab-focus), another Tab related behavior.
+- [Mention](/docs/patterns/mention) and [Emoji](/docs/patterns/emoji) for menu based suggestions.
+- [Slash menu](/docs/patterns/slash-menu).

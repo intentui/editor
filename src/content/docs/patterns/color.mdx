@@ -1,0 +1,43 @@
+---
+title: Color
+description: Text color and background color pickers with a color area, hue slider and hex input.
+references:
+  - https://react-spectrum.adobe.com/react-aria/ColorPicker.html
+---
+
+Two toolbar buttons, one for text color and one for background color. Each opens a popover with a color area, a hue slider and a hex field.
+
+<ComponentPreview name="color" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `FormatStateExtension` | Reports the color at the selection, so the swatch under each icon matches it. Remove it and the buttons throw, because they read from it. |
+| `ColorToolbarPlugin` | Both color buttons. It takes no props. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+## Behavior
+
+- The color is applied while the user drags or types, not when the popover closes.
+- Colors are stored as inline hex styles, `color` and `background-color`.
+- When the selection has no explicit color, the swatch falls back to `#000000` for text and `#ffffff` for background. Nothing is applied until the user changes the value.
+- An eye dropper button appears next to the hex field in browsers that support the `EyeDropper` API.
+
+## Styling
+
+The pickers are built from the Intent UI color components (`color-area`, `color-slider`, `color-field`, `color-swatch`, `color-picker`) in `components/ui/`. The popover follows your `overlay` and `border` tokens. Edit `color-toolbar-plugin.tsx` to change the icons or the fallback colors.
+
+## Related patterns
+
+- [Text format](/docs/patterns/text-format) includes a highlight format that uses a theme color.
+- [Font](/docs/patterns/font) for font family and size.
+- [Clear](/docs/patterns/clear) to remove colors from the selection.

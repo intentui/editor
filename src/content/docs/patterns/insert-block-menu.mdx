@@ -1,0 +1,58 @@
+---
+title: Insert block menu
+description: A toolbar group of buttons for inserting blocks.
+references:
+  - https://lexical.dev/docs/concepts/commands
+---
+
+`BlockInsert` is a toolbar group that holds insert buttons. Unlike the [slash menu](/docs/patterns/slash-menu), it is always visible.
+
+<ComponentPreview name="insert-block-menu" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `CodeExtension` | Code block node and highlighting, used by the code block button. |
+| `LayoutExtension` | Column layout nodes and the command the columns button dispatches. |
+| `HorizontalRuleExtension` | The divider node and command. |
+| `ImageExtension` | The image node and the insert command. |
+| `TableExtension` | Table nodes and the insert command. |
+| `BlockInsert` | The toolbar group, labelled "Insert". |
+| `InsertCodeBlockPlugin`, `InsertColumnsPlugin`, `InsertHorizontalRulePlugin`, `InsertImagePlugin`, `InsertTablePlugin` | One button per block. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+Each button needs the extension of its block. To remove a block, delete its button and its extension. To remove the group, delete `BlockInsert`. Reorder the lines to reorder the buttons.
+
+## Buttons
+
+| Plugin | Button | Behavior |
+| --- | --- | --- |
+| `InsertCodeBlockPlugin` | Insert code block | Inserts a code block. |
+| `InsertColumnsPlugin` | Columns | Opens a menu with 1 column, 2 columns and 3 columns. |
+| `InsertHorizontalRulePlugin` | Insert divider | Inserts a divider. |
+| `InsertImagePlugin` | Insert image | Opens a file picker and inserts the chosen image. |
+| `InsertTablePlugin` | Insert table | Opens a grid of up to 10 columns by 8 rows. Click a cell to choose the size. |
+
+All buttons are disabled when the editor is read-only. Each block is covered in its own pattern: [Code block](/docs/patterns/code-block), [Columns](/docs/patterns/columns), [Divider](/docs/patterns/divider), [Image](/docs/patterns/image) and [Table](/docs/patterns/table).
+
+### Emoji button
+
+The full editor also has an `InsertEmojiPlugin` button. It only types the `:` trigger, so it needs `EmojiExtension` and `EmojiPickerPlugin` to show anything. See [Emoji](/docs/patterns/emoji).
+
+## Styling
+
+Buttons are Intent UI outline buttons with `size="sq-xs"`, each with a tooltip. Group spacing and colors come from the toolbar. `BlockInsert` is a `ToolbarGroup` and accepts the same props.
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu) to insert blocks by typing.
+- [Draggable block](/docs/patterns/draggable-block) to move blocks once inserted.
+- [Toolbar](/docs/getting-started/toolbar) for the toolbar container.

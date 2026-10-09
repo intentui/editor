@@ -21,6 +21,8 @@ export function QuotePickerPlugin() {
       {
         value: "quote",
         label: "Quote",
+        group: "Basic blocks",
+        description: "Capture a quote.",
         icon: <ChatBubbleBottomCenterTextIcon className="text-muted-fg" />,
         keywords: ["quote", "block quote", "blockquote"],
         onSelect: () =>

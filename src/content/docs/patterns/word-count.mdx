@@ -1,0 +1,66 @@
+---
+title: Word count
+description: Show a live word and character count in the activity bar.
+references:
+  - https://lexical.dev/docs/react/plugins#lexicalcharacterlimitplugin
+---
+
+A live word and character count in the activity bar below the content area.
+
+<ComponentPreview name="word-count" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `ActivityBar` | The strip under the content area. See [Activity bar](/docs/getting-started/activity-bar). |
+| `CountPlugin` | Renders "N words" and "N characters" and updates on every change. |
+
+The content area is a flex child with `flex-1`, and `ActivityBar` is `shrink-0`, so the bar keeps its own height and the content fills the rest.
+
+## How counts work
+
+- Words are counted with `Intl.Segmenter` at word granularity, so languages without spaces are handled. Without `Intl.Segmenter` it splits on whitespace.
+- Characters are counted as graphemes, so an emoji counts as one character. Line breaks are not counted.
+- Numbers use `Intl.NumberFormat`, so large counts get locale separators.
+
+## Character limit
+
+Pass `maxLength` to show a used and limit label such as "12 / 280 characters". The label turns `text-danger` once the limit is exceeded.
+
+```tsx
+<CountPlugin maxLength={280} />
+```
+
+<Note intent="warning">
+  `maxLength` renders Lexical's `CharacterLimitPlugin`, which needs `OverflowNode` from `@lexical/overflow`. The editor does not register it, so `maxLength` throws "OverflowNode not registered on editor" until you add the node yourself. This pattern therefore does not use it.
+</Note>
+
+<Note intent="info">
+  The limit is visual only. The editor does not stop typing past `maxLength`. It measures UTF-16 code units, so the used count can differ from the grapheme count shown without a limit.
+</Note>
+
+## Styling
+
+- The labels are plain `span` elements that inherit `text-xs text-muted-fg` from the activity bar.
+- Text past the limit uses `characterLimit` in `theme.ts`, which is `inline bg-danger-subtle text-danger-subtle-fg`.
+
+## API
+
+<ApiParameters>
+  <ApiDescription>Props of `CountPlugin`.</ApiDescription>
+  <ApiParameter name="maxLength" type="number" defaultValue="undefined">When set, shows a used and limit label instead of the plain character count. Requires `OverflowNode` to be registered.</ApiParameter>
+</ApiParameters>
+
+## Related patterns
+
+- [Read only](/docs/patterns/read-only) for another activity bar control.
+- [Speech to text](/docs/patterns/speech-to-text) to dictate into the editor.
+- [Shortcuts](/docs/patterns/shortcuts) for the shortcuts dialog.

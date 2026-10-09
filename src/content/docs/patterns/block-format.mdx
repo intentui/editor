@@ -1,0 +1,67 @@
+---
+title: Block format
+description: A searchable selector that turns the current block into a paragraph, heading, list or quote.
+references:
+  - https://react-spectrum.adobe.com/react-aria/ComboBox.html
+---
+
+A combo box that shows the block type under the cursor and changes it when you pick another one.
+
+<ComponentPreview name="block-format" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. It provides paragraphs, headings and quotes. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `ListExtension` | Numbered and bulleted lists. Remove it and those two options disappear from the selector. |
+| `CheckListExtension` | Check lists. Remove it and the Check list option disappears. |
+| `ShortcutsExtension` | Registers the block keyboard shortcuts below. Remove it and the selector still works, but the shortcuts do not. |
+| `BlockFormatToolbarPlugin` | The combo box. It takes no props. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+## Options
+
+The selector lists only what the editor can create. Type in the input to filter the list.
+
+| Option | Shortcut |
+| --- | --- |
+| Paragraph | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>0</Kbd> |
+| Heading 1 | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>1</Kbd> |
+| Heading 2 | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>2</Kbd> |
+| Heading 3 | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>3</Kbd> |
+| Numbered list | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>7</Kbd> |
+| Bulleted list | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>8</Kbd> |
+| Check list | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>9</Kbd> |
+| Quote | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>Q</Kbd> |
+
+Use <Kbd>Cmd</Kbd> instead of <Kbd>Ctrl</Kbd> on macOS, except for Quote, which uses <Kbd>Ctrl</Kbd> on every platform. Pressing a list shortcut while already in that list turns the block back into a paragraph.
+
+## Fewer block types
+
+The list items are shown only when the matching extension is registered. To offer only paragraphs, headings and quotes, drop the two list extensions.
+
+```tsx
+dependencies: [RichTextExtension, ShortcutsExtension],
+```
+
+## Styling
+
+The combo box is `w-48` with the compact input size. Each block is styled by the `heading`, `quote` and `list` entries in `components/editor/theme.ts`.
+
+```ts title="components/editor/theme.ts"
+quote: "relative my-4 border-s-2 ps-6 text-muted-fg italic first:mt-0 last:mb-0",
+```
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu) to change the block type by typing `/`.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) to create blocks with `#`, `>` and `-`.
+- [Alignment and indent](/docs/patterns/alignment-and-indent) for block layout.

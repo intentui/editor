@@ -1,4 +1,5 @@
 import {
+  Fragment,
   createContext,
   useCallback,
   useContext,
@@ -26,6 +27,10 @@ export type ComponentPickerItem = {
   value: string;
   label: string;
   icon?: React.ReactNode;
+  /** Shown under the label by the `detailed` variant. */
+  description?: string;
+  /** Section heading in the `detailed` variant. Keep items of one group next to each other. */
+  group?: string;
   keywords?: string[];
   onSelect: (queryString: string) => void;
 };
@@ -65,7 +70,14 @@ class ComponentPickerOption extends MenuOption {
   }
 }
 
-export function ComponentPicker({ children }: { children: React.ReactNode }) {
+export function ComponentPicker({
+  children,
+  variant = "default",
+}: {
+  children: React.ReactNode;
+  /** `detailed` groups items into sections and shows an icon tile, a label and a description. */
+  variant?: "default" | "detailed";
+}) {
   const [editor] = useLexicalComposerContext();
   const [queryString, setQueryString] = useState<string | null>(null);
   const [itemsById, setItemsById] = useState(() => new Map<string, ComponentPickerItem[]>());
@@ -145,35 +157,90 @@ export function ComponentPicker({ children }: { children: React.ReactNode }) {
         ) =>
           anchorElementRef.current && options.length > 0
             ? createPortal(
-                <div className="absolute start-0 top-full z-50 -mt-4 w-56 overflow-hidden rounded-lg bg-overlay text-overlay-fg shadow-xs ring ring-muted-fg/20 drop-shadow-xl dark:ring-border">
-                  <div
-                    role="listbox"
-                    aria-label="Components"
-                    className="grid max-h-64 grid-cols-[auto_minmax(0,1fr)] gap-y-1 overflow-y-auto overscroll-contain p-1 text-sm"
-                  >
-                    {options.map((option, index) => (
-                      <div
-                        key={option.key}
-                        ref={option.setRefElement}
-                        role="option"
-                        tabIndex={-1}
-                        aria-selected={selectedIndex === index}
-                        onMouseDown={(event) => event.preventDefault()}
-                        onMouseEnter={() => setHighlightedIndex(index)}
-                        onClick={() => selectOptionAndCleanUp(option)}
-                        className={twJoin(
-                          "col-span-full grid cursor-default grid-cols-subgrid items-center gap-x-2 rounded-[calc(var(--radius-lg)-(--spacing(1)))] px-2.5 py-2 outline-hidden sm:px-2 sm:py-1.5",
-                          "[&_svg]:size-4 [&_svg]:shrink-0",
-                          selectedIndex === index
-                            ? "bg-accent text-accent-fg [&_svg]:text-accent-fg"
-                            : "text-fg",
-                        )}
-                      >
-                        {option.item.icon ?? <span />}
-                        <span className="truncate">{option.item.label}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div
+                  className={twJoin(
+                    "absolute start-0 top-full z-50 -mt-4 overflow-hidden rounded-lg bg-overlay text-overlay-fg shadow-xs ring ring-muted-fg/20 drop-shadow-xl dark:ring-border",
+                    variant === "detailed" ? "w-72" : "w-56",
+                  )}
+                >
+                  {variant === "detailed" ? (
+                    <div
+                      role="listbox"
+                      aria-label="Components"
+                      className="max-h-80 overflow-y-auto overscroll-contain p-1 text-sm"
+                    >
+                      {options.map((option, index) => {
+                        const { group, icon, label, description } = option.item;
+                        const showGroup = group && group !== options[index - 1]?.item.group;
+                        return (
+                          <Fragment key={option.key}>
+                            {showGroup && (
+                              <div
+                                role="presentation"
+                                className="px-2 pt-2 pb-1 font-medium text-muted-fg text-xs"
+                              >
+                                {group}
+                              </div>
+                            )}
+                            <div
+                              ref={option.setRefElement}
+                              role="option"
+                              tabIndex={-1}
+                              aria-selected={selectedIndex === index}
+                              onMouseDown={(event) => event.preventDefault()}
+                              onMouseEnter={() => setHighlightedIndex(index)}
+                              onClick={() => selectOptionAndCleanUp(option)}
+                              className={twJoin(
+                                "flex cursor-default items-center gap-x-3 rounded-[calc(var(--radius-lg)-(--spacing(1)))] px-2 py-1.5 outline-hidden",
+                                selectedIndex === index ? "bg-accent text-accent-fg" : "text-fg",
+                              )}
+                            >
+                              <span className="grid size-9 shrink-0 place-content-center rounded-md border bg-bg [&_svg]:size-5">
+                                {icon}
+                              </span>
+                              <span className="grid min-w-0">
+                                <span className="truncate font-medium">{label}</span>
+                                {description && (
+                                  <span className="truncate text-muted-fg text-xs">
+                                    {description}
+                                  </span>
+                                )}
+                              </span>
+                            </div>
+                          </Fragment>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div
+                      role="listbox"
+                      aria-label="Components"
+                      className="grid max-h-64 grid-cols-[auto_minmax(0,1fr)] gap-y-1 overflow-y-auto overscroll-contain p-1 text-sm"
+                    >
+                      {options.map((option, index) => (
+                        <div
+                          key={option.key}
+                          ref={option.setRefElement}
+                          role="option"
+                          tabIndex={-1}
+                          aria-selected={selectedIndex === index}
+                          onMouseDown={(event) => event.preventDefault()}
+                          onMouseEnter={() => setHighlightedIndex(index)}
+                          onClick={() => selectOptionAndCleanUp(option)}
+                          className={twJoin(
+                            "col-span-full grid cursor-default grid-cols-subgrid items-center gap-x-2 rounded-[calc(var(--radius-lg)-(--spacing(1)))] px-2.5 py-2 outline-hidden sm:px-2 sm:py-1.5",
+                            "[&_svg]:size-4 [&_svg]:shrink-0",
+                            selectedIndex === index
+                              ? "bg-accent text-accent-fg [&_svg]:text-accent-fg"
+                              : "text-fg",
+                          )}
+                        >
+                          {option.item.icon ?? <span />}
+                          <span className="truncate">{option.item.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>,
                 anchorElementRef.current,
               )

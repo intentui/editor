@@ -1,0 +1,111 @@
+---
+title: Block editor
+description: An editor built around the slash menu, with sections and descriptions for every block.
+---
+
+Content comes first. There is no toolbar and no activity bar. Type <Kbd>/</Kbd> on an empty line to pick a block, hover a block for its handle, and select text to format it.
+
+<ComponentPreview name="block-editor" />
+
+## Installation
+
+This editor is `components/editor/editor-block.tsx`. It is installed with `@intentui/editor`, next to `editor.tsx`. Render `DemoBlockEditor`, or copy the file and rename it.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+```tsx title="app/page.tsx"
+import { DemoBlockEditor } from "@/components/editor/editor-block"
+
+export default function Page() {
+  return <DemoBlockEditor />
+}
+```
+
+## How you use it
+
+| You want to | Do this |
+| --- | --- |
+| Add or change a block | Type <Kbd>/</Kbd> and pick from the menu, or hover a block and click the plus button on its handle. |
+| Move a block | Drag it by its handle. See [Draggable block](/docs/patterns/draggable-block). |
+| Format text | Select text. The floating toolbar offers bold, italic, underline, strikethrough and a link. |
+| Write Markdown | Type it. `# `, `- `, `> `, `` ` `` and the other shortcuts convert as you type, see [Markdown shortcuts](/docs/patterns/markdown-shortcuts). |
+
+The placeholder reads "Type '/' for commands" while the editor is empty.
+
+## The slash menu
+
+The menu uses the `detailed` variant of `ComponentPicker`: three sections, and an icon tile, a label and a description for every item. Typing after the slash filters the list by label and keyword.
+
+| Section | Items |
+| --- | --- |
+| Basic blocks | Paragraph, headings 1 to 3, bulleted list, numbered list, check list, quote, divider |
+| Media | Image |
+| Advanced | Table, code block, 1, 2 and 3 columns |
+
+```tsx title="components/editor/editor-block.tsx"
+<ComponentPicker variant="detailed">
+  <ParagraphPickerPlugin />
+  <HeadingPickerPlugin />
+  <BulletedListPickerPlugin />
+  <NumberedListPickerPlugin />
+  <CheckListPickerPlugin />
+  <QuotePickerPlugin />
+  <DividerPickerPlugin />
+  <ImagePickerPlugin />
+  <TablePickerPlugin />
+  <CodePickerPlugin />
+  <ColumnsPickerPlugin />
+</ComponentPicker>
+```
+
+Items appear in the order of the plugins, so move a line to move an item and delete a line to remove it. See [Slash menu](/docs/patterns/slash-menu) for the `group` and `description` fields and how to add your own item.
+
+## What's included
+
+### Extensions
+
+| Extension | Behavior |
+| --- | --- |
+| `RichTextExtension` | Rich text editing. Required. |
+| `HistoryExtension` | Undo and redo. |
+| `TabIndentationExtension` | Indent and outdent with <Kbd>Tab</Kbd>. |
+| `ListExtension`, `CheckListExtension` | Bulleted, numbered and check lists. |
+| `LinkExtension`, `AutoLinkExtension` | Links and automatic link detection. |
+| `CodeExtension` | Code blocks with syntax highlighting. |
+| `LayoutExtension` | Columns. |
+| `TableExtension` | Tables. |
+| `HorizontalRuleExtension` | Dividers. |
+| `ImageExtension`, `DragDropPasteExtension` | Images, including drag, drop and paste. |
+| `ShortcutsExtension` | Keyboard shortcuts, see [Shortcuts](/docs/patterns/shortcuts). |
+| `FormatStateExtension` | Lets the floating toolbar show which formats are active. |
+| `ClipboardDOMImportExtension` | Cleaner pasting of HTML. |
+
+### UI
+
+| Piece | What it does |
+| --- | --- |
+| `ContentEditable` with `variant="draggable"` | The writing area, with room on the left for the drag handle. |
+| `DraggableBlockPlugin` | The handle with a plus button and drag and drop. |
+| `FloatingToolbarPlugin` | The toolbar next to a selection, holding `TextFormatToolbarPlugin formats="basic"` and `LinkToolbarPlugin`. |
+| `LinkEditorPlugin` | Edits a link. The link button does nothing without it. |
+| `TableHoverActionsPlugin` | Add and remove rows and columns on hover. |
+| `ComponentPicker` | The slash menu. |
+
+## Compared with the full editor
+
+| Left out | Where it was |
+| --- | --- |
+| The toolbar | Above the content, with fonts, colors, alignment and indent controls |
+| The activity bar | Below the content, with counts, speech to text and the shortcuts dialog |
+| Emoji, mentions, hashtags and special text | Pickers and extensions |
+| Autocomplete, tab focus and speech to text | Extensions |
+| The context menu | Content area |
+
+To bring something back, copy its extension and its plugin from [`editor.tsx`](/docs/patterns/full-editor). The other [patterns](/docs/patterns/full-editor) list which pieces belong together.
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu)
+- [Draggable block](/docs/patterns/draggable-block)
+- [Floating toolbar](/docs/patterns/floating-toolbar)
+- [Markdown editor](/docs/patterns/markdown-editor)

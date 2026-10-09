@@ -1,0 +1,61 @@
+---
+title: Context menu
+description: A right-click menu for clipboard actions, removing links and deleting blocks.
+---
+
+Right-click inside the editor to open a custom menu instead of the browser's.
+
+<ComponentPreview name="context-menu" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `LinkExtension` | Only for the "Remove link" item. Without it the editor has no links to remove, and the item never shows. |
+| `ContextMenuPlugin` | Listens for `contextmenu` on the editor and renders the menu. It takes no props. |
+
+## Menu items
+
+| Item | Action |
+| --- | --- |
+| Remove link | Shown only when you right-click a link. Unlinks the text. An auto-detected link is marked as unlinked instead. |
+| Cut | Cuts the selection. |
+| Copy | Copies the selection. |
+| Paste | Pastes rich content from the clipboard. |
+| Paste as plain text | Pastes the clipboard as plain text. |
+| Delete | Removes the selected image or divider, or otherwise the top-level block under the pointer. |
+
+<Note intent="warning">
+  Paste reads the clipboard with `navigator.clipboard`. If the browser denies access, the plugin calls `window.alert("Clipboard access is not allowed")`. Replace that call if you want a quieter failure.
+</Note>
+
+## Customize
+
+The items are plain JSX in `plugins/context-menu-plugin.tsx`. Add, remove or reorder `ContextMenuItem` elements to change the menu.
+
+```tsx
+<ContextMenuItem onAction={() => editor.dispatchCommand(COPY_COMMAND, null)}>
+  <DocumentDuplicateIcon />
+  Copy
+</ContextMenuItem>
+```
+
+To remove the pattern, delete `ContextMenuPlugin`. The browser's menu returns.
+
+## Styling
+
+The menu comes from `@/components/ui/context-menu`, with `w-52` set by the plugin. The Delete item uses `intent="danger"`.
+
+## Related patterns
+
+- [Link](/docs/patterns/link) for creating and editing links.
+- [Floating toolbar](/docs/patterns/floating-toolbar) for formatting controls next to the selection.
+- [Draggable block](/docs/patterns/draggable-block) for moving blocks.

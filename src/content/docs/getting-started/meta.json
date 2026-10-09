@@ -1,0 +1,15 @@
+{
+  "title": "Getting started",
+  "pages": [
+    "introduction",
+    "installation",
+    "quick-start",
+    "project-structure",
+    "theming",
+    "---Layout---",
+    "anatomy",
+    "toolbar",
+    "content-area",
+    "activity-bar"
+  ]
+}

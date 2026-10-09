@@ -1,0 +1,101 @@
+---
+title: Text format
+description: Bold, italic, underline, strikethrough, code, highlight, sub and superscript, and case.
+references:
+  - https://lexical.dev/docs/concepts/commands
+---
+
+A toolbar with every inline text format. Select text and apply a format with a button or a keyboard shortcut.
+
+<ComponentPreview name="text-format" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `FormatStateExtension` | Tracks which formats are active, so buttons show as pressed. |
+| `ShortcutsExtension` | Registers the keyboard shortcuts below. Remove it and the buttons still work, but the shortcuts do not. |
+| `TextFormatToolbarPlugin` | The toggle buttons. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+## Formats
+
+| Group | Formats |
+| --- | --- |
+| Basic | Bold, italic, underline, strikethrough |
+| Marks | Highlight, inline code |
+| Script | Subscript, superscript |
+| Case | Uppercase, lowercase, title case |
+
+### Markdown formats only
+
+Set `formats="markdown"` to render bold, italic, strikethrough and inline code in one group. These are the formats Markdown can write, see the [Markdown editor](/docs/patterns/markdown-editor).
+
+```tsx
+<Toolbar>
+  <TextFormatToolbarPlugin formats="markdown" />
+</Toolbar>
+```
+
+### Basic formats only
+
+Set `formats="basic"` to render only the first group.
+
+```tsx
+<Toolbar>
+  <TextFormatToolbarPlugin formats="basic" />
+</Toolbar>
+```
+
+## Keyboard
+
+Use <Kbd>Cmd</Kbd> instead of <Kbd>Ctrl</Kbd> on macOS.
+
+| Format | Shortcut |
+| --- | --- |
+| Bold | <Kbd>Ctrl</Kbd> <Kbd>B</Kbd> |
+| Italic | <Kbd>Ctrl</Kbd> <Kbd>I</Kbd> |
+| Underline | <Kbd>Ctrl</Kbd> <Kbd>U</Kbd> |
+| Strikethrough | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>X</Kbd> |
+| Inline code | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>C</Kbd> |
+| Subscript | <Kbd>Ctrl</Kbd> <Kbd>,</Kbd> |
+| Superscript | <Kbd>Ctrl</Kbd> <Kbd>.</Kbd> |
+| Lowercase | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>1</Kbd> |
+| Uppercase | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>2</Kbd> |
+| Title case | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>3</Kbd> |
+
+The three case shortcuts use <Kbd>Ctrl</Kbd> on every platform. Highlight has no shortcut.
+
+## Styling
+
+Each format is styled by an entry under `text` in `components/editor/theme.ts`.
+
+```ts title="components/editor/theme.ts"
+text: {
+  bold: "font-bold",
+  code: "rounded-sm bg-muted px-1.5 py-0.5 font-mono text-sm",
+  highlight: "rounded bg-warning-subtle",
+  // ...
+}
+```
+
+## API
+
+<ApiParameters>
+  <ApiDescription>Props of `TextFormatToolbarPlugin`.</ApiDescription>
+  <ApiParameter name="formats" type="&quot;basic&quot; | &quot;markdown&quot; | &quot;all&quot;" defaultValue="&quot;all&quot;">`basic` renders bold, italic, underline and strikethrough only. `markdown` renders bold, italic, strikethrough and inline code. `all` adds highlight, code, subscript, superscript and the case formats.</ApiParameter>
+</ApiParameters>
+
+## Related patterns
+
+- [Block format](/docs/patterns/block-format) for headings, lists and quotes.
+- [Color](/docs/patterns/color) for text and highlight colors.
+- [Floating toolbar](/docs/patterns/floating-toolbar) to show these controls next to the selection.

@@ -1,0 +1,35 @@
+/* Syntax highlighting. Shiki writes both themes as CSS variables on every token. */
+.shiki {
+  background-color: var(--shiki-light-bg);
+}
+
+.shiki span {
+  color: var(--shiki-light);
+}
+
+.shiki code {
+  display: grid;
+  min-width: 100%;
+}
+
+.shiki .line {
+  display: inline-block;
+  min-height: 1lh;
+  width: 100%;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+html.dark .shiki {
+  background-color: var(--color-shiki-bg) !important;
+}
+
+.shiki .highlighted {
+  margin-left: -1rem;
+  width: calc(100% + 2rem);
+  padding-left: 1rem;
+  background-color: var(--color-info-subtle);
+}

@@ -20,6 +20,8 @@ export function BulletedListPickerPlugin() {
       {
         value: "bulleted-list",
         label: "Bulleted list",
+        group: "Basic blocks",
+        description: "Create a simple bulleted list.",
         icon: <ListBulletIcon className="text-muted-fg" />,
         keywords: ["bulleted list", "unordered list", "ul"],
         onSelect: () => {

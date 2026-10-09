@@ -1,0 +1,83 @@
+---
+title: Quick start
+description: Render the editor in a Next.js page and start customizing it.
+---
+
+## Render the editor
+
+`editor.tsx` exports a ready-made editor. It is a client component, so you can import it straight into a server component page.
+
+```tsx title="app/page.tsx"
+import { DemoEditor } from "@/components/editor/editor"
+
+export default function Page() {
+  return (
+    <div className="p-4">
+      <DemoEditor />
+    </div>
+  )
+}
+```
+
+That gives you the [full editor](/docs/patterns/full-editor): toolbar, floating menus, slash menu and activity bar.
+
+## Customize it
+
+`DemoEditor` takes no props. It is a composition of extensions and UI plugins, so you customize it by editing the file. To remove a feature, delete its line. To reorder the toolbar, move the lines.
+
+```tsx title="components/editor/editor.tsx"
+<Toolbar>
+  <HistoryToolbarPlugin />
+  <ToolbarSeparator />
+  <BlockFormatToolbarPlugin />
+  <TextFormatToolbarPlugin />
+  <LinkToolbarPlugin />
+</Toolbar>
+```
+
+Some features need an extension as well as a plugin. The extension registers the behavior, the plugin is the UI. Each [pattern](/docs/patterns/full-editor) lists exactly which extensions and plugins one feature needs, so you can see what to keep or delete together.
+
+## Start from a pattern
+
+If you want a smaller editor, copy a pattern instead of trimming the full one. Each pattern is a self-contained component made from pieces of `editor.tsx`.
+
+- Toolbar only: [Text format](/docs/patterns/text-format), [Block format](/docs/patterns/block-format)
+- Writing menus: [Slash menu](/docs/patterns/slash-menu), [Mention](/docs/patterns/mention)
+- Blocks: [Image](/docs/patterns/image), [Table](/docs/patterns/table), [Code block](/docs/patterns/code-block)
+
+## Seeding initial content
+
+Patterns start with some content so you can try them straight away. They seed it with `$initialEditorState`, plus one extra dependency:
+
+```tsx
+import { HISTORY_MERGE_TAG, configExtension, defineExtension } from "lexical"
+import { InitialStateExtension } from "@lexical/extension"
+
+defineExtension({
+  // ...
+  dependencies: [
+    RichTextExtension,
+    configExtension(InitialStateExtension, {
+      updateOptions: { tag: HISTORY_MERGE_TAG, discrete: true },
+    }),
+  ],
+  $initialEditorState: () => {
+    // append nodes to $getRoot()
+  },
+})
+```
+
+`discrete: true` applies the content immediately. Without it Lexical applies the content a moment later, so a server-rendered page renders the editor empty and the client renders it filled in, and React reports a hydration mismatch. Leave the extra dependency out if your editor starts empty or you load saved content on the client.
+
+## Rename the component
+
+`DemoEditor` is only a name. Rename it and export it from wherever fits your project, for example `RichTextEditor`.
+
+## Next.js notes
+
+- The editor is client-side only. `editor.tsx` already starts with `"use client"`, so no `dynamic()` import is needed.
+- Give the editor a parent with a height. The content area scrolls inside it, so an unbounded parent makes the page grow instead.
+
+<Note intent="info">
+  Saving and loading content is handled by Lexical. See the [Lexical docs](https://lexical.dev/docs/concepts/serialization) for the editor state format.
+</Note>

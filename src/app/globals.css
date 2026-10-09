@@ -1,32 +1,36 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/code.css";
+@import "../styles/typeset.css";
+@import "../styles/shadcn.css";
 
 @plugin 'tailwindcss-react-aria-components';
-/*
-If you want to use the typography plugin, uncomment the line below.
-*/
-/*@plugin '@tailwindcss/typography';*/
-@variant dark (&:is(.dark *));
-
-@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
-  --font-mono: var(--font-geist-mono), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    var(--font-docs-mono), "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas",
+    '"Liberation Mono"', '"Courier New"', "monospace";
 
   --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   --font-mono--font-feature-settings: "ss02", "zero";
 
+  --color-shiki-bg: var(--shiki-bg);
+  --color-shiki-border: var(--input);
+
   --color-border: var(--border);
+  --color-page: var(--page);
   --color-input: var(--input);
 
   --color-ring: var(--ring);
 
   --color-bg: var(--bg);
   --color-fg: var(--fg);
+
+  --color-card: var(--card);
+  --color-card-fg: var(--card-fg);
 
   --color-primary: var(--primary);
   --color-primary-fg: var(--primary-fg);
@@ -77,6 +81,14 @@ If you want to use the typography plugin, uncomment the line below.
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -90,7 +102,6 @@ If you want to use the typography plugin, uncomment the line below.
     from {
       transform: translateX(0);
     }
-
     to {
       transform: translateX(calc(-100% - var(--gap)));
     }
@@ -100,16 +111,39 @@ If you want to use the typography plugin, uncomment the line below.
     from {
       transform: translateY(0);
     }
-
     to {
       transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  --animate-blink: blink 1.4s both infinite;
+
+  @keyframes blink {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
     }
   }
 }
 
 :root {
-  --bg: var(--color-white);
-  --fg: var(--color-zinc-950);
+  color-scheme: light dark;
+  interpolate-size: allow-keywords;
+
+  --radius: 0.5rem;
+  --bg: oklch(1 0 0);
+  --fg: oklch(0.21 0.006 285.885);
+
+  --card: oklch(1 0 0);
+  --card-fg: oklch(0.21 0.006 285.885);
+
+  --shiki-bg: var(--bg);
+  --shiki-light: var(--shiki-bg);
 
   --primary: oklch(0.546 0.245 262.881);
   --primary-fg: oklch(1 0 0);
@@ -117,48 +151,51 @@ If you want to use the typography plugin, uncomment the line below.
   --primary-subtle: oklch(0.623 0.214 259.815 / 0.15);
   --primary-subtle-fg: oklch(0.488 0.243 264.376);
 
-  --secondary: var(--color-zinc-100);
-  --secondary-fg: var(--color-zinc-950);
+  --secondary: oklch(0.92 0.004 286.32);
+  --secondary-fg: oklch(0.141 0.005 285.823);
 
-  --overlay: var(--color-white);
-  --overlay-fg: var(--color-zinc-950);
+  --overlay: oklch(1 0 0);
+  --overlay-fg: oklch(0.141 0.005 285.823);
 
   --accent: oklch(0.92 0.004 286.32);
   --accent-fg: oklch(0.141 0.005 285.823);
 
-  --muted: var(--color-zinc-100);
-  --muted-fg: var(--color-zinc-600);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-fg: oklch(0.552 0.016 285.938);
 
-  --success: var(--color-emerald-600);
-  --success-fg: var(--color-white);
-  --success-subtle: theme('color-emerald-500/15%');
-  --success-subtle-fg: var(--color-emerald-700);
+  --success: oklch(0.596 0.145 163.225);
+  --success-fg: oklch(1 0 0);
+
+  --success-subtle: oklch(0.696 0.17 162.48 / 0.15);
+  --success-subtle-fg: oklch(0.508 0.118 165.612);
 
   --info: var(--color-sky-500);
   --info-fg: var(--color-white);
-  --info-subtle: theme('color-sky-500/15%');
-  --info-subtle-fg: var(--color-sky-700);
+  --info-subtle: oklch(0.685 0.169 237.323 / 0.15);
+  --info-subtle-fg: oklch(0.5 0.134 242.749);
 
-  --warning: var(--color-amber-400);
-  --warning-fg: var(--color-amber-950);
-  --warning-subtle: theme('color-amber-400/20%');
-  --warning-subtle-fg: var(--color-amber-700);
+  --warning: oklch(0.828 0.189 84.429);
+  --warning-fg: oklch(0.279 0.077 45.635);
 
-  --danger: var(--color-red-600);
-  --danger-fg: var(--color-red-50);
-  --danger-subtle: theme('color-red-500/15%');
-  --danger-subtle-fg: var(--color-red-700);
+  --warning-subtle: oklch(0.828 0.189 84.429 / 0.2);
+  --warning-subtle-fg: oklch(0.555 0.163 48.998);
+
+  --danger: oklch(0.577 0.245 27.325);
+  --danger-fg: oklch(0.971 0.013 17.38);
+
+  --danger-subtle: oklch(0.637 0.237 25.331 / 0.15);
+  --danger-subtle-fg: oklch(0.505 0.213 27.518);
 
   --border: var(--color-zinc-300);
-  --input: var(--color-zinc-300);
-  --ring: var(--primary);
+  --page: var(--color-zinc-300);
+  --input: oklch(0.871 0.006 286.286);
+  --ring: oklch(0.546 0.245 262.881);
 
-  --navbar: oklch(0.988 0 0);
-  --navbar-fg: var(--color-zinc-950);
+  --navbar: oklch(0.995 0 0);
+  --navbar-fg: oklch(0.141 0.005 285.823);
 
   --sidebar: oklch(0.985 0 0);
   --sidebar-fg: oklch(0.141 0.005 285.823);
-
   --sidebar-primary: oklch(0.623 0.214 259.815 / 0.15);
   --sidebar-primary-fg: oklch(0.488 0.243 264.376);
   --sidebar-accent: oklch(0.92 0.004 286.32);
@@ -171,25 +208,17 @@ If you want to use the typography plugin, uncomment the line below.
   --chart-3: oklch(0.707 0.165 254.624);
   --chart-4: oklch(0.809 0.105 251.813);
   --chart-5: oklch(0.882 0.059 254.128);
-
-  --radius-lg: 0.5rem;
-  --radius-xs: calc(var(--radius-lg) * 0.25);
-  --radius-sm: calc(var(--radius-lg) * 0.5);
-  --radius-md: calc(var(--radius-lg) * 0.75);
-  --radius-xl: calc(var(--radius-lg) * 1.5);
-  --radius-2xl: calc(var(--radius-lg) * 2);
-  --radius-3xl: calc(var(--radius-lg) * 3);
-  --radius-4xl: calc(var(--radius-lg) * 4);
-
-  ::selection {
-    background-color: var(--color-primary-subtle);
-    color: var(--color-primary-subtle-fg);
-  }
 }
 
 .dark {
-  --bg: oklch(0.17 0.006 285.885);
-  --fg: var(--color-zinc-50);
+  --shiki-bg: #111114;
+  --shiki-da--bg: oklch(0.091 0.005 285.823);
+
+  --bg: var(--color-zinc-950);
+  --fg: oklch(0.985 0 0);
+
+  --card: oklch(0.21 0.006 285.885);
+  --card-fg: oklch(0.985 0 0);
 
   --primary: oklch(0.546 0.245 262.881);
   --primary-fg: oklch(1 0 0);
@@ -197,45 +226,50 @@ If you want to use the typography plugin, uncomment the line below.
   --primary-subtle: oklch(0.623 0.214 259.815 / 0.1);
   --primary-subtle-fg: oklch(0.707 0.165 254.624);
 
-  --secondary: var(--color-zinc-800);
-  --secondary-fg: var(--color-zinc-50);
+  --secondary: oklch(0.244 0.006 286.033);
+  --secondary-fg: oklch(0.985 0 0);
 
-  --accent: oklch(0.32 0.013 285.805);
+  --overlay: oklch(0.21 0.006 285.885);
+  --overlay-fg: oklch(0.985 0 0);
+
+  --accent: oklch(0.274 0.006 286.033);
   --accent-fg: oklch(0.985 0 0);
 
-  --muted: var(--color-zinc-900);
-  --muted-fg: var(--color-zinc-400);
+  --muted: oklch(0.21 0.006 285.885);
+  --muted-fg: oklch(0.705 0.015 286.067);
 
-  --overlay: oklch(0.234 0.006 286.033);
-  --overlay-fg: var(--color-zinc-50);
+  --success: oklch(0.596 0.145 163.225);
+  --success-fg: oklch(1 0 0);
 
-  --success: var(--color-emerald-600);
-  --success-fg: var(--color-white);
-  --success-subtle: theme('color-emerald-500/10%');
-  --success-subtle-fg: var(--color-emerald-400);
+  --success-subtle: oklch(0.696 0.17 162.48 / 0.1);
+  --success-subtle-fg: oklch(0.765 0.177 163.223);
 
   --info: var(--color-sky-500);
   --info-fg: var(--color-white);
-  --info-subtle: theme('color-sky-500/10%');
-  --info-subtle-fg: var(--color-sky-300);
+  --info-subtle: oklch(0.685 0.169 237.323 / 0.1);
+  --info-subtle-fg: oklch(0.828 0.111 230.318);
 
-  --warning: var(--color-amber-400);
-  --warning-fg: var(--color-amber-950);
-  --warning-subtle: theme('color-amber-400/10%');
-  --warning-subtle-fg: var(--color-amber-400);
+  --warning: oklch(0.828 0.189 84.429);
+  --warning-fg: oklch(0.279 0.077 45.635);
 
-  --danger: var(--color-red-600);
-  --danger-fg: var(--color-red-50);
-  --danger-subtle: theme('color-red-500/10%');
-  --danger-subtle-fg: var(--color-red-400);
+  --warning-subtle: oklch(0.828 0.189 84.429 / 0.1);
+  --warning-subtle-fg: oklch(0.828 0.189 84.429);
 
-  --border: oklch(0.30 0.013 285.805);
-  --input: oklch(0.310 0.013 285.805);
+  --danger: oklch(0.577 0.245 27.325);
+  --danger-fg: oklch(0.971 0.013 17.38);
 
-  --navbar: oklch(0.17 0.006 285.885);
-  --navbar-fg: var(--color-zinc-50);
+  --danger-subtle: oklch(0.637 0.237 25.331 / 0.1);
+  --danger-subtle-fg: oklch(0.704 0.191 22.216);
 
-  --sidebar: oklch(0.180 0.006 285.885);
+  --border: oklch(0.342 0.017 285.786);
+  --page: color-mix(in oklab, var(--color-zinc-700) 50%, transparent);
+  --input: oklch(0.32 0.013 285.805);
+  --ring: oklch(0.546 0.245 262.881);
+
+  --navbar: oklch(0.19 0.006 285.885);
+  --navbar-fg: oklch(0.985 0 0);
+
+  --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-fg: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.623 0.214 259.815 / 0.1);
   --sidebar-primary-fg: oklch(0.707 0.165 254.624);
@@ -251,9 +285,17 @@ If you want to use the typography plugin, uncomment the line below.
   --chart-5: oklch(0.882 0.059 254.128);
 }
 
-@utility touch-hitbox {
-  position: relative;
+.typeset-docs {
+  --typeset-font-body: var(--font-inter);
+  --typeset-font-heading: var(--font-inter);
+  --typeset-font-mono: var(--font-docs-mono);
+  --typeset-size: 15px;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.25em;
+}
 
+@utility touch-target {
+  position: relative;
   &::before {
     content: "";
     position: absolute;
@@ -267,10 +309,6 @@ If you want to use the typography plugin, uncomment the line below.
     min-width: 44px;
     z-index: 9999;
   }
-
-  @media (pointer: fine) {
-    display: none;
-  }
 }
 
 @layer base {
@@ -281,19 +319,17 @@ If you want to use the typography plugin, uncomment the line below.
   ::file-selector-button {
     border-color: var(--border, currentColor);
   }
-}
 
-@layer base {
   * {
     text-rendering: optimizeLegibility;
-
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
   }
 
   html {
-    font-variation-settings: normal;
     scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    font-variation-settings: normal;
     height: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -304,10 +340,55 @@ If you want to use the typography plugin, uncomment the line below.
     background-color: var(--bg);
     color: var(--fg);
   }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+  }
 }
 
+@variant dark (&:is(.dark *));
 
 .react-aria-DropIndicator[data-drop-target] {
   outline: 1px solid var(--primary);
   transform: translateZ(0);
+}
+
+@theme static {
+  --animate-sheet-backdrop: sheet-backdrop 300ms linear both;
+  --animate-sheet-scale-back: sheet-scale-back 300ms ease-out both;
+
+  @keyframes sheet-backdrop {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes sheet-scale-back {
+    to {
+      transform: translate(var(--sheet-stack-x, 0px), var(--sheet-stack-y, 0px)) scale(0.95);
+    }
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .react-aria-sheet[data-has-descendants] {
+    transform: translate(var(--sheet-stack-x, 0px), var(--sheet-stack-y, 0px)) scale(0.95);
+  }
+}
+
+::selection {
+  background-color: var(--color-primary-subtle);
+  color: var(--color-primary-subtle-fg);
 }

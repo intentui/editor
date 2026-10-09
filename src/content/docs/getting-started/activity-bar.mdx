@@ -1,0 +1,58 @@
+---
+title: Activity bar
+description: A slim status bar under the content area that holds word count, speech to text, a read-only toggle and the shortcuts dialog.
+---
+
+The activity bar is a thin strip below the content area. It is a container: you decide what goes in it by placing small plugins inside.
+
+<ComponentPreview name="activity-bar-layout" />
+
+## Usage
+
+`ActivityBar` renders a horizontally scrollable row with a top border, a fixed height of `h-10` and `text-xs text-muted-fg` text. Put it after the content area and place plugins inside.
+
+```tsx title="components/editor/editor.tsx"
+import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin"
+import { CountPlugin } from "@/components/editor/plugins/activitybar/count-plugin"
+import { ReadOnlyTogglePlugin } from "@/components/editor/plugins/activitybar/read-only-toggle-plugin"
+import { ShortcutPlugin } from "@/components/editor/plugins/activitybar/shortcut-plugin"
+import { SpeechToTextPlugin } from "@/components/editor/plugins/activitybar/speech-to-text-plugin"
+
+<ActivityBar>
+  <div className="flex items-center gap-3">
+    <CountPlugin />
+  </div>
+  <div className="ms-auto flex items-center gap-3">
+    <SpeechToTextPlugin />
+    <ReadOnlyTogglePlugin />
+    <ShortcutPlugin />
+  </div>
+</ActivityBar>
+```
+
+The inner row uses `justify-between`, so with two groups the first sits at the start and the second at the end. To remove the whole bar, delete the `ActivityBar` block. To remove one feature, delete its line.
+
+## Plugins
+
+| Plugin | What it does | Pattern |
+| --- | --- | --- |
+| `CountPlugin` | Shows live word and character counts. | [Word count](/docs/patterns/word-count) |
+| `SpeechToTextPlugin` | Microphone button that types what you say. | [Speech to text](/docs/patterns/speech-to-text) |
+| `ReadOnlyTogglePlugin` | Lock button that switches between editing and read-only. | [Read only](/docs/patterns/read-only) |
+| `ShortcutPlugin` | Opens a dialog listing keyboard shortcuts. | [Shortcuts](/docs/patterns/shortcuts) |
+
+## Styling
+
+The bar is styled in `activitybar-plugin.tsx`. Change the classes there to adjust height, padding or text color.
+
+- Outer wrapper: `w-full shrink-0 border-t border-border`. It accepts a `className` that is merged over these.
+- Inner row: `flex h-10 w-max min-w-full items-center justify-between gap-3 px-4 text-xs whitespace-nowrap text-muted-fg`.
+
+The row uses `w-max`, so on narrow screens it scrolls horizontally instead of wrapping.
+
+## API
+
+<ApiParameters>
+  <ApiParameter name="children" type="React.ReactNode">The plugins and layout wrappers to render inside the bar.</ApiParameter>
+  <ApiParameter name="className" type="string">Merged into the outer wrapper classes with `twMerge`.</ApiParameter>
+</ApiParameters>

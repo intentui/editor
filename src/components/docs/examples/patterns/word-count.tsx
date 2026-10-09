@@ -1,0 +1,45 @@
+"use client";
+
+import { useMemo } from "react";
+
+import { defineExtension } from "lexical";
+
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
+
+import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin";
+import { CountPlugin } from "@/components/editor/plugins/activitybar/count-plugin";
+import { ContentEditable } from "@/components/editor/plugins/content-editable";
+import { editorTheme } from "@/components/editor/theme";
+
+export function WordCountEditor() {
+  const app = useMemo(
+    () =>
+      defineExtension({
+        name: "@intentui-editor/word-count",
+        namespace: "intentui-editor",
+        dependencies: [RichTextExtension],
+        theme: editorTheme,
+      }),
+    [],
+  );
+
+  return (
+    <LexicalExtensionComposer extension={app} contentEditable={null}>
+      <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-lg border border-border bg-bg">
+        <div className="relative flex min-h-56 min-w-0 flex-1 flex-col overflow-y-auto">
+          <ContentEditable
+            variant="toolbar"
+            className="flex-1"
+            placeholder="Start typing to see the counts below update..."
+          />
+        </div>
+        <ActivityBar>
+          <div className="flex items-center gap-3">
+            <CountPlugin />
+          </div>
+        </ActivityBar>
+      </div>
+    </LexicalExtensionComposer>
+  );
+}

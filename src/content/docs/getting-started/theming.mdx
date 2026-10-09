@@ -1,0 +1,56 @@
+---
+title: Theming
+description: Change the look of the editor with Intent UI tokens and the editor theme.
+---
+
+The editor uses the same design tokens as the rest of Intent UI, so it follows your light and dark theme automatically. There is nothing extra to configure.
+
+## Tokens
+
+These tokens drive most of the editor. Change them in your global CSS and the editor updates.
+
+| Token | Used for |
+| --- | --- |
+| `--bg`, `--fg` | Editor surface and text |
+| `--border`, `--input` | Editor frame, tables, code blocks, dividers |
+| `--muted`, `--muted-fg` | Code blocks, placeholders, quotes, secondary text |
+| `--primary`, `--primary-subtle` | Links, selection, hashtags, checked items, focus rings |
+| `--overlay`, `--overlay-fg` | Menus, popovers, floating toolbars |
+| `--warning-subtle` | Highlights and special text |
+
+## Content styles
+
+How each kind of content looks is defined in `theme.ts` as Tailwind classes. Edit the class strings to restyle an element.
+
+```ts title="components/editor/theme.ts"
+export const editorTheme: EditorThemeClasses = {
+  paragraph: "relative m-0 mb-2 last:mb-0",
+  quote: "relative my-4 border-s-2 ps-6 text-muted-fg italic first:mt-0 last:mb-0",
+  link: "cursor-pointer text-primary underline underline-offset-2 hover:text-primary/80",
+  text: {
+    bold: "font-bold",
+    code: "rounded-sm bg-muted px-1.5 py-0.5 font-mono text-sm",
+  },
+  // ...
+}
+```
+
+Some styles need real CSS, such as code block gutters, collapsible markers and table selection. Those live in `theme.css`, next to `theme.ts`.
+
+### Example: larger headings
+
+Change the `heading.h1` string:
+
+```ts
+heading: {
+  h1: "relative mt-8 mb-4 text-5xl font-bold tracking-tight first:mt-0",
+}
+```
+
+## Dark mode
+
+Dark mode follows the `.dark` class that Intent UI uses, so the editor needs no dark-specific code. Syntax colors in code blocks come from Shiki themes configured in `extensions/code.tsx`.
+
+## Content area spacing
+
+The padding of the writing area is set by the `variant` prop of `ContentEditable`. See [Content area](/docs/getting-started/content-area).

@@ -1,0 +1,77 @@
+---
+title: Markdown shortcuts
+description: Type Markdown syntax and have it turn into formatted blocks and text as you write.
+references:
+  - https://lexical.dev/docs/packages/lexical-markdown
+---
+
+Type Markdown and it converts in place: `# ` becomes a heading, `- ` a list, `**bold**` bold text. There is no toolbar.
+
+<ComponentPreview name="markdown-shortcuts" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Headings and quotes. Every pattern needs it. |
+| `ListExtension` | Bulleted and numbered lists. Without it the list shortcuts do nothing useful. |
+| `CheckListExtension` | Check lists. |
+| `LinkExtension` | Links created with `[text](url)`. |
+| `CodeExtension` | Fenced code blocks created with three backticks. |
+| `HorizontalRuleExtension` | Dividers created with `---`. |
+| `registerMarkdownShortcuts` | Called in `register`. It listens for typing and applies the transformers. Remove it and nothing converts. |
+| `TRANSFORMERS` | The list of syntaxes to recognize. Remove an entry to disable that syntax. |
+
+Each transformer needs the extension that provides its node. If you remove an extension, remove the matching transformer too.
+
+## Shortcuts
+
+Type the syntax, then a space where one is shown.
+
+| Type | Result |
+| --- | --- |
+| `# ` to `###### ` | Heading 1 to 6 |
+| `> ` | Quote |
+| `- `, `* ` or `+ ` | Bulleted list |
+| `1. ` | Numbered list |
+| `[ ] ` or `[x] ` | Unchecked or checked item |
+| `--- `, `*** ` or `___ ` | Divider |
+| Three backticks and a space | Code block |
+| `**text** ` or `__text__ ` | Bold |
+| `*text* ` or `_text_ ` | Italic |
+| `***text*** ` | Bold and italic |
+| `~~text~~ ` | Strikethrough |
+| `==text== ` | Highlight |
+| `` `code` `` | Inline code |
+| `[text](url) ` | Link |
+
+Inline formats convert when you type the closing mark and the character after it.
+
+## Choose the syntaxes
+
+`TRANSFORMERS` is a plain array. Keep only what you need.
+
+```tsx
+const TRANSFORMERS: Transformer[] = [
+  ...ELEMENT_TRANSFORMERS,
+  ...TEXT_FORMAT_TRANSFORMERS,
+];
+```
+
+Drop `HR`, `CHECK_LIST` or the multiline and text match groups together with their extensions.
+
+<Note intent="info">
+  The full editor also registers table, image and emoji transformers. They are not part of this pattern, see [Full editor](/docs/patterns/full-editor).
+</Note>
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu) for a searchable alternative to typing syntax.
+- [Block format](/docs/patterns/block-format) for choosing blocks from a toolbar.
+- [Import and export](/docs/patterns/import-export) to convert whole documents with the same transformers.

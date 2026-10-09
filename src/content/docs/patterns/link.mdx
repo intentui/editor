@@ -1,0 +1,67 @@
+---
+title: Link
+description: A toolbar toggle that adds a link through a floating editor, and removes the link at the cursor.
+references:
+  - https://lexical.dev/docs/concepts/commands
+---
+
+A toolbar button and a popover for adding, previewing, editing and removing links. URLs typed into the editor are linked automatically.
+
+<ComponentPreview name="link" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `FormatStateExtension` | Tells the button whether the selection is in a link, so it shows as pressed. |
+| `LinkExtension` | Adds the link node and validates URLs. Remove it and links cannot be created. |
+| `AutoLinkExtension` | Turns typed or pasted URLs and email addresses into links. Optional. Remove it and only the button creates links. |
+| `LinkToolbarPlugin` | The toggle button. |
+| `LinkEditorPlugin` | The popover. The button asks it to open its input, so without it the button does nothing when no link is selected. Place it inside the `relative` content container. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+## Behavior
+
+- With text selected and no link, the button opens the popover with an empty URL field.
+- Inside a link, the button removes the link and keeps the text.
+- Moving the cursor into a link, or clicking it, opens the popover below the link. It shows the URL, an edit button and a remove button.
+- Edit switches to a URL input. Press <Kbd>Enter</Kbd> or the check button to save, or the cross button to cancel.
+- <Kbd>Ctrl</Kbd> or <Kbd>Cmd</Kbd> and click on a link opens it in a new tab.
+- Saved URLs pass through `sanitizeUrl`. Only `http:`, `https:`, `mailto:`, `sms:` and `tel:` are kept, other protocols become `about:blank`.
+- Editing an automatically detected link turns it into a regular link.
+- The popover does not appear in read-only mode.
+
+There is no keyboard shortcut for inserting a link.
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| <Kbd>Esc</Kbd> | Closes the popover. While editing, cancels the edit first. |
+| <Kbd>Enter</Kbd> | Saves the URL while editing. |
+
+The popover also closes when focus leaves it.
+
+## Styling
+
+Links in the content are styled by the `link` entry in `components/editor/theme.ts`. The popover is the Intent UI `PopoverContent` with a `max-w-md` width, and the URL uses `text-primary-subtle-fg`.
+
+```ts title="components/editor/theme.ts"
+link: "cursor-pointer text-primary underline underline-offset-2 hover:text-primary/80",
+```
+
+URL rules live in `components/editor/extensions/link.ts`.
+
+## Related patterns
+
+- [Floating toolbar](/docs/patterns/floating-toolbar) to put the link button next to the selection.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) to create links by typing `[text](url)`.
+- [Text format](/docs/patterns/text-format) for inline formats.

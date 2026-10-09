@@ -1,0 +1,45 @@
+---
+title: Project structure
+description: What the CLI adds to your project and where each piece lives.
+---
+
+After running `shadcn@latest add @intentui/editor`, everything lives in `src/components/editor/`.
+
+```txt
+src/components/editor/
+├── editor.tsx          # The composed editor you render
+├── editor-md.tsx       # A Markdown-only editor, a subset of editor.tsx
+├── editor-block.tsx    # A block editor built around the slash menu, a subset of editor.tsx
+├── theme.ts            # Tailwind classes for each content element
+├── theme.css           # Styles that need real CSS (code, tables, collapsibles)
+├── dictionaries/       # UI strings
+├── extensions/         # Lexical extensions that register behavior
+├── nodes/              # Custom Lexical nodes (image, layout, emoji, mention, special text)
+├── transformers/       # Markdown shortcuts and Markdown import/export
+└── plugins/
+    ├── content-editable.tsx
+    ├── toolbar/            # Toolbar controls
+    ├── floating/           # Selection toolbar, link editor, table actions
+    ├── component-picker/   # Slash menu items
+    ├── block-insert/       # Insert block menu items
+    ├── activitybar/        # Counts, speech to text, read-only toggle, shortcuts
+    ├── context-menu-plugin.tsx
+    ├── draggable-block-plugin.tsx
+    ├── emoji-picker-plugin.tsx
+    └── mention-plugin.tsx
+```
+
+## Where to look
+
+| I want to change | Look in |
+| --- | --- |
+| Which features are on | `editor.tsx` |
+| How headings, lists, quotes and tables look | `theme.ts`, `theme.css` |
+| A toolbar control | `plugins/toolbar/` |
+| Slash menu items | `plugins/component-picker/` |
+| Floating menus | `plugins/floating/` |
+| UI text | `dictionaries/english.ts` |
+
+## What is Lexical, and what is UI
+
+The `plugins/` folder is the UI layer these docs cover. `extensions/`, `nodes/` and `transformers/` are the Lexical layer: they register behavior and define how content is stored. You rarely need to touch them to change how the editor looks. When you do, the [Lexical docs](https://lexical.dev/docs/intro) explain the concepts.

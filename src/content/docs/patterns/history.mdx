@@ -1,0 +1,47 @@
+---
+title: History
+description: Undo and redo buttons that enable and disable with the editor history.
+references:
+  - https://lexical.dev/docs/packages/lexical-history
+---
+
+Undo and redo buttons for the toolbar. Each one is disabled when there is nothing to undo or redo.
+
+<ComponentPreview name="history" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `HistoryExtension` | Records changes and provides the undo and redo stacks. `HistoryToolbarPlugin` reads `canUndo` and `canRedo` from it, so without it the plugin fails to render. |
+| `HistoryToolbarPlugin` | The undo and redo buttons. It takes no props. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+## Keyboard
+
+The shortcuts come from Lexical's history and work even if you remove the toolbar plugin. They do not need `ShortcutsExtension`.
+
+| Action | Windows and Linux | macOS |
+| --- | --- | --- |
+| Undo | <Kbd>Ctrl</Kbd> <Kbd>Z</Kbd> | <Kbd>Cmd</Kbd> <Kbd>Z</Kbd> |
+| Redo | <Kbd>Ctrl</Kbd> <Kbd>Y</Kbd> | <Kbd>Cmd</Kbd> <Kbd>Shift</Kbd> <Kbd>Z</Kbd> |
+
+## Behavior
+
+- Both buttons are also disabled while the editor is [read only](/docs/patterns/read-only).
+- Typing is grouped into steps by Lexical, so one undo usually removes a burst of typing, not a single character.
+- The history is in memory. It is lost when the editor unmounts.
+
+## Related patterns
+
+- [Clear](/docs/patterns/clear) for emptying the editor, which you can undo.
+- [Speech to text](/docs/patterns/speech-to-text) where saying "undo" or "redo" runs these commands.
+- [Shortcuts](/docs/patterns/shortcuts) for the full keyboard reference.

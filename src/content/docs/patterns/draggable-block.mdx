@@ -1,0 +1,45 @@
+---
+title: Draggable block
+description: A handle beside each block for reordering blocks and starting the slash menu.
+references:
+  - https://lexical.dev/docs/react/plugins
+---
+
+Hover a block to reveal a plus button and a drag grip in the left margin. Drag the grip to move the block. Click the plus to start a slash command.
+
+<ComponentPreview name="draggable-block" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `ContentEditable variant="draggable"` | Adds `px-12` of padding so the handle has room in the left margin. With another variant the handle overlaps the text. |
+| `DraggableBlockPlugin` | The handle, the drop line and the drag logic. It takes no props. |
+| `ComponentPicker` with picker plugins | The plus button types `/`, and the slash menu is what opens. Without a `ComponentPicker` the plus button only inserts a slash character. This demo offers paragraph, heading and quote. |
+
+## Behavior
+
+- Drag the grip to reorder top-level blocks. A thin line shows where the block will land.
+- Click the plus to insert `/` and open the [slash menu](/docs/patterns/slash-menu).
+  - On a text block, the `/` goes at the end of the block, with a space before it if needed.
+  - On other blocks, such as an image, a new paragraph containing `/` is added after the block. Hold <Kbd>Alt</Kbd> or <Kbd>Ctrl</Kbd> while clicking to add it before the block.
+
+Dragging comes from Lexical's experimental draggable block plugin. See [lexical.dev](https://lexical.dev) for how it works.
+
+## Styling
+
+The handle and drop line are plain elements in `plugins/draggable-block-plugin.tsx`. The grip uses `text-muted-fg` with `hover:bg-secondary`, and the drop line uses `bg-primary/50`. The left padding comes from the `draggable` entries in `plugins/content-editable.tsx`.
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu) for the menu the plus button opens.
+- [Content area](/docs/getting-started/content-area) for the `ContentEditable` variants.
+- [Context menu](/docs/patterns/context-menu) for deleting the block under the pointer.

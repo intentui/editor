@@ -1,0 +1,65 @@
+---
+title: Full editor
+description: The complete editor you get from the CLI. Every other pattern is a subset of it.
+---
+
+This is `components/editor/editor.tsx`, exactly as the CLI installs it. Everything the editor can do is wired up here, so it is the best place to see how the pieces fit together.
+
+<ComponentPreview name="full-editor" />
+
+## Installation
+
+Install the editor, then render `DemoEditor`, or rename it and use it as the starting point for your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+### Extensions
+
+The `dependencies` list in `defineExtension` decides which behaviors the editor has.
+
+| Extension | Behavior | Pattern |
+| --- | --- | --- |
+| `RichTextExtension` | Rich text editing. Required. | |
+| `HistoryExtension` | Undo and redo. | [History](/docs/patterns/history) |
+| `TabIndentationExtension` | Indent with <Kbd>Tab</Kbd>. | [Alignment and indent](/docs/patterns/alignment-and-indent) |
+| `ListExtension`, `CheckListExtension` | Bulleted, numbered and check lists. | [Block format](/docs/patterns/block-format) |
+| `HashtagExtension`, `SpecialTextExtension` | Highlights hashtags and special words. | [Special text](/docs/patterns/special-text) |
+| `LinkExtension`, `AutoLinkExtension` | Links and automatic link detection. | [Link](/docs/patterns/link) |
+| `CodeExtension` | Code blocks with syntax highlighting. | [Code block](/docs/patterns/code-block) |
+| `LayoutExtension` | Columns. | [Columns](/docs/patterns/columns) |
+| `EmojiExtension` | Emoji nodes. | [Emoji](/docs/patterns/emoji) |
+| `TableExtension` | Tables. | [Table](/docs/patterns/table) |
+| `HorizontalRuleExtension` | Dividers. | [Divider](/docs/patterns/divider) |
+| `ImageExtension`, `DragDropPasteExtension` | Images, including drag, drop and paste. | [Image](/docs/patterns/image) |
+| `MentionExtension` | Mention nodes. | [Mention](/docs/patterns/mention) |
+| `AutocompleteExtension` | Inline suggestions. | [Autocomplete](/docs/patterns/autocomplete) |
+| `TabFocusExtension` | Tab focus behavior. | [Tab focus](/docs/patterns/tab-focus) |
+| `SpeechToTextExtension` | Dictation. | [Speech to text](/docs/patterns/speech-to-text) |
+| `ShortcutsExtension` | Keyboard shortcuts. | [Shortcuts](/docs/patterns/shortcuts) |
+| `FormatStateExtension` | Tracks the current format so controls reflect it. | [Text format](/docs/patterns/text-format) |
+| `ClearEditorExtension` | Clears the document. | [Clear](/docs/patterns/clear) |
+| `ClipboardDOMImportExtension` | Cleaner pasting of HTML. | |
+| `AutoFocusExtension` | Focuses the editor on mount. | |
+
+Markdown typing shortcuts are registered with `registerMarkdownShortcuts` in `register`, using the `EDITOR_TRANSFORMERS` list. See [Markdown shortcuts](/docs/patterns/markdown-shortcuts).
+
+### Regions
+
+| Region | In the file | Details |
+| --- | --- | --- |
+| Toolbar | `<Toolbar>` with the toolbar plugins | [Toolbar](/docs/getting-started/toolbar) |
+| Content area | `<ContentEditable variant="draggable" />` | [Content area](/docs/getting-started/content-area) |
+| Overlays | Drag handle, floating toolbar, link editor, table actions, emoji picker, mentions, context menu, slash menu | [Floating toolbar](/docs/patterns/floating-toolbar), [Slash menu](/docs/patterns/slash-menu) |
+| Activity bar | `<ActivityBar>` with count, speech to text, read-only toggle and shortcuts | [Activity bar](/docs/getting-started/activity-bar) |
+
+## Make it smaller
+
+For an editor limited to what Markdown can express, see the [Markdown editor](/docs/patterns/markdown-editor), which ships as `editor-md.tsx`. For an editor built around the slash menu, see the [Block editor](/docs/patterns/block-editor), which ships as `editor-block.tsx`.
+
+Delete what you do not need. Each pattern shows which extensions and plugins belong together, so you can remove a feature completely: its extension, its imports and its JSX.
+
+## Related patterns
+
+Start with [Text format](/docs/patterns/text-format), [Slash menu](/docs/patterns/slash-menu) and [Table](/docs/patterns/table).

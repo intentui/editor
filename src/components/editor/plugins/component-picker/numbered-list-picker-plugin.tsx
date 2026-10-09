@@ -20,6 +20,8 @@ export function NumberedListPickerPlugin() {
       {
         value: "numbered-list",
         label: "Numbered list",
+        group: "Basic blocks",
+        description: "Create a list with numbering.",
         icon: <NumberedListIcon className="text-muted-fg" />,
         keywords: ["numbered list", "ordered list", "ol"],
         onSelect: () => {

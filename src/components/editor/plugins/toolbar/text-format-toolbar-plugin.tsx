@@ -124,8 +124,21 @@ function FormatToggleGroup({ items }: { items: (typeof FORMAT_GROUPS)[number] })
   );
 }
 
-export function TextFormatToolbarPlugin({ formats = "all" }: { formats?: "basic" | "all" }) {
-  const groups = formats === "basic" ? FORMAT_GROUPS.slice(0, 1) : FORMAT_GROUPS;
+// The formats Markdown can write: **bold**, *italic*, ~~strikethrough~~ and `code`.
+const MARKDOWN_FORMATS: TextFormatType[] = ["bold", "italic", "strikethrough", "code"];
+const MARKDOWN_GROUP = FORMAT_GROUPS.flat().filter(({ format }) => MARKDOWN_FORMATS.includes(format));
+
+export function TextFormatToolbarPlugin({
+  formats = "all",
+}: {
+  formats?: "basic" | "markdown" | "all";
+}) {
+  const groups =
+    formats === "basic"
+      ? FORMAT_GROUPS.slice(0, 1)
+      : formats === "markdown"
+        ? [MARKDOWN_GROUP]
+        : FORMAT_GROUPS;
   return (
     <>
       {groups.map((items, groupIndex) => (

@@ -1,0 +1,56 @@
+---
+title: Divider
+description: A horizontal rule that separates sections of content.
+---
+
+A divider is a full-width horizontal line. Click it to select it, then press <Kbd>Backspace</Kbd> or <Kbd>Delete</Kbd> to remove it.
+
+<ComponentPreview name="divider" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `HorizontalRuleExtension` | Registers the divider node and `INSERT_HORIZONTAL_RULE_COMMAND`. Remove it and the button and slash menu do nothing. |
+| `registerMarkdownShortcuts(editor, [HR])` | Turns `---`, `***` or `___` into a divider. Without it only the button and slash menu insert dividers. |
+| `InsertHorizontalRulePlugin` | The toolbar button. |
+| `DividerPickerPlugin` | The "Insert divider" slash menu item. |
+| `ComponentPicker`, `BlockInsert`, `Toolbar` | Containers for the slash menu and the button. |
+
+## Inserting a divider
+
+| Method | How |
+| --- | --- |
+| Toolbar | The "Insert divider" button. |
+| Slash menu | Type `/` and choose "Insert divider" (keywords: horizontal rule, divider, hr, separator). |
+| Markdown | On an empty line type `---`, `***` or `___`, then <Kbd>Space</Kbd> or <Kbd>Enter</Kbd>. |
+
+Dividers export to Markdown as `***`.
+
+## Styling
+
+The divider renders as a plain `hr`. `theme.ts` has no `hr` key by default, so it uses the base styles for `hr`. To style it, add keys to the theme:
+
+```ts title="components/editor/theme.ts"
+export const editorTheme: EditorThemeClasses = {
+  // ...
+  hr: "my-6 border-t border-border",
+  hrSelected: "outline-2 outline-offset-2 outline-primary",
+};
+```
+
+`hr` is applied to every divider. `hrSelected` is added while a divider is selected.
+
+## Related patterns
+
+- [Columns](/docs/patterns/columns) for side-by-side content.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) for the other things you can type.
+- [Slash menu](/docs/patterns/slash-menu) for the menu that lists "Insert divider".

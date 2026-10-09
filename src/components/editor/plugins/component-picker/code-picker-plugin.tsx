@@ -18,6 +18,8 @@ export function CodePickerPlugin() {
       {
         value: "code-block",
         label: "Insert code block",
+        group: "Advanced",
+        description: "Capture a code snippet.",
         icon: <CodeBracketIcon className="text-muted-fg" />,
         keywords: ["code", "codeblock", "javascript", "python", "js"],
         onSelect: () => insertCodeBlock(editor),

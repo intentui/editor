@@ -1,0 +1,144 @@
+---
+title: Markdown editor
+description: An editor limited to what Markdown can express, in the toolbar, the floating toolbar and the slash menu.
+references:
+  - https://lexical.dev/docs/packages/lexical-markdown
+---
+
+The full editor can store things Markdown cannot: underline, colors, fonts, alignment, columns. This editor leaves them out. The toolbar, the floating toolbar and the slash menu only offer what Markdown can write, so what you see is what a Markdown export keeps.
+
+<ComponentPreview name="markdown-editor" />
+
+## Installation
+
+This editor is `components/editor/editor-md.tsx`. It is installed with `@intentui/editor`, next to `editor.tsx`. Render `DemoMarkdownEditor`, or copy the file and rename it.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+```tsx title="app/page.tsx"
+import { DemoMarkdownEditor } from "@/components/editor/editor-md"
+
+export default function Page() {
+  return <DemoMarkdownEditor />
+}
+```
+
+## What's included
+
+### Extensions
+
+| Extension | Behavior |
+| --- | --- |
+| `RichTextExtension` | Rich text editing. Required. |
+| `HistoryExtension` | Undo and redo. |
+| `TabIndentationExtension` | Indent and outdent list items with <Kbd>Tab</Kbd>. |
+| `ListExtension`, `CheckListExtension` | Bulleted, numbered and check lists. |
+| `LinkExtension`, `AutoLinkExtension` | Links and automatic link detection. |
+| `CodeExtension` | Code blocks with syntax highlighting. |
+| `TableExtension` | Tables. |
+| `HorizontalRuleExtension` | Dividers. |
+| `ImageExtension`, `DragDropPasteExtension` | Images, including drag, drop and paste. |
+| `FormatStateExtension` | Lets the toolbar show which formats are active. |
+| `ClearEditorExtension` | The clear editor button. |
+| `ClipboardDOMImportExtension` | Cleaner pasting of HTML. |
+
+### Toolbar, floating toolbar and slash menu
+
+| Region | Contents |
+| --- | --- |
+| Toolbar | Undo and redo, block type, bold, italic, strikethrough, inline code, link, insert menu, clear, import and export. |
+| Floating toolbar | Bold, italic, strikethrough, inline code and link. |
+| Slash menu | Paragraph, headings 1 to 3, table, numbered list, bulleted list, check list, quote, code block, divider and image. |
+| Insert menu | Code block, divider, image and table. |
+| Activity bar | Word and character counts and the read-only toggle. |
+
+Everything else is the same as in the [full editor](/docs/patterns/full-editor): the same plugins, the same composition.
+
+## Compared with the full editor
+
+These are left out because Markdown has no syntax for them.
+
+| Left out | Where it was |
+| --- | --- |
+| Underline, highlight, subscript, superscript, uppercase, lowercase, title case | Toolbar and floating toolbar |
+| Font family, font size, text and highlight color | Toolbar |
+| Alignment, indent and outdent buttons | Toolbar |
+| Columns | Insert menu and slash menu |
+| Emoji, mentions, hashtags and special text | Insert menu, pickers and extensions |
+| Speech to text, the shortcuts dialog and `ShortcutsExtension` | Activity bar and extensions |
+| Autocomplete and tab focus | Extensions |
+| Context menu | Content area |
+
+## Text formats
+
+`TextFormatToolbarPlugin` has a `markdown` option for this editor. It renders only the formats Markdown can write, in one group.
+
+```tsx
+<TextFormatToolbarPlugin formats="markdown" />
+```
+
+The floating toolbar uses the same option, so both show the same four buttons.
+
+### Formats Markdown cannot write
+
+Buttons are not the only way to apply a format. <Kbd>Ctrl</Kbd> <Kbd>U</Kbd> underlines text in any Lexical editor, and the underline would then disappear from the Markdown export. The editor refuses those formats from every source with a small command handler:
+
+```tsx title="components/editor/editor-md.tsx"
+const MARKDOWN_TEXT_FORMATS: TextFormatType[] = ["bold", "italic", "strikethrough", "code"]
+
+register: (editor) =>
+  mergeRegister(
+    registerMarkdownShortcuts(editor, MARKDOWN_TRANSFORMERS),
+    editor.registerCommand(
+      FORMAT_TEXT_COMMAND,
+      (format) => !MARKDOWN_TEXT_FORMATS.includes(format),
+      COMMAND_PRIORITY_HIGH,
+    ),
+  ),
+```
+
+Returning `true` marks the command as handled, so it stops there. Remove the handler if you want the keyboard to stay unrestricted.
+
+## Markdown shortcuts
+
+Typing Markdown converts it as you go. `MARKDOWN_TRANSFORMERS` is the stock Lexical list plus the editor's table, divider, image and check list transformers, without highlight.
+
+| Type | Result |
+| --- | --- |
+| `# ` | Heading 1. `##` and `###` give headings 2 and 3. |
+| `**text**` | Bold |
+| `*text*` | Italic |
+| `~~text~~` | Strikethrough |
+| `` `text` `` | Inline code |
+| `> ` | Quote |
+| `1. ` | Numbered list |
+| `- ` | Bulleted list |
+| `[ ] ` on its own line | Check list |
+| `--- ` | Divider |
+| ```` ```js ```` then space | Code block |
+
+<Note intent="info">
+  `==text==` stays plain text. Highlight is not in the Markdown transformers, so it does not convert. In a bulleted list item, typing `[ ] ` does not turn the item into a check item. Start the line with `[ ] ` instead.
+</Note>
+
+## Import and export
+
+`ImportExportToolbarPlugin` receives `MARKDOWN_TRANSFORMERS`, so **Export as, Markdown** downloads a `.md` file that includes tables, images and dividers. The menu also offers Lexical JSON and HTML.
+
+<Note intent="warning">
+  **Import file** uses Lexical's importer, which reads `.lexical` files only. It does not read Markdown files. To start from Markdown text, convert it with `$convertFromMarkdownString` from `@lexical/markdown`, see the [Lexical Markdown docs](https://lexical.dev/docs/packages/lexical-markdown).
+</Note>
+
+## API
+
+<ApiParameters>
+  <ApiDescription>The new option on `TextFormatToolbarPlugin`.</ApiDescription>
+  <ApiParameter name="formats" type="&quot;basic&quot; | &quot;markdown&quot; | &quot;all&quot;" defaultValue="&quot;all&quot;">`markdown` renders bold, italic, strikethrough and inline code in one group.</ApiParameter>
+</ApiParameters>
+
+## Related patterns
+
+- [Full editor](/docs/patterns/full-editor)
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts)
+- [Text format](/docs/patterns/text-format)
+- [Slash menu](/docs/patterns/slash-menu)

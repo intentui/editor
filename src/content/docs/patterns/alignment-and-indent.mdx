@@ -1,0 +1,85 @@
+---
+title: Alignment and indent
+description: Align blocks left, center, right or justified, and indent or outdent them.
+references:
+  - https://lexical.dev/docs/concepts/commands
+---
+
+Two toolbar groups for block layout: alignment toggles and indent buttons.
+
+<ComponentPreview name="alignment-and-indent" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Handles the align and indent commands. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `FormatStateExtension` | Tracks the alignment and indent level of the current block. Remove it and the buttons throw, because they read from it. |
+| `TabIndentationExtension` | Indents with the <Kbd>Tab</Kbd> key. Remove it and <Kbd>Tab</Kbd> moves focus out of the editor. |
+| `ShortcutsExtension` | Registers the keyboard shortcuts below. Remove it and the buttons still work, but the shortcuts do not. |
+| `ElementFormatToolbarPlugin` | The alignment toggles. |
+| `IndentToolbarPlugin` | The indent and outdent buttons. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+You can use either plugin on its own. Keep `FormatStateExtension` in both cases.
+
+## Alignment
+
+The buttons are toggles, and the one matching the current block is pressed. Blocks without an explicit alignment show as left.
+
+| Button | Shortcut |
+| --- | --- |
+| Align left | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>L</Kbd> |
+| Align center | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>E</Kbd> |
+| Align right | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>R</Kbd> |
+| Justify | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>J</Kbd> |
+| Align start, Align end | None |
+
+Use <Kbd>Cmd</Kbd> instead of <Kbd>Ctrl</Kbd> on macOS.
+
+### Basic alignment only
+
+Set `formats="basic"` to render only left, center, right and justify. The default adds start and end, which follow the text direction.
+
+```tsx
+<ElementFormatToolbarPlugin formats="basic" />
+```
+
+## Indent
+
+Outdent is disabled when the current block has no indentation. The icons flip in right-to-left layouts.
+
+| Action | Shortcut |
+| --- | --- |
+| Indent | <Kbd>Ctrl</Kbd> <Kbd>]</Kbd> or <Kbd>Tab</Kbd> |
+| Outdent | <Kbd>Ctrl</Kbd> <Kbd>[</Kbd> |
+
+## Styling
+
+The indent step is a CSS variable in `components/editor/theme.css`.
+
+```css title="components/editor/theme.css"
+.editor-indent {
+  --lexical-indent-base-value: 32px;
+}
+```
+
+## API
+
+<ApiParameters>
+  <ApiDescription>Props of `ElementFormatToolbarPlugin`. `IndentToolbarPlugin` takes no props.</ApiDescription>
+  <ApiParameter name="formats" type="&quot;basic&quot; | &quot;all&quot;" defaultValue="&quot;all&quot;">`basic` renders left, center, right and justify. `all` adds start and end.</ApiParameter>
+</ApiParameters>
+
+## Related patterns
+
+- [Block format](/docs/patterns/block-format) to change the block type.
+- [Text format](/docs/patterns/text-format) for inline formats.
+- [Floating toolbar](/docs/patterns/floating-toolbar) to show controls next to the selection.

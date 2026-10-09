@@ -1,0 +1,59 @@
+---
+title: Columns
+description: Place content side by side in a layout of one, two or three columns.
+---
+
+A columns block is a CSS grid of equal-width cells. Each cell is an editable area that can hold paragraphs, lists and other blocks.
+
+<ComponentPreview name="columns" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `LayoutExtension` | Registers the container and cell nodes, `INSERT_LAYOUT_COMMAND`, cleanup of invalid structures and the arrow-key escape. Remove it and the buttons do nothing. |
+| `InsertColumnsPlugin` | The toolbar menu with "1 column", "2 columns" and "3 columns". |
+| `ColumnsPickerPlugin` | The same three choices in the slash menu. |
+| `ComponentPicker`, `BlockInsert`, `Toolbar` | Containers for the slash menu and the button. |
+
+## Inserting columns
+
+| Method | How |
+| --- | --- |
+| Toolbar | The "Columns" button opens a menu with the three layouts. |
+| Slash menu | Type `/` and choose "1 column", "2 columns" or "3 columns" (keywords: columns, layout, grid). |
+
+There is no Markdown shortcut. The block is inserted at the nearest top-level position and the cursor lands in the first cell.
+
+## Behavior
+
+- The column count is fixed when inserted. There are no controls to add, remove or resize columns afterwards.
+- The layout is stored as a grid template (`1fr`, `1fr 1fr` or `1fr 1fr 1fr`) in the block's inline `grid-template-columns` style.
+- If the block is the first or last block in the document, pressing an arrow key at the edge of the first or last cell adds a paragraph so you can move out.
+
+To offer other layouts such as `2fr 1fr`, add entries to `COLUMN_OPTIONS` in `insert-columns-plugin.tsx` and `COLUMN_ITEMS` in `columns-picker-plugin.tsx`. Any value works as long as its space-separated count matches the cells you want.
+
+## Styling
+
+`theme.ts`:
+
+| Key | Default |
+| --- | --- |
+| `layoutContainer` | `editor-layout-container my-3 grid gap-4` |
+| `layoutItem` | `min-w-0 rounded-md border border-dashed border-border p-2` |
+
+The dashed border makes the layout visible while editing. Remove `border border-dashed border-border` from `layoutItem` for invisible columns, or change `gap-4` to adjust spacing. The grid keeps its columns on small screens. To stack them, add a class such as `max-sm:grid-cols-1!` to `layoutContainer`.
+
+## Related patterns
+
+- [Slash menu](/docs/patterns/slash-menu) for the menu that lists the layouts.
+- [Insert block menu](/docs/patterns/insert-block-menu) for the toolbar group.
+- [Divider](/docs/patterns/divider) for a simpler way to separate content.

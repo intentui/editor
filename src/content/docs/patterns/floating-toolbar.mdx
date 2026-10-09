@@ -1,0 +1,67 @@
+---
+title: Floating toolbar
+description: A small toolbar that appears above selected text.
+references:
+  - https://react-spectrum.adobe.com/react-aria/Popover.html
+---
+
+A toolbar that shows up above the selection and hides when the selection collapses. It holds whatever toolbar plugins you pass as children.
+
+<ComponentPreview name="floating-toolbar" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `FormatStateExtension` | Tracks which formats are active, so buttons show as pressed. |
+| `ShortcutsExtension` | Registers the text format shortcuts. Remove it and the buttons still work, but the shortcuts do not. |
+| `LinkExtension` | Required by the link button. |
+| `AutoLinkExtension` | Turns typed URLs into links. Optional. |
+| `FloatingToolbarPlugin` | The popup. Place it inside the `relative` content container. |
+| `TextFormatToolbarPlugin` | The format buttons shown in the popup. |
+| `LinkToolbarPlugin` | The link button shown in the popup. |
+| `LinkEditorPlugin` | Opens when the link button needs a URL. Without it the link button does nothing. Remove the link button and this plugin together. |
+
+## Behavior
+
+- It opens only when the selection is non-collapsed, contains text and is inside the editor.
+- It is placed above the start of the selection and follows it on scroll and resize.
+- It does not render when the editor is read-only.
+- While you drag the selection or drag content, it ignores pointer events or hides, so it stays out of the way.
+
+## Choose the controls
+
+The children define what appears. Use any toolbar plugin. For text formats only:
+
+```tsx
+<FloatingToolbarPlugin>
+  <TextFormatToolbarPlugin formats="basic" />
+</FloatingToolbarPlugin>
+```
+
+Plugins that need an extension, like the link button, bring the same requirements they have in a regular [toolbar](/docs/getting-started/toolbar).
+
+## Styling
+
+The popup is the Intent UI `PopoverContent`, so it uses the `bg-overlay` and `text-overlay-fg` tokens, with a maximum width of `min(36rem, 100vw - 2rem)`. The inner toolbar wraps its items. Edit `floating-toolbar-plugin.tsx` to change the placement or offset, which are `top start` and `8`.
+
+## API
+
+<ApiParameters>
+  <ApiDescription>Props of `FloatingToolbarPlugin`.</ApiDescription>
+  <ApiParameter name="children" type="React.ReactNode">The toolbar plugins to render inside the popup.</ApiParameter>
+</ApiParameters>
+
+## Related patterns
+
+- [Text format](/docs/patterns/text-format) for the formats shown here.
+- [Link](/docs/patterns/link) for the link button and editor.
+- [Context menu](/docs/patterns/context-menu) for actions on right click.

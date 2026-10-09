@@ -16,6 +16,8 @@ export function ImagePickerPlugin() {
       {
         value: "image",
         label: "Insert image",
+        group: "Media",
+        description: "Upload an image from your device.",
         icon: <PhotoIcon className="text-muted-fg" />,
         keywords: ["image", "photo", "picture", "file", "img"],
         onSelect: pick,

@@ -1,0 +1,137 @@
+---
+title: Shortcuts
+description: A dialog that lists the editor's keyboard shortcuts, plus a complete reference of shortcuts and Markdown typing shortcuts.
+---
+
+A command-line icon button in the activity bar. It opens a dialog that groups the shortcuts by History, Formatting, Blocks and Lists, with key labels for the visitor's platform.
+
+<ComponentPreview name="shortcuts" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `ShortcutsExtension` | Binds the keys and runs the actions. Remove it and the dialog still opens, but the custom shortcuts below stop working. |
+| `HistoryExtension` | Undo and redo. |
+| `ListExtension`, `CheckListExtension` | The numbered, bulleted and check list shortcuts. |
+| `CodeExtension` | The code block shortcut. |
+| `TabIndentationExtension` | Makes <Kbd>Tab</Kbd> indent. |
+| `ShortcutPlugin` | The button and dialog. It takes no props. |
+| `ActivityBar` | The strip that holds the button. See [Activity bar](/docs/getting-started/activity-bar). |
+
+Removing `ShortcutPlugin` only removes the dialog. The shortcuts keep working. The dialog lists every shortcut the pattern registers, so if you drop an extension such as `ListExtension`, remove its rows from `SHORTCUT_GROUPS` too.
+
+## Customizing
+
+Bindings live in the `SHORTCUT_BINDINGS` object in `extensions/shortcuts.ts`, each as a `key` plus modifiers. Change a binding there and both the shortcut and the dialog label update. The dialog rows come from the `SHORTCUT_GROUPS` array in `shortcut-plugin.tsx`.
+
+## Shortcut reference
+
+Use <Kbd>Cmd</Kbd> instead of <Kbd>Ctrl</Kbd> and <Kbd>Option</Kbd> instead of <Kbd>Alt</Kbd> on macOS, except where noted.
+
+### History and text
+
+| Action | Shortcut |
+| --- | --- |
+| Undo | <Kbd>Ctrl</Kbd> <Kbd>Z</Kbd> |
+| Redo | <Kbd>Ctrl</Kbd> <Kbd>Y</Kbd>, or <Kbd>Cmd</Kbd> <Kbd>Shift</Kbd> <Kbd>Z</Kbd> on macOS |
+| Bold | <Kbd>Ctrl</Kbd> <Kbd>B</Kbd> |
+| Italic | <Kbd>Ctrl</Kbd> <Kbd>I</Kbd> |
+| Underline | <Kbd>Ctrl</Kbd> <Kbd>U</Kbd> |
+| Strikethrough | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>X</Kbd> |
+| Inline code | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>C</Kbd> |
+| Subscript | <Kbd>Ctrl</Kbd> <Kbd>,</Kbd> |
+| Superscript | <Kbd>Ctrl</Kbd> <Kbd>.</Kbd> |
+| Lowercase | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>1</Kbd> |
+| Uppercase | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>2</Kbd> |
+| Title case | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>3</Kbd> |
+| Clear formatting | <Kbd>Ctrl</Kbd> <Kbd>{"\\"}</Kbd> |
+
+Lowercase, uppercase and title case use <Kbd>Ctrl</Kbd> on every platform, including macOS. Highlight has no shortcut.
+
+### Alignment and indent
+
+| Action | Shortcut |
+| --- | --- |
+| Align left | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>L</Kbd> |
+| Align center | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>E</Kbd> |
+| Align right | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>R</Kbd> |
+| Justify | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>J</Kbd> |
+| Indent | <Kbd>Ctrl</Kbd> <Kbd>]</Kbd> |
+| Outdent | <Kbd>Ctrl</Kbd> <Kbd>[</Kbd> |
+
+### Blocks and lists
+
+| Action | Shortcut |
+| --- | --- |
+| Paragraph | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>0</Kbd> |
+| Heading 1 | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>1</Kbd> |
+| Heading 2 | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>2</Kbd> |
+| Heading 3 | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>3</Kbd> |
+| Quote | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>Q</Kbd> |
+| Code block | <Kbd>Ctrl</Kbd> <Kbd>Alt</Kbd> <Kbd>C</Kbd> |
+| Numbered list | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>7</Kbd> |
+| Bulleted list | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>8</Kbd> |
+| Check list | <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>9</Kbd> |
+
+Quote is <Kbd>Ctrl</Kbd> <Kbd>Shift</Kbd> <Kbd>Q</Kbd> on every platform, including macOS. A heading or quote shortcut on a block that already has that type does nothing. A list shortcut on a block that is already that list turns it back into a paragraph.
+
+### Other keys
+
+| Key | What it does |
+| --- | --- |
+| <Kbd>Tab</Kbd> | Indents. Inside a code block it inserts a 2-space indent. |
+| <Kbd>Arrow</Kbd> | At the start or end of a code block or columns block that is the first or last block, an arrow key creates a paragraph so you can move out. |
+| <Kbd>Tab</Kbd> or <Kbd>Right</Kbd> | Accepts the [autocomplete](/docs/patterns/autocomplete) suggestion when one is shown. |
+| <Kbd>Esc</Kbd> | Closes the link editor. |
+
+## Markdown shortcuts
+
+Type these at the start of a line, then a space, to convert the block. They come from the transformers registered in `editor.tsx`, so they only work in editors that call `registerMarkdownShortcuts`. See [Markdown shortcuts](/docs/patterns/markdown-shortcuts). The pattern above does not register them.
+
+| Type | Result |
+| --- | --- |
+| `# ` to `###### ` | Heading 1 to 6 |
+| `> ` | Quote |
+| `- `, `* ` or `+ ` | Bulleted list |
+| `1. ` | Numbered list |
+| `[ ] ` or `- [ ] ` | Check list (`[x] ` for a checked item) |
+| ```` ```js ```` then space | [Code block](/docs/patterns/code-block), language optional |
+| `---`, `***` or `___` | [Divider](/docs/patterns/divider) |
+| `\| a \| b \|` | [Table](/docs/patterns/table) row |
+| `![alt](url)` | [Image](/docs/patterns/image), converted when you type the closing `)` |
+| `:name:` | [Emoji](/docs/patterns/emoji), for example `:smile:` |
+
+Inline formatting converts when you type the closing marker:
+
+| Type | Result |
+| --- | --- |
+| `**text**` or `__text__` | Bold |
+| `*text*` or `_text_` | Italic |
+| `***text***` or `___text___` | Bold and italic |
+| `~~text~~` | Strikethrough |
+| `==text==` | Highlight |
+| `` `text` `` | Inline code |
+| `[text](url)` | Link |
+
+### Menu triggers
+
+| Type | Opens |
+| --- | --- |
+| `/` | [Slash menu](/docs/patterns/slash-menu) |
+| `:` | [Emoji picker](/docs/patterns/emoji) |
+| `@` | [Mention](/docs/patterns/mention) |
+
+## Related patterns
+
+- [Text format](/docs/patterns/text-format), [Block format](/docs/patterns/block-format) and [Alignment and indent](/docs/patterns/alignment-and-indent) for the buttons behind these shortcuts.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) for the typing shortcuts.
+- [History](/docs/patterns/history) for undo and redo.

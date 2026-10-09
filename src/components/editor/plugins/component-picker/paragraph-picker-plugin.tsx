@@ -20,6 +20,8 @@ export function ParagraphPickerPlugin() {
       {
         value: "paragraph",
         label: "Paragraph",
+        group: "Basic blocks",
+        description: "Just start writing with plain text.",
         icon: <Bars3BottomLeftIcon className="text-muted-fg" />,
         keywords: ["normal", "paragraph", "p", "text"],
         onSelect: () =>

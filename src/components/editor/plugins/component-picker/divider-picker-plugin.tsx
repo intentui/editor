@@ -20,6 +20,8 @@ export function DividerPickerPlugin() {
       {
         value: "divider",
         label: "Insert divider",
+        group: "Basic blocks",
+        description: "Visually divide blocks.",
         icon: <MinusIcon className="text-muted-fg" />,
         keywords: ["horizontal rule", "divider", "hr", "separator"],
         onSelect: () => {

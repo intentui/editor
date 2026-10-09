@@ -1,0 +1,47 @@
+---
+title: Speech to text
+description: A microphone button that types spoken words into the editor using the browser's speech recognition.
+references:
+  - https://developer.mozilla.org/docs/Web/API/SpeechRecognition
+---
+
+A microphone button in the activity bar. While it is on, the editor inserts what you say at the cursor.
+
+<ComponentPreview name="speech-to-text" />
+
+<Note intent="warning">
+  Speech recognition uses the browser's `SpeechRecognition` or `webkitSpeechRecognition` API. Browsers without it render the button disabled. Browsers that support it ask for microphone permission and may send audio to a remote service.
+</Note>
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `SpeechToTextExtension` | Runs recognition and inserts the transcript. Remove it and the button toggles but nothing is typed. |
+| `HistoryExtension` | Lets the spoken commands "undo" and "redo" work. Without it they do nothing. |
+| `SpeechToTextPlugin` | The microphone button. It takes no props. |
+| `ActivityBar` | The strip that holds the button. See [Activity bar](/docs/getting-started/activity-bar). |
+
+## Behavior
+
+- Click the microphone to start and click again to stop. While listening, the button is red and has `aria-pressed`.
+- Recognition is continuous. Only final results are inserted, at the current selection.
+- Recognition stops by itself when the browser ends the session, and the button resets.
+- Saying "undo" or "redo" on its own runs undo or redo instead of typing the word. A transcript with a line break starts a new paragraph.
+- The language is `en-US`. If the editor sits inside an element with a `lang` of `ar` or `he`, it uses `ar-SA` or `he-IL`.
+
+## Styling
+
+The listening color comes from `text-danger hover:text-danger` in `speech-to-text-plugin.tsx`. The icon is the Heroicons `MicrophoneIcon`.
+
+## Related patterns
+
+- [History](/docs/patterns/history) for the undo and redo the voice commands use.
+- [Word count](/docs/patterns/word-count) and [Read only](/docs/patterns/read-only) for other activity bar controls.

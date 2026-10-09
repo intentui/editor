@@ -1,0 +1,42 @@
+---
+title: Installation
+description: Add the editor to your project with the shadcn CLI.
+references:
+  - https://intentui.com/docs/getting-started/installation
+---
+
+## Requirements
+
+- React 19 and a framework that supports client components, such as Next.js.
+- Tailwind CSS v4.
+- The Intent UI theme tokens. If you are starting from scratch, follow the [Intent UI installation guide](https://intentui.com/docs/getting-started/installation) or initialize the theme first:
+
+<PackageCommand exec="shadcn@latest init @intentui/theme-default" />
+
+## Add the registry
+
+The editor is published in the Intent UI registry. Make sure `components.json` has the `@intentui` registry. If you already use Intent UI, it is there.
+
+```json title="components.json"
+{
+  "registries": {
+    "@intentui": "https://intentui.com/r/{name}"
+  }
+}
+```
+
+## Installation
+
+Add the editor with one command:
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+This creates the `src/components/editor/` folder (see [Project structure](/docs/getting-started/project-structure)) and adds the Intent UI components it is built from, such as `button`, `toolbar`, `tooltip`, `popover`, `menu`, `combo-box` and the color pickers.
+
+<Note intent="info">
+  Use the `-o` flag to overwrite files that already exist, for example when updating: `shadcn@latest add @intentui/editor -o`.
+</Note>
+
+## Next steps
+
+Render your first editor in [Quick start](/docs/getting-started/quick-start).

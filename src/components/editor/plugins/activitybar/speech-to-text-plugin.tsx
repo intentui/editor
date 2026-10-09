@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { COMMAND_PRIORITY_LOW } from "lexical";
 
@@ -48,8 +48,18 @@ function SpeechToTextButton() {
   );
 }
 
+const subscribe = () => () => {};
+
 export function SpeechToTextPlugin() {
-  if (SUPPORT_SPEECH_RECOGNITION) {
+  // The server cannot know whether the browser supports speech recognition, so it
+  // renders the disabled button. The client switches over right after hydrating.
+  const isSupported = useSyncExternalStore(
+    subscribe,
+    () => SUPPORT_SPEECH_RECOGNITION,
+    () => false,
+  );
+
+  if (isSupported) {
     return <SpeechToTextButton />;
   }
 

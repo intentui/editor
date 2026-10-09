@@ -20,6 +20,8 @@ export function CheckListPickerPlugin() {
       {
         value: "check-list",
         label: "Check list",
+        group: "Basic blocks",
+        description: "Track tasks with a to-do list.",
         icon: <CheckCircleIcon className="text-muted-fg" />,
         keywords: ["check list", "todo list", "checkbox"],
         onSelect: () => {

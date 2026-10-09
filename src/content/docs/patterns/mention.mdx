@@ -1,0 +1,57 @@
+---
+title: Mention
+description: Type @ and pick a name from a menu to insert a mention.
+references:
+  - https://lexical.dev/docs/react/plugins
+---
+
+Type `@` followed by a name to open a suggestion menu. Choosing a name inserts a highlighted mention.
+
+<ComponentPreview name="mention" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `MentionExtension` | Registers `MentionNode`. Remove it and picking a name throws, because the node is unknown to the editor. |
+| `MentionPlugin` | The `@` trigger, the suggestion menu and the insert. It renders inside the content area wrapper so the menu is positioned against the text. |
+
+## Using mentions
+
+Type `@` at the start of a line or after a space, then a few letters. The menu shows up to 5 matches. Move with <Kbd>↑</Kbd> and <Kbd>↓</Kbd>, then press <Kbd>Enter</Kbd> or <Kbd>Tab</Kbd>, or click an option. <Kbd>Esc</Kbd> closes the menu.
+
+A mention is one unit. Backspace removes the whole mention, and you cannot edit it character by character.
+
+<Note intent="warning">
+  `MentionPlugin` takes no props and uses hard-coded sample data: a `MENTIONS` array of Star Wars characters in `plugins/mention-plugin.tsx`. Replace it with your own users before shipping.
+</Note>
+
+## Using your own data
+
+Edit `lookupService.search(query, callback)` in `plugins/mention-plugin.tsx`. It currently filters `MENTIONS` after a 250 ms delay. Call your API there and pass an array of display names to `callback`. Each option is a plain name string, and results are cached per query in `mentionsCache`.
+
+The menu does not open while the text matches the [slash menu](/docs/patterns/slash-menu) trigger, so the two can live in the same editor.
+
+## Styling
+
+The pill class lives in `components/editor/nodes/mention-node.ts`:
+
+```ts title="components/editor/nodes/mention-node.ts"
+export const MENTION_CLASS_NAME = "editor-mention rounded bg-primary/10 px-1 text-primary";
+```
+
+The menu uses `bg-overlay text-overlay-fg` with a `ring-muted-fg/20` ring, and the highlighted row uses `bg-accent text-accent-fg`. Both are in `mention-plugin.tsx`.
+
+## Related patterns
+
+- [Emoji](/docs/patterns/emoji) for another inline picker, triggered by `:`.
+- [Slash menu](/docs/patterns/slash-menu) for inserting blocks.
+- [Import and export](/docs/patterns/import-export) to save content that contains mentions.

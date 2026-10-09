@@ -1,0 +1,54 @@
+---
+title: Font
+description: A font family selector and a size stepper that apply inline styles to the selection.
+references:
+  - https://react-spectrum.adobe.com/react-aria/NumberField.html
+---
+
+A font family combo box and a font size stepper. Both apply inline styles to the selected text and show the value at the selection.
+
+<ComponentPreview name="font" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `FormatStateExtension` | Reports the font family and size at the selection. Remove it and the controls throw, because they read from it. |
+| `FontFamilyToolbarPlugin` | The searchable family selector. |
+| `FontSizeToolbarPlugin` | The number field with decrease and increase buttons. |
+| `Toolbar` | The container that holds toolbar plugins. See [Toolbar](/docs/getting-started/toolbar). |
+
+The two plugins are independent. Use either one alone. Neither takes props.
+
+## Font family
+
+Each option is previewed in its own font. The built-in list is Arial, Courier New, Georgia, Times New Roman, Trebuchet MS and Verdana. To change it, edit the `FONT_FAMILIES` array at the top of `font-family-toolbar-plugin.tsx`. The names are used as the CSS `font-family` value, so make sure the fonts are available to your users.
+
+When the selection has no explicit font family, the box shows the first entry in the list. That is only the displayed value. No style is applied until the user picks one.
+
+## Font size
+
+The constants at the top of `font-size-toolbar-plugin.tsx` define the behavior.
+
+| Constant | Value |
+| --- | --- |
+| `MIN_FONT_SIZE` | `8` |
+| `MAX_FONT_SIZE` | `72` |
+| `DEFAULT_FONT_SIZE` | `16` |
+| `FONT_SIZE_STEP` | `2` |
+
+Sizes are written as `px`. The field shows `16` when the selection has no explicit size, so the first press of the increase button applies `18px`.
+
+## Related patterns
+
+- [Color](/docs/patterns/color) for text and background colors.
+- [Text format](/docs/patterns/text-format) for bold, italic and other formats.
+- [Clear](/docs/patterns/clear) to remove font and color styles from the selection.

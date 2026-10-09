@@ -1,0 +1,48 @@
+---
+title: Read only
+description: A lock button that switches the editor between editing and read-only.
+references:
+  - https://lexical.dev/docs/intro
+---
+
+A lock button in the activity bar. An open lock means the editor is editable, a closed lock means it is read only.
+
+<ComponentPreview name="read-only" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Lexical's rich text behavior. Every pattern needs it. |
+| `InitialStateExtension` | Applies the seeded content immediately, so the server and the client render the same. Leave it out if your editor starts empty. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content). |
+| `ReadOnlyTogglePlugin` | The lock button. It calls `editor.setEditable()` and listens for editable changes. It needs no extension. |
+| `ActivityBar` | The strip that holds the button. See [Activity bar](/docs/getting-started/activity-bar). |
+| `FormatStateExtension`, `ShortcutsExtension`, `TextFormatToolbarPlugin`, `Toolbar` | Only here so the demo has a toolbar that visibly disables. Remove them if you only want the lock. |
+
+## Behavior
+
+- The button label and tooltip read "Switch to read-only" or "Switch to edit mode".
+- Toolbar groups are disabled while read only. This includes text format, alignment, link, indent, font, color, block format, history, clear, the insert buttons and import. Export stays enabled.
+- The [floating toolbar](/docs/patterns/floating-toolbar) does not open and the link editor stays closed.
+- Table hover actions and image resize handles are hidden.
+- The toggle keeps working, so users can always switch back.
+
+## Starting read only
+
+The button takes no props. To start read only, or to drive the mode from your own state, call `editor.setEditable(false)` yourself. See the [Lexical docs](https://lexical.dev/docs/intro).
+
+## Styling
+
+The button uses the `plain` intent with `size="sq-xs"` from the Button component. Edit `read-only-toggle-plugin.tsx` to change the icons or style.
+
+## Related patterns
+
+- [Text format](/docs/patterns/text-format), whose buttons disable in this mode.
+- [Floating toolbar](/docs/patterns/floating-toolbar).
+- [Word count](/docs/patterns/word-count) for another activity bar control.

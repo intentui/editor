@@ -1,0 +1,133 @@
+---
+title: Slash menu
+description: Type a slash to insert and convert blocks from a searchable menu.
+references:
+  - https://lexical.dev/docs/react/plugins
+---
+
+Type `/` in an empty line to open a menu of blocks. Keep typing to filter, use the arrow keys to move and press <Kbd>Enter</Kbd> to apply.
+
+<ComponentPreview name="slash-menu" />
+
+## Installation
+
+This pattern is built from files in `@intentui/editor`. Install the editor, then copy the code above into a component of your own.
+
+<PackageCommand exec="shadcn@latest add @intentui/editor" />
+
+## What's included
+
+| Piece | Why it is here |
+| --- | --- |
+| `RichTextExtension` | Headings, quotes and paragraphs. Every pattern needs it. |
+| `ListExtension` | Needed by the numbered and bulleted list items. |
+| `CheckListExtension` | Needed by the check list item. |
+| `ComponentPicker` | Renders the menu and collects the items from its children. |
+| `ParagraphPickerPlugin`, `HeadingPickerPlugin`, `NumberedListPickerPlugin`, `BulletedListPickerPlugin`, `CheckListPickerPlugin`, `QuotePickerPlugin` | One item plugin per block. Remove a plugin to remove its items. |
+
+Item plugins must be rendered inside `ComponentPicker`. Outside it they throw an error. The demo uses a placeholder rather than initial content, so the menu is the first thing a user tries.
+
+## Items
+
+Items appear in the order of the children. Search matches the label or any keyword.
+
+| Item | Plugin | Keywords |
+| --- | --- | --- |
+| Paragraph | `ParagraphPickerPlugin` | normal, paragraph, p, text |
+| Heading 1, 2, 3 | `HeadingPickerPlugin` | heading, header, h1 / h2 / h3 |
+| Numbered list | `NumberedListPickerPlugin` | numbered list, ordered list, ol |
+| Bulleted list | `BulletedListPickerPlugin` | bulleted list, unordered list, ul |
+| Check list | `CheckListPickerPlugin` | check list, todo list, checkbox |
+| Quote | `QuotePickerPlugin` | quote, block quote, blockquote |
+
+The full editor adds table, code block, divider, columns and image items. Each needs the extension of its block, see [Insert block menu](/docs/patterns/insert-block-menu).
+
+## Trigger
+
+The menu opens on `/` at the start of a line or after a space, and allows spaces in the query. It closes when nothing matches. Selecting an item removes the typed text and then runs the item.
+
+## Detailed menu
+
+Set `variant="detailed"` to group the items into sections and show an icon tile, a label and a description for each one. The [block editor](/docs/patterns/block-editor) uses it.
+
+```tsx
+<ComponentPicker variant="detailed">
+  <ParagraphPickerPlugin />
+  <HeadingPickerPlugin />
+  {/* ... */}
+</ComponentPicker>
+```
+
+Every built-in item already carries a `group` and a `description`, and the default variant ignores them. Items are grouped by `group` in the order the plugins are rendered, so keep the plugins of one group next to each other. The built-in groups are:
+
+| Group | Items |
+| --- | --- |
+| Basic blocks | Paragraph, headings 1 to 3, bulleted list, numbered list, check list, quote, divider |
+| Media | Image |
+| Advanced | Table, code block, columns |
+
+To use your own sections or text, set `group` and `description` on your items. The default variant is unchanged, so editors that do not set `variant` look exactly as before.
+
+## Add your own item
+
+Create a plugin that registers items with `useComponentPickerItems`. Keep the array stable with `useMemo`, as the existing plugins do.
+
+```tsx title="components/editor/plugins/component-picker/my-picker-plugin.tsx"
+import { useMemo } from "react"
+
+import {
+  type ComponentPickerItem,
+  useComponentPickerItems,
+} from "@/components/editor/plugins/component-picker/component-picker-plugin"
+
+export function MyPickerPlugin() {
+  const items = useMemo<ComponentPickerItem[]>(
+    () => [
+      {
+        value: "my-item",
+        label: "My item",
+        keywords: ["custom"],
+        onSelect: () => {
+          // runs after the typed "/query" text has been removed
+        },
+      },
+    ],
+    [],
+  )
+
+  useComponentPickerItems(items)
+  return null
+}
+```
+
+Then render `<MyPickerPlugin />` inside `ComponentPicker`.
+
+## Styling
+
+The list is a `role="listbox"` panel using `bg-overlay`, `text-overlay-fg`, a `ring` border and `w-56`. The active row uses `bg-accent text-accent-fg` and icons use `text-muted-fg`. Edit `component-picker-plugin.tsx` to change the layout.
+
+## API
+
+<ApiParameters>
+  <ApiDescription>Fields of a `ComponentPickerItem`.</ApiDescription>
+  <ApiParameter name="value" type="string">Unique key for the item.</ApiParameter>
+  <ApiParameter name="label" type="string">Text shown in the menu and matched against the query.</ApiParameter>
+  <ApiParameter name="icon" type="React.ReactNode">Optional icon shown before the label.</ApiParameter>
+  <ApiParameter name="description" type="string">Optional line shown under the label by the `detailed` variant.</ApiParameter>
+  <ApiParameter name="group" type="string">Optional section heading used by the `detailed` variant.</ApiParameter>
+  <ApiParameter name="keywords" type="string[]">Optional extra terms that match the query.</ApiParameter>
+  <ApiParameter name="onSelect" type="(queryString: string) => void">Called after the item is chosen, with the typed query.</ApiParameter>
+</ApiParameters>
+
+<ApiParameters>
+  <ApiDescription>Props of `ComponentPicker`.</ApiDescription>
+  <ApiParameter name="children" type="React.ReactNode">The item plugins. Required.</ApiParameter>
+  <ApiParameter name="variant" type="&quot;default&quot; | &quot;detailed&quot;" defaultValue="&quot;default&quot;">`detailed` shows sections, an icon tile and a description for each item.</ApiParameter>
+</ApiParameters>
+
+## Related patterns
+
+- [Block editor](/docs/patterns/block-editor), which uses the `detailed` variant.
+- [Insert block menu](/docs/patterns/insert-block-menu) for always visible insert buttons.
+- [Block format](/docs/patterns/block-format) to change the block type from the toolbar.
+- [Markdown shortcuts](/docs/patterns/markdown-shortcuts) to create blocks by typing syntax.

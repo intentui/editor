@@ -1,0 +1,63 @@
+---
+title: Content area
+description: The editable surface where users type, with three padding variants and a built-in placeholder.
+references:
+  - https://lexical.dev/docs/react/plugins
+---
+
+`ContentEditable` is the editable element. It wraps the Lexical component with Intent UI styling and a placeholder.
+
+<ComponentPreview name="content-area-layout" />
+
+## Usage
+
+```tsx
+import { ContentEditable } from "@/components/editor/plugins/content-editable"
+
+<div className="relative flex-1 overflow-y-auto">
+  <ContentEditable variant="draggable" placeholder="Write something..." />
+</div>
+```
+
+Put it in a scrollable, `relative` parent. The placeholder is absolutely positioned and the floating plugins use the parent as their anchor. The element itself has `min-h-full w-full`, so the parent decides the editor height.
+
+The editor is created by `LexicalExtensionComposer` with `contentEditable={null}`, which means you must render `ContentEditable` yourself, exactly once.
+
+<Note intent="info">
+  Seeding an editor with `$initialEditorState` in a server-rendered app needs one extra line, so the server and the client start from the same content. See [Seeding initial content](/docs/getting-started/quick-start#seeding-initial-content).
+</Note>
+
+## Variants
+
+The `variant` prop only changes padding. The placeholder is offset to match.
+
+| Variant | Padding | Use it for |
+| --- | --- | --- |
+| `default` | `px-2.5 py-2` | A bare editor without chrome. |
+| `toolbar` | `px-4 py-4` | An editor under a [toolbar](/docs/getting-started/toolbar). |
+| `draggable` | `px-12 py-4` | An editor with the [drag handle](/docs/patterns/draggable-block), which needs room in the left gutter. |
+
+## Styling
+
+Pass `className` to style the editable element. It is merged with the base classes (`min-h-full w-full bg-transparent text-sm outline-none`) using `twMerge`, so your classes win.
+
+```tsx
+<ContentEditable variant="toolbar" className="text-base leading-7" />
+```
+
+Typography for the content itself (headings, quotes, lists, links, inline code) comes from `src/components/editor/theme.ts`. Edit the entries there to restyle content, see [Theming](/docs/getting-started/theming).
+
+## Overlays
+
+The floating toolbar, link editor, table actions, context menu and pickers render inside the same `relative` container as the content area. Add them next to `ContentEditable`, see the [full editor](/docs/patterns/full-editor).
+
+## API
+
+<ApiParameters>
+  <ApiDescription>Extends `ContentEditableElementProps` from Lexical, without `editor` and `className`.</ApiDescription>
+  <ApiParameter name="variant" type="&quot;default&quot; | &quot;toolbar&quot; | &quot;draggable&quot;" defaultValue="&quot;default&quot;">Sets the padding of the editable element and the placeholder.</ApiParameter>
+  <ApiParameter name="placeholder" type="string" defaultValue="empty string">Text shown while the editor is empty. It is also used as `aria-placeholder`.</ApiParameter>
+  <ApiParameter name="className" type="string">Classes merged onto the editable element.</ApiParameter>
+  <ApiParameter name="placeholderClassName" type="string">Classes merged onto the placeholder element.</ApiParameter>
+  <ApiReference href="https://lexical.dev/docs/react/plugins">Lexical reference</ApiReference>
+</ApiParameters>

@@ -15,24 +15,28 @@ import {
 const COLUMN_ITEMS: {
   value: string;
   label: string;
+  description: string;
   icon: React.ComponentType<React.ComponentProps<"svg">>;
   templateColumns: string;
 }[] = [
   {
     value: "columns-one",
     label: "1 column",
+    description: "Keep blocks in a single column.",
     icon: StopIcon,
     templateColumns: "1fr",
   },
   {
     value: "columns-two",
     label: "2 columns",
+    description: "Place blocks side by side.",
     icon: ViewColumnsIcon,
     templateColumns: "1fr 1fr",
   },
   {
     value: "columns-three",
     label: "3 columns",
+    description: "Place blocks in three columns.",
     icon: RectangleGroupIcon,
     templateColumns: "1fr 1fr 1fr",
   },
@@ -43,9 +47,11 @@ export function ColumnsPickerPlugin() {
 
   const items = useMemo<ComponentPickerItem[]>(
     () =>
-      COLUMN_ITEMS.map(({ value, label, icon: Icon, templateColumns }) => ({
+      COLUMN_ITEMS.map(({ value, label, description, icon: Icon, templateColumns }) => ({
         value,
         label: label,
+        group: "Advanced",
+        description,
         icon: <Icon className="text-muted-fg" />,
         keywords: ["columns", "layout", "grid"],
         onSelect: () => {
