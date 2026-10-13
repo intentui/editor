@@ -11,7 +11,7 @@ export const app = {
     lexical: "https://lexical.dev",
   },
   repo: {
-    url: "https://github.com/intentui",
+    url: "https://github.com/intentui/editor",
   },
   // Pages that live on the main Intent UI site.
   site: {
