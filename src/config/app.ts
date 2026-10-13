@@ -1,12 +1,12 @@
 export const app = {
-  name: "Intent Editor",
+  name: "Intent UI Editor",
   url: process.env.NEXT_PUBLIC_APP_URL ?? "https://editor.intentui.com",
   description:
     "A rich text editor for React. Built on Lexical, React Aria Components and Tailwind CSS, and installed with the shadcn CLI.",
   installCommand: "shadcn@latest add @intentui/editor",
   links: {
     twitter: "https://x.com/intent/follow?screen_name=intentui",
-    github: "https://github.com/intentui",
+    github: "https://github.com/intentui/editor",
     discord: "https://discord.gg/DYmVJ66JUD",
     lexical: "https://lexical.dev",
   },
