@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import { Analytics } from "@/components/analytics";
 import { AppBootstrap } from "@/components/app-bootstrap";
 import { JsonLd } from "@/components/json-ld";
 import { Providers } from "@/components/providers";
@@ -108,6 +109,7 @@ export default function RootLayout({
           <AppBootstrap />
           <main>{children}</main>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

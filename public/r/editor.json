@@ -497,8 +497,6 @@
       "target": "components/editor/transformers/table-transformer.ts"
     }
   ],
-  "categories": [
-    "editor"
-  ],
+  "categories": ["editor"],
   "type": "registry:block"
 }
