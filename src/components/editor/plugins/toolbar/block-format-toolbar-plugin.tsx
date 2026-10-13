@@ -39,7 +39,7 @@ import {
 } from "lexical";
 import { useEffect, useMemo, useState } from "react";
 
-import { $getSelectedNode } from "@/components/editor/extensions/format-state";
+import { $getSelectedNode } from "@/components/editor/extensions/format-state-extension";
 import {
   ComboBox,
   ComboBoxContent,

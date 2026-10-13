@@ -11,13 +11,9 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { type ElementFormatType, FORMAT_ELEMENT_COMMAND } from "lexical";
 import { Fragment } from "react";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
-import {
-  ToolbarGroup,
-  ToolbarItem,
-  ToolbarSeparator,
-} from "@/components/ui/toolbar";
-import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
+import { ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@/components/ui/toolbar";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 type AlignItem = {
   value: Exclude<ElementFormatType, "">;

@@ -13,10 +13,10 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
-import { LinkExtension } from "@/components/editor/extensions/link";
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { AutoLinkExtension } from "@/components/editor/extensions/auto-link-extension";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { FloatingToolbarPlugin } from "@/components/editor/plugins/floating/floating-toolbar-plugin";
 import { LinkEditorPlugin } from "@/components/editor/plugins/floating/link-editor-plugin";

@@ -79,74 +79,74 @@
           "target": "components/editor/editor.tsx"
         },
         {
-          "path": "src/components/editor/extensions/auto-link.ts",
+          "path": "src/components/editor/extensions/auto-link-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/auto-link.ts"
+          "target": "components/editor/extensions/auto-link-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/autocomplete.ts",
+          "path": "src/components/editor/extensions/autocomplete-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/autocomplete.ts"
+          "target": "components/editor/extensions/autocomplete-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/code.tsx",
+          "path": "src/components/editor/extensions/code-extension.tsx",
           "type": "registry:component",
-          "target": "components/editor/extensions/code.tsx"
+          "target": "components/editor/extensions/code-extension.tsx"
         },
         {
-          "path": "src/components/editor/extensions/drag-drop-paste.ts",
+          "path": "src/components/editor/extensions/drag-drop-paste-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/drag-drop-paste.ts"
+          "target": "components/editor/extensions/drag-drop-paste-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/emoji.ts",
+          "path": "src/components/editor/extensions/emoji-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/emoji.ts"
+          "target": "components/editor/extensions/emoji-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/format-state.tsx",
+          "path": "src/components/editor/extensions/format-state-extension.tsx",
           "type": "registry:component",
-          "target": "components/editor/extensions/format-state.tsx"
+          "target": "components/editor/extensions/format-state-extension.tsx"
         },
         {
-          "path": "src/components/editor/extensions/image.ts",
+          "path": "src/components/editor/extensions/image-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/image.ts"
+          "target": "components/editor/extensions/image-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/layout.ts",
+          "path": "src/components/editor/extensions/layout-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/layout.ts"
+          "target": "components/editor/extensions/layout-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/link.ts",
+          "path": "src/components/editor/extensions/link-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/link.ts"
+          "target": "components/editor/extensions/link-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/mention.ts",
+          "path": "src/components/editor/extensions/mention-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/mention.ts"
+          "target": "components/editor/extensions/mention-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/shortcuts.ts",
+          "path": "src/components/editor/extensions/shortcuts-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/shortcuts.ts"
+          "target": "components/editor/extensions/shortcuts-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/special-text.ts",
+          "path": "src/components/editor/extensions/special-text-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/special-text.ts"
+          "target": "components/editor/extensions/special-text-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/speech-to-text.ts",
+          "path": "src/components/editor/extensions/speech-to-text-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/speech-to-text.ts"
+          "target": "components/editor/extensions/speech-to-text-extension.ts"
         },
         {
-          "path": "src/components/editor/extensions/tab-focus.ts",
+          "path": "src/components/editor/extensions/tab-focus-extension.ts",
           "type": "registry:component",
-          "target": "components/editor/extensions/tab-focus.ts"
+          "target": "components/editor/extensions/tab-focus-extension.ts"
         },
         {
           "path": "src/components/editor/nodes/emoji-node.ts",

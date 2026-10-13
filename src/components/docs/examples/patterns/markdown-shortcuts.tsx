@@ -16,8 +16,8 @@ import { RichTextExtension } from "@lexical/rich-text";
 import { defineExtension } from "lexical";
 import { useMemo } from "react";
 
-import { CodeExtension } from "@/components/editor/extensions/code";
-import { LinkExtension } from "@/components/editor/extensions/link";
+import { CodeExtension } from "@/components/editor/extensions/code-extension";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { editorTheme } from "@/components/editor/theme";
 import { HR } from "@/components/editor/transformers/horizontal-rule-transformer";

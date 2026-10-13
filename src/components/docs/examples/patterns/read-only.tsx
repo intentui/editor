@@ -13,8 +13,8 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin";
 import { ReadOnlyTogglePlugin } from "@/components/editor/plugins/activitybar/read-only-toggle-plugin";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";

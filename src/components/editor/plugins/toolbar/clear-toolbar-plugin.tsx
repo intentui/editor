@@ -4,7 +4,7 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { $getRoot, $isParagraphNode, CLEAR_EDITOR_COMMAND } from "lexical";
 import { useEffect, useState } from "react";
 
-import { clearFormatting } from "@/components/editor/extensions/format-state";
+import { clearFormatting } from "@/components/editor/extensions/format-state-extension";
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";

@@ -13,7 +13,7 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { LayoutExtension } from "@/components/editor/extensions/layout";
+import { LayoutExtension } from "@/components/editor/extensions/layout-extension";
 import {
   $createLayoutContainerNode,
   $createLayoutItemNode,

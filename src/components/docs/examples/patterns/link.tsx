@@ -14,9 +14,9 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
-import { LinkExtension } from "@/components/editor/extensions/link";
+import { AutoLinkExtension } from "@/components/editor/extensions/auto-link-extension";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { LinkEditorPlugin } from "@/components/editor/plugins/floating/link-editor-plugin";
 import { LinkToolbarPlugin } from "@/components/editor/plugins/toolbar/link-toolbar-plugin";

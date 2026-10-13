@@ -18,8 +18,8 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { CodeExtension } from "@/components/editor/extensions/code";
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { CodeExtension } from "@/components/editor/extensions/code-extension";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { BlockInsert } from "@/components/editor/plugins/block-insert/block-insert-plugin";
 import { InsertCodeBlockPlugin } from "@/components/editor/plugins/block-insert/insert-code-block-plugin";
 import { CodePickerPlugin } from "@/components/editor/plugins/component-picker/code-picker-plugin";

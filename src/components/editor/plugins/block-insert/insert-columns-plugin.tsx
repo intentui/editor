@@ -4,7 +4,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { $getRoot, $getSelection, type LexicalEditor } from "lexical";
 
-import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout";
+import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout-extension";
 import { Button } from "@/components/ui/button";
 import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";

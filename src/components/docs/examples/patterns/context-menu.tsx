@@ -14,7 +14,7 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { LinkExtension } from "@/components/editor/extensions/link";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { ContextMenuPlugin } from "@/components/editor/plugins/context-menu-plugin";
 import { editorTheme } from "@/components/editor/theme";

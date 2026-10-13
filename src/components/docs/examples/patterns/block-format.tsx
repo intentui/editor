@@ -14,7 +14,7 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { BlockFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/block-format-toolbar-plugin";
 import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";

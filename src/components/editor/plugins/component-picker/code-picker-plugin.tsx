@@ -3,7 +3,7 @@ import { CodeBracketIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useMemo } from "react";
 
-import { insertCodeBlock } from "@/components/editor/extensions/code";
+import { insertCodeBlock } from "@/components/editor/extensions/code-extension";
 import {
   type ComponentPickerItem,
   useComponentPickerItems,

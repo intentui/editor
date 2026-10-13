@@ -39,11 +39,8 @@ import {
   OUTDENT_CONTENT_COMMAND,
 } from "lexical";
 
-import { insertCodeBlock } from "@/components/editor/extensions/code";
-import {
-  $getSelectedNode,
-  clearFormatting,
-} from "@/components/editor/extensions/format-state";
+import { insertCodeBlock } from "@/components/editor/extensions/code-extension";
+import { $getSelectedNode, clearFormatting } from "@/components/editor/extensions/format-state-extension";
 
 const CONTROL_OR_META_ALT = { ...CONTROL_OR_META, altKey: true };
 const CONTROL_OR_META_SHIFT = { ...CONTROL_OR_META, shiftKey: true };

@@ -6,7 +6,7 @@ import { type Color, parseColor } from "@react-stately/color";
 import { $getRoot, $getSelection } from "lexical";
 import { useMemo } from "react";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
 import { Button } from "@/components/ui/button";
 import { ColorArea } from "@/components/ui/color-area";
 import { ColorField } from "@/components/ui/color-field";

@@ -3,8 +3,8 @@ import { TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
-import { OPEN_LINK_EDITOR_COMMAND } from "@/components/editor/extensions/link";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
+import { OPEN_LINK_EDITOR_COMMAND } from "@/components/editor/extensions/link-extension";
 import { ToolbarGroup, ToolbarItem } from "@/components/ui/toolbar";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 

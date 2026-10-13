@@ -13,7 +13,7 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { ColorToolbarPlugin } from "@/components/editor/plugins/toolbar/color-toolbar-plugin";
 import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";

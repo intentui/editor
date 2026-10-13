@@ -18,8 +18,8 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { CodeExtension } from "@/components/editor/extensions/code";
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { CodeExtension } from "@/components/editor/extensions/code-extension";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin";
 import { ShortcutPlugin } from "@/components/editor/plugins/activitybar/shortcut-plugin";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";

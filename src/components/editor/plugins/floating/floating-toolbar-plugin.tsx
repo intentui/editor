@@ -18,7 +18,7 @@ import {
 } from "lexical";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { $getSelectedNode } from "@/components/editor/extensions/format-state";
+import { $getSelectedNode } from "@/components/editor/extensions/format-state-extension";
 import {
   getDOMRangeRect,
   hideFloatingAnchor,

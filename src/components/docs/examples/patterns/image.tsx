@@ -14,8 +14,8 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { DragDropPasteExtension } from "@/components/editor/extensions/drag-drop-paste";
-import { ImageExtension } from "@/components/editor/extensions/image";
+import { DragDropPasteExtension } from "@/components/editor/extensions/drag-drop-paste-extension";
+import { ImageExtension } from "@/components/editor/extensions/image-extension";
 import { $createImageNode } from "@/components/editor/nodes/image-node";
 import { BlockInsert } from "@/components/editor/plugins/block-insert/block-insert-plugin";
 import { InsertImagePlugin } from "@/components/editor/plugins/block-insert/insert-image-plugin";

@@ -7,7 +7,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { INDENT_CONTENT_COMMAND, OUTDENT_CONTENT_COMMAND } from "lexical";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";

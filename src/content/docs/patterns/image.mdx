@@ -46,9 +46,9 @@ The editor does not upload anything. Picked, pasted and dropped files are read i
 To upload instead, replace the data URL with your own URL before the image is inserted. There are two places to change:
 
 - `useImageFilePicker` in `plugins/block-insert/insert-image-plugin.tsx`: `onChange` calls `readFileAsDataUrl(file)` and passes the result as `src`.
-- `extensions/drag-drop-paste.ts`: the handler reads files with `mediaFileReader` and dispatches `INSERT_IMAGE_COMMAND` with `src: result`.
+- `extensions/drag-drop-paste-extension.ts`: the handler reads files with `mediaFileReader` and dispatches `INSERT_IMAGE_COMMAND` with `src: result`.
 
-```ts title="extensions/drag-drop-paste.ts"
+```ts title="extensions/drag-drop-paste-extension.ts"
 editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
   altText: file.name,
   src: await uploadFile(file), // your function, returns a URL

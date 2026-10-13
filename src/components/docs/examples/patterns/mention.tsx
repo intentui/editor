@@ -13,7 +13,7 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { MentionExtension } from "@/components/editor/extensions/mention";
+import { MentionExtension } from "@/components/editor/extensions/mention-extension";
 import { $createMentionNode } from "@/components/editor/nodes/mention-node";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { MentionPlugin } from "@/components/editor/plugins/mention-plugin";

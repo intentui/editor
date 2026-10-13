@@ -13,7 +13,7 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { TabFocusExtension } from "@/components/editor/extensions/tab-focus";
+import { TabFocusExtension } from "@/components/editor/extensions/tab-focus-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { editorTheme } from "@/components/editor/theme";
 

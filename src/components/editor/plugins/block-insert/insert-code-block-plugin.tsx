@@ -2,7 +2,7 @@ import { CodeBracketIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
-import { insertCodeBlock } from "@/components/editor/extensions/code";
+import { insertCodeBlock } from "@/components/editor/extensions/code-extension";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 

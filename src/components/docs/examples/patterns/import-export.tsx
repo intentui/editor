@@ -26,10 +26,10 @@ import {
 } from "lexical";
 import { useMemo } from "react";
 
-import { CodeExtension } from "@/components/editor/extensions/code";
-import { EmojiExtension } from "@/components/editor/extensions/emoji";
-import { ImageExtension } from "@/components/editor/extensions/image";
-import { LinkExtension } from "@/components/editor/extensions/link";
+import { CodeExtension } from "@/components/editor/extensions/code-extension";
+import { EmojiExtension } from "@/components/editor/extensions/emoji-extension";
+import { ImageExtension } from "@/components/editor/extensions/image-extension";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { ImportExportToolbarPlugin } from "@/components/editor/plugins/toolbar/import-export-toolbar-plugin";
 import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";
