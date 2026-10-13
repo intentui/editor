@@ -31,7 +31,10 @@ import {
   $getSelectedLinkNode,
   $getSelectedNode,
 } from "@/components/editor/extensions/format-state-extension";
-import { OPEN_LINK_EDITOR_COMMAND, sanitizeUrl } from "@/components/editor/extensions/link-extension";
+import {
+  OPEN_LINK_EDITOR_COMMAND,
+  sanitizeUrl,
+} from "@/components/editor/extensions/link-extension";
 import {
   getDOMRangeRect,
   hideFloatingAnchor,

@@ -12,8 +12,12 @@ import { FORMAT_TEXT_COMMAND, type TextFormatType } from "lexical";
 import { Fragment } from "react";
 
 import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
-import { ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@/components/ui/toolbar";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import {
+  ToolbarGroup,
+  ToolbarItem,
+  ToolbarSeparator,
+} from "@/components/ui/toolbar";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 type IconComponent = React.ComponentType<{ className?: string }>;
 
