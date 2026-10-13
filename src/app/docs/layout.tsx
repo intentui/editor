@@ -1,10 +1,12 @@
-import { Aside } from "@/components/docs/aside"
-import { Footer } from "@/components/docs/footer"
-import { PageContainer } from "@/components/page-container"
-import { SiteHeader } from "@/components/site-header"
-import { getSidebarSections } from "@/lib/docs-nav"
+import { Aside } from "@/components/docs/aside";
+import { Footer } from "@/components/docs/footer";
+import { PageContainer } from "@/components/page-container";
+import { SiteHeader } from "@/components/site-header";
+import { getSidebarSections } from "@/lib/docs-nav";
 
-export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function Layout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <div>
       <SiteHeader />
@@ -20,5 +22,5 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
         </div>
       </PageContainer>
     </div>
-  )
+  );
 }

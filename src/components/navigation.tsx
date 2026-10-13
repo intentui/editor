@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
-import { usePathname } from "next/navigation"
-import { useState } from "react"
-import { BrandLogoLink } from "@/components/brand-logo-link"
-import { CommandPalette } from "@/components/command-palette"
-import { GithubLink } from "@/components/github-link"
-import { BrandDiscordIcon } from "@/components/icons/brand-discord-icon"
-import { BrandXIcon } from "@/components/icons/brand-x-icon"
-import { NavLink } from "@/components/nav-item"
-import { PageContainer } from "@/components/page-container"
-import { ResponsiveNavigation } from "@/components/responsive-navigation"
-import { ThemeSwitcher } from "@/components/theme-switcher"
-import { Button, buttonStyles } from "@/components/ui/button"
-import { Link } from "@/components/ui/link"
-import { app } from "@/config/app"
-import { useMediaQuery } from "@/hooks/use-media-query"
-import type { SearchItem, SidebarSection } from "@/lib/docs-nav"
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { BrandLogoLink } from "@/components/brand-logo-link";
+import { CommandPalette } from "@/components/command-palette";
+import { GithubLink } from "@/components/github-link";
+import { BrandDiscordIcon } from "@/components/icons/brand-discord-icon";
+import { BrandXIcon } from "@/components/icons/brand-x-icon";
+import { NavLink } from "@/components/nav-item";
+import { PageContainer } from "@/components/page-container";
+import { ResponsiveNavigation } from "@/components/responsive-navigation";
+import { ThemeSwitcher } from "@/components/theme-switcher";
+import { Button, buttonStyles } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
+import { app } from "@/config/app";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import type { SearchItem, SidebarSection } from "@/lib/docs-nav";
 
 export function Navigation({
   sections,
   searchItems,
 }: {
-  sections: SidebarSection[]
-  searchItems: SearchItem[]
+  sections: SidebarSection[];
+  searchItems: SearchItem[];
 }) {
-  const pathname = usePathname()
-  const [open, setOpen] = useState(false)
-  const isDesktop = useMediaQuery("(min-width: 1024px)")
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   return (
     <>
       <CommandPalette setOpen={setOpen} openCmd={open} items={searchItems} />
@@ -40,7 +40,10 @@ export function Navigation({
               </div>
               <NavLink
                 isNextLink
-                isActive={pathname?.startsWith("/docs") && !pathname?.startsWith("/docs/patterns")}
+                isActive={
+                  pathname?.startsWith("/docs") &&
+                  !pathname?.startsWith("/docs/patterns")
+                }
                 href="/docs/getting-started/introduction"
               >
                 Docs
@@ -110,5 +113,5 @@ export function Navigation({
       </div>
       {!isDesktop && <ResponsiveNavigation sections={sections} />}
     </>
-  )
+  );
 }

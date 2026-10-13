@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { CheckIcon } from "@heroicons/react/20/solid"
-import type React from "react"
-import { useEffect, useState } from "react"
-import { Button } from "react-aria-components/Button"
-import { DuplicateIcon } from "@/components/icons/duplicate-icon"
-import { useClipboard } from "@/hooks/use-clipboard"
-import { cx } from "@/lib/primitive"
+import { CheckIcon } from "@heroicons/react/20/solid";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Button } from "react-aria-components/Button";
+import { DuplicateIcon } from "@/components/icons/duplicate-icon";
+import { useClipboard } from "@/hooks/use-clipboard";
+import { cx } from "@/lib/primitive";
 
 interface CopyButtonProps extends React.ComponentProps<typeof Button> {
-  isCopied?: boolean
-  setIsCopied?: (isCopied: boolean) => void
-  alwaysVisible?: boolean
-  text?: string
+  isCopied?: boolean;
+  setIsCopied?: (isCopied: boolean) => void;
+  alwaysVisible?: boolean;
+  text?: string;
 }
 
 export function CopyButton({
@@ -23,26 +23,28 @@ export function CopyButton({
   className,
   ...props
 }: CopyButtonProps) {
-  const { copy } = useClipboard()
-  const [isCopiedState, setIsCopiedState] = useState(false)
+  const { copy } = useClipboard();
+  const [isCopiedState, setIsCopiedState] = useState(false);
 
-  const isControlled = isCopiedProp !== undefined
-  const isCopied = isControlled ? isCopiedProp : isCopiedState
-  const setIsCopied = isControlled ? setIsCopiedProp || (() => {}) : setIsCopiedState
+  const isControlled = isCopiedProp !== undefined;
+  const isCopied = isControlled ? isCopiedProp : isCopiedState;
+  const setIsCopied = isControlled
+    ? setIsCopiedProp || (() => {})
+    : setIsCopiedState;
 
   useEffect(() => {
     if (isCopied) {
-      const timeout = setTimeout(() => setIsCopied(false), 2000)
-      return () => clearTimeout(timeout)
+      const timeout = setTimeout(() => setIsCopied(false), 2000);
+      return () => clearTimeout(timeout);
     }
-  }, [isCopied, setIsCopied])
+  }, [isCopied, setIsCopied]);
 
   const onPressHandler = async () => {
     if (text) {
-      const didCopy = await copy(text)
-      if (didCopy) setIsCopied(true)
+      const didCopy = await copy(text);
+      if (didCopy) setIsCopied(true);
     }
-  }
+  };
 
   return (
     <Button
@@ -51,11 +53,15 @@ export function CopyButton({
       className={cx(
         "relative h-8 w-14 overflow-hidden p-1.5 font-medium pressed:text-foreground text-muted-foreground text-sm/6 hover:text-foreground",
         isCopied && "text-foreground",
-        className
+        className,
       )}
       {...props}
     >
-      {isCopied ? <CheckIcon className="size-4" /> : <DuplicateIcon className="size-4" />}
+      {isCopied ? (
+        <CheckIcon className="size-4" />
+      ) : (
+        <DuplicateIcon className="size-4" />
+      )}
     </Button>
-  )
+  );
 }

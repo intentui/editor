@@ -1,11 +1,11 @@
-import { cn } from "cn"
+import { cn } from "cn";
 
 export interface AvatarProps {
-  src?: string | null
-  initials?: string
-  alt?: string
-  className?: string
-  isSquare?: boolean
+  src?: string | null;
+  initials?: string;
+  alt?: string;
+  className?: string;
+  isSquare?: boolean;
   size?:
     | "xs"
     | "sm"
@@ -19,7 +19,7 @@ export interface AvatarProps {
     | "6xl"
     | "7xl"
     | "8xl"
-    | "9xl"
+    | "9xl";
 }
 
 export function Avatar({
@@ -53,7 +53,7 @@ export function Avatar({
         isSquare
           ? "rounded-(--avatar-radius) *:rounded-(--avatar-radius)"
           : "rounded-full *:rounded-full",
-        className
+        className,
       )}
     >
       {initials && (
@@ -75,7 +75,14 @@ export function Avatar({
           </text>
         </svg>
       )}
-      {src && <img className="size-full object-cover object-center" src={src} alt={alt} />}
+      {src && (
+        // biome-ignore lint/performance/noImgElement: Reusable avatars support arbitrary external image URLs without a Next.js image service.
+        <img
+          className="size-full object-cover object-center"
+          src={src}
+          alt={alt}
+        />
+      )}
     </span>
-  )
+  );
 }

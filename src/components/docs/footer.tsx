@@ -1,12 +1,20 @@
-import { BrandIntentuiIcon } from "@/components/icons/brand-intentui-icon"
-import { Link } from "@/components/ui/link"
-import { Text } from "@/components/ui/text"
-import { app } from "@/config/app"
+import { BrandIntentuiIcon } from "@/components/icons/brand-intentui-icon";
+import { Link } from "@/components/ui/link";
+import { Text } from "@/components/ui/text";
+import { app } from "@/config/app";
 
 const footerNavigation = {
   resources: [
-    { name: "Introduction", href: "/docs/getting-started/introduction", external: false },
-    { name: "Installation", href: "/docs/getting-started/installation", external: false },
+    {
+      name: "Introduction",
+      href: "/docs/getting-started/introduction",
+      external: false,
+    },
+    {
+      name: "Installation",
+      href: "/docs/getting-started/installation",
+      external: false,
+    },
     { name: "Patterns", href: "/docs/patterns/full-editor", external: false },
     { name: "Intent UI docs", href: app.site.docs, external: true },
   ],
@@ -27,14 +35,14 @@ const footerNavigation = {
     { name: "X", href: app.links.twitter },
     { name: "Lexical", href: app.links.lexical },
   ],
-}
+};
 
 function Column({
   title,
   items,
 }: {
-  title: string
-  items: { name: string; href: string; external?: boolean }[]
+  title: string;
+  items: { name: string; href: string; external?: boolean }[];
 }) {
   return (
     <div>
@@ -45,7 +53,9 @@ function Column({
             <Link
               href={item.href}
               className="font-normal text-foreground/60 hover:text-foreground"
-              {...(item.external === false ? {} : { target: "_blank", rel: "noreferrer" })}
+              {...(item.external === false
+                ? {}
+                : { target: "_blank", rel: "noreferrer" })}
             >
               {item.name}
             </Link>
@@ -53,7 +63,7 @@ function Column({
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
 export function Footer() {
@@ -73,7 +83,10 @@ export function Footer() {
         </div>
 
         <div className="xl:border-l w-full flex justify-between border-page xl:px-20 py-6">
-          <Link href="/" className="flex items-center font-semibold text-foreground text-lg">
+          <Link
+            href="/"
+            className="flex items-center font-semibold text-foreground text-lg"
+          >
             <BrandIntentuiIcon className="size-5 shrink-0" />
             <span className="ml-2">
               Intent <span className="text-muted-foreground">Editor</span>
@@ -83,5 +96,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

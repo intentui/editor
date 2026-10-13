@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { CheckIcon, MinusIcon } from "@heroicons/react/20/solid"
+import { CheckIcon, MinusIcon } from "@heroicons/react/20/solid";
+import { cn } from "cn";
 import {
   CheckboxButton,
   type CheckboxButtonProps,
   CheckboxField as CheckboxFieldPrimitive,
   type CheckboxFieldProps,
-} from "react-aria-components/Checkbox"
+} from "react-aria-components/Checkbox";
 import {
   CheckboxGroup as CheckboxGroupPrimitive,
   type CheckboxGroupProps,
-} from "react-aria-components/CheckboxGroup"
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import { cn } from "cn"
-import { cx } from "@/lib/primitive"
-import { Label } from "@/components/ui/field"
+} from "react-aria-components/CheckboxGroup";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import { Label } from "@/components/ui/field";
+import { cx } from "@/lib/primitive";
 
 export function CheckboxGroup({ className, ...props }: CheckboxGroupProps) {
   return (
@@ -23,10 +23,10 @@ export function CheckboxGroup({ className, ...props }: CheckboxGroupProps) {
       data-slot="control"
       className={cx(
         "space-y-3 has-[[slot=description]]:not-has-[[slot=errorMessage]]:space-y-6 has-[[slot=description]]:**:data-[slot=label]:font-medium **:[[slot=description]]:block",
-        className
+        className,
       )}
     />
-  )
+  );
 }
 
 export function CheckboxField({ className, ...props }: CheckboxFieldProps) {
@@ -41,16 +41,19 @@ export function CheckboxField({ className, ...props }: CheckboxFieldProps) {
         "**:data-[slot=control-label]:col-start-2 **:data-[slot=control-label]:row-start-1",
         "*:[[slot=description]]:col-start-2 *:[[slot=description]]:row-start-2",
         "has-[[slot=description]]:**:data-[slot=control-label]:font-medium",
-        className
+        className,
       )}
     />
-  )
+  );
 }
 
 export function Checkbox({ className, ...props }: CheckboxButtonProps) {
   return (
     <CheckboxButton
-      className={cx("group gap-x-3 inline-flex col-span-full focus:outline-hidden", className)}
+      className={cx(
+        "group gap-x-3 inline-flex col-span-full focus:outline-hidden",
+        className,
+      )}
       {...props}
     >
       {composeRenderProps(
@@ -60,12 +63,12 @@ export function Checkbox({ className, ...props }: CheckboxButtonProps) {
             <MinusIcon data-slot="check-indicator" />
           ) : isSelected ? (
             <CheckIcon data-slot="check-indicator" />
-          ) : null
+          ) : null;
 
           return (
             <div
               className={cn(
-                "grid grid-cols-[1.125rem_1fr] items-center gap-y-1 has-data-[slot=control-label]:gap-x-3 sm:grid-cols-[1rem_1fr]"
+                "grid grid-cols-[1.125rem_1fr] items-center gap-y-1 has-data-[slot=control-label]:gap-x-3 sm:grid-cols-[1rem_1fr]",
               )}
             >
               <span
@@ -92,9 +95,9 @@ export function Checkbox({ className, ...props }: CheckboxButtonProps) {
                 {children}
               </Label>
             </div>
-          )
-        }
+          );
+        },
       )}
     </CheckboxButton>
-  )
+  );
 }

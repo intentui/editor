@@ -1,11 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { defineExtension } from "lexical";
-
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
+import { defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { editorTheme } from "@/components/editor/theme";

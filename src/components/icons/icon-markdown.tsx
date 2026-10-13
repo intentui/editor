@@ -19,4 +19,4 @@ export const IconMarkdown = (props: React.SVGProps<SVGSVGElement>) => (
       d="M30 98V30h20l20 25 20-25h20v68H90V59L70 84 50 59v39H30zm125 0-30-33h20V30h20v35h20l-30 33z"
     />
   </svg>
-)
+);

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { Toaster as ToasterPrimitive, type ToasterProps } from "sonner"
-import { twJoin } from "cn"
-import { useTheme } from "@/components/theme-provider"
+import { twJoin } from "cn";
+import { Toaster as ToasterPrimitive, type ToasterProps } from "sonner";
+import { useTheme } from "@/components/theme-provider";
 
 export function Toast(props: ToasterProps) {
-  const { theme = "system" } = useTheme()
+  const { theme = "system" } = useTheme();
   return (
     <ToasterPrimitive
       theme={theme as ToasterProps["theme"]}
@@ -14,7 +14,7 @@ export function Toast(props: ToasterProps) {
       toastOptions={{
         className: twJoin(
           "not-has-data-[slot=note]:backdrop-blur-3xl will-change-transform *:data-[slot=note]:relative *:data-[slot=note]:z-50 *:data-icon:mt-0.5 *:data-icon:self-start has-data-description:*:data-icon:mt-1",
-          "**:data-action:[--normal-bg:var(--color-primary-foreground)] **:data-action:[--normal-text:var(--color-primary)]"
+          "**:data-action:[--normal-bg:var(--color-primary-foreground)] **:data-action:[--normal-text:var(--color-primary)]",
         ),
       }}
       style={
@@ -29,7 +29,8 @@ export function Toast(props: ToasterProps) {
           "--success-text": "var(--color-success-subtle-foreground)",
 
           "--error-bg": "var(--color-danger-subtle)",
-          "--error-border": "color-mix(in oklab, var(--danger-subtle-foreground) 20%, transparent)",
+          "--error-border":
+            "color-mix(in oklab, var(--danger-subtle-foreground) 20%, transparent)",
           "--error-text": "var(--color-danger-subtle-foreground)",
 
           "--warning-bg": "var(--color-warning-subtle)",
@@ -38,11 +39,12 @@ export function Toast(props: ToasterProps) {
           "--warning-text": "var(--color-warning-subtle-foreground)",
 
           "--info-bg": "var(--color-info-subtle)",
-          "--info-border": "color-mix(in oklab, var(--info-subtle-foreground) 20%, transparent)",
+          "--info-border":
+            "color-mix(in oklab, var(--info-subtle-foreground) 20%, transparent)",
           "--info-text": "var(--color-info-subtle-foreground)",
         } as React.CSSProperties
       }
       {...props}
     />
-  )
+  );
 }

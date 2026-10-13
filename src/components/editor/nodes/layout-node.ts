@@ -1,6 +1,7 @@
 import {
   $applyNodeReplacement,
   $getDocument,
+  addClassNamesToElement,
   type DOMConversionOutput,
   type DOMExportOutput,
   type EditorConfig,
@@ -11,7 +12,6 @@ import {
   type NodeKey,
   type SerializedElementNode,
   type Spread,
-  addClassNamesToElement,
 } from "lexical";
 
 export type SerializedLayoutContainerNode = Spread<
@@ -21,9 +21,13 @@ export type SerializedLayoutContainerNode = Spread<
 
 export type SerializedLayoutItemNode = SerializedElementNode;
 
-function $convertLayoutContainerElement(domNode: HTMLElement): DOMConversionOutput | null {
+function $convertLayoutContainerElement(
+  domNode: HTMLElement,
+): DOMConversionOutput | null {
   const templateColumns = domNode.style.gridTemplateColumns;
-  return templateColumns ? { node: $createLayoutContainerNode(templateColumns) } : null;
+  return templateColumns
+    ? { node: $createLayoutContainerNode(templateColumns) }
+    : null;
 }
 
 export class LayoutContainerNode extends ElementNode {
@@ -50,12 +54,18 @@ export class LayoutContainerNode extends ElementNode {
     return new LayoutContainerNode(node.__templateColumns, node.__key);
   }
 
-  static importJSON(serializedNode: SerializedLayoutContainerNode): LayoutContainerNode {
+  static importJSON(
+    serializedNode: SerializedLayoutContainerNode,
+  ): LayoutContainerNode {
     return $createLayoutContainerNode(serializedNode.templateColumns);
   }
 
-  updateFromJSON(serializedNode: LexicalUpdateJSON<SerializedLayoutContainerNode>): this {
-    return super.updateFromJSON(serializedNode).setTemplateColumns(serializedNode.templateColumns);
+  updateFromJSON(
+    serializedNode: LexicalUpdateJSON<SerializedLayoutContainerNode>,
+  ): this {
+    return super
+      .updateFromJSON(serializedNode)
+      .setTemplateColumns(serializedNode.templateColumns);
   }
 
   exportJSON(): SerializedLayoutContainerNode {
@@ -110,7 +120,9 @@ export class LayoutContainerNode extends ElementNode {
   }
 }
 
-export function $createLayoutContainerNode(templateColumns: string): LayoutContainerNode {
+export function $createLayoutContainerNode(
+  templateColumns: string,
+): LayoutContainerNode {
   return $applyNodeReplacement(new LayoutContainerNode(templateColumns));
 }
 
@@ -181,6 +193,8 @@ export function $createLayoutItemNode(): LayoutItemNode {
   return $applyNodeReplacement(new LayoutItemNode());
 }
 
-export function $isLayoutItemNode(node: LexicalNode | null | undefined): node is LayoutItemNode {
+export function $isLayoutItemNode(
+  node: LexicalNode | null | undefined,
+): node is LayoutItemNode {
   return node instanceof LayoutItemNode;
 }

@@ -1,35 +1,43 @@
-"use client"
+"use client";
 
-import NextLink from "next/link"
-import { usePathname } from "next/navigation"
-import type React from "react"
-import { Link } from "react-aria-components/Link"
-import { cn } from "cn"
+import { cn } from "cn";
+import NextLink from "next/link";
+import { usePathname } from "next/navigation";
+import type React from "react";
+import { Link } from "react-aria-components/Link";
 
 interface NavLinkProps {
-  href: string
-  isActive?: boolean
-  isNextLink?: boolean
-  children?: React.ReactNode
-  target?: string
-  className?: string
+  href: string;
+  isActive?: boolean;
+  isNextLink?: boolean;
+  children?: React.ReactNode;
+  target?: string;
+  className?: string;
 }
 
-const NavLink = ({ href, isActive, className, isNextLink, ...props }: NavLinkProps) => {
-  const El = isNextLink ? NextLink : Link
-  const pathname = usePathname()
-  const isCurrent = isActive || href === pathname
+const NavLink = ({
+  href,
+  isActive,
+  className,
+  isNextLink,
+  ...props
+}: NavLinkProps) => {
+  const El = isNextLink ? NextLink : Link;
+  const pathname = usePathname();
+  const isCurrent = isActive || href === pathname;
   return (
     <El
       href={href}
       className={cn(
         "relative flex items-center gap-x-2 p-2 text-sm tracking-tight outline-hidden transition-colors focus:outline-hidden focus-visible:text-foreground sm:py-3 **:[svg]:-mx-0.5",
-        isCurrent ? "font-medium text-foreground" : "text-muted-foreground hover:text-foreground",
-        className
+        isCurrent
+          ? "font-medium text-foreground"
+          : "text-muted-foreground hover:text-foreground",
+        className,
       )}
       {...props}
     />
-  )
-}
+  );
+};
 
-export { NavLink }
+export { NavLink };

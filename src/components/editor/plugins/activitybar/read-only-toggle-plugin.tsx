@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/16/solid";
 
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function ReadOnlyTogglePlugin() {
   const [editor] = useLexicalComposerContext();

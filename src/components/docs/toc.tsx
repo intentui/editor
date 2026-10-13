@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import type { TableOfContents, TOCItemType } from "fumadocs-core/toc"
-import { LayoutGroup, motion } from "motion/react"
-import { Suspense, useEffect, useId, useMemo, useRef, useState } from "react"
-import { tv } from "tailwind-variants"
-import { cn } from "cn"
+import { cn } from "cn";
+import type { TableOfContents, TOCItemType } from "fumadocs-core/toc";
+import { LayoutGroup, motion } from "motion/react";
+import { Suspense, useEffect, useId, useMemo, useRef, useState } from "react";
+import { tv } from "tailwind-variants";
 
 const tocStyles = tv({
   slots: {
@@ -22,53 +22,73 @@ const tocStyles = tv({
   defaultVariants: {
     context: "docs",
   },
-})
+});
 
 interface TocProps {
-  className?: string
-  items: TableOfContents
+  className?: string;
+  items: TableOfContents;
 }
 
 export function Toc({ className, items }: TocProps) {
-  const navRef = useRef<HTMLElement>(null)
-  const ids = useMemo(() => items.map((item) => item.url.split("#")[1] as string), [items])
-  const activeId = useActiveItem(ids)
-  const activeIndex = activeId ? ids.indexOf(activeId) : -1
-  const id = useId()
-  const minDepth = items.reduce((acc, item) => Math.min(acc, item.depth), 1000)
-  const styles = tocStyles({ context: "docs" })
+  const navRef = useRef<HTMLElement>(null);
+  const ids = useMemo(
+    () => items.map((item) => item.url.split("#")[1] as string),
+    [items],
+  );
+  const activeId = useActiveItem(ids);
+  const activeIndex = activeId ? ids.indexOf(activeId) : -1;
+  const id = useId();
+  const minDepth = items.reduce((acc, item) => Math.min(acc, item.depth), 1000);
+  const styles = tocStyles({ context: "docs" });
 
   useEffect(() => {
-    if (!activeId || activeIndex < 2) return
-    const nav = navRef.current
-    const anchor = nav?.querySelector<HTMLElement>(`li > a[href="#${activeId}"]`)
+    if (!activeId || activeIndex < 2) return;
+    const nav = navRef.current;
+    const anchor = nav?.querySelector<HTMLElement>(
+      `li > a[href="#${activeId}"]`,
+    );
 
     if (nav && anchor) {
-      const anchorRect = anchor.getBoundingClientRect()
-      const navRect = nav.getBoundingClientRect()
+      const anchorRect = anchor.getBoundingClientRect();
+      const navRect = nav.getBoundingClientRect();
 
       nav.scrollTo({
         top:
-          nav.scrollTop + anchorRect.top - navRect.top - (nav.clientHeight - anchorRect.height) / 2,
+          nav.scrollTop +
+          anchorRect.top -
+          navRect.top -
+          (nav.clientHeight - anchorRect.height) / 2,
         behavior: "smooth",
-      })
+      });
     }
-  }, [activeId, activeIndex])
+  }, [activeId, activeIndex]);
 
   return (
     <LayoutGroup id={id}>
       <aside className={styles.root({ className })}>
-        <nav ref={navRef} aria-labelledby="on-this-page-title" className={styles.nav()}>
+        <nav
+          ref={navRef}
+          aria-labelledby="on-this-page-title"
+          className={styles.nav()}
+        >
           <Suspense>
             {items.length > 0 && (
               <>
-                <h2 id="on-this-page-title" className="text-sm/6 mb-4 text-muted-foreground">
+                <h2
+                  id="on-this-page-title"
+                  className="text-sm/6 mb-4 text-muted-foreground"
+                >
                   On this page
                 </h2>
 
                 <ul className="flex flex-col gap-y-2.5">
                   {items.map((item) => (
-                    <TocLink key={item.url} item={item} activeId={activeId} minDepth={minDepth} />
+                    <TocLink
+                      key={item.url}
+                      item={item}
+                      activeId={activeId}
+                      minDepth={minDepth}
+                    />
                   ))}
                 </ul>
               </>
@@ -77,13 +97,13 @@ export function Toc({ className, items }: TocProps) {
         </nav>
       </aside>
     </LayoutGroup>
-  )
+  );
 }
 
 interface TocLinkProps {
-  item: TOCItemType
-  activeId: string | null
-  minDepth: number
+  item: TOCItemType;
+  activeId: string | null;
+  minDepth: number;
 }
 
 function TocLink({ item, activeId, minDepth }: TocLinkProps) {
@@ -106,7 +126,7 @@ function TocLink({ item, activeId, minDepth }: TocLinkProps) {
           "block text-sm/6 tracking-tight no-underline outline-hidden duration-200 focus-visible:text-foreground focus-visible:outline-hidden",
           item.url.split("#")[1] === activeId
             ? "text-foreground forced-colors:text-[Highlight]"
-            : "text-muted-foreground/90 forced-colors:text-[GrayText]"
+            : "text-muted-foreground/90 forced-colors:text-[GrayText]",
         )}
         style={{
           marginLeft: (item.depth - minDepth) * 16,
@@ -116,44 +136,45 @@ function TocLink({ item, activeId, minDepth }: TocLinkProps) {
         {item.title}
       </a>
     </li>
-  )
+  );
 }
 
 function useActiveItem(itemIds: string[]) {
-  const [activeId, setActiveId] = useState<string | null>(null)
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        let bestCandidate: IntersectionObserverEntry | null = null
+        let bestCandidate: IntersectionObserverEntry | null = null;
         for (const entry of entries) {
           if (
             entry.isIntersecting &&
-            (!bestCandidate || bestCandidate.intersectionRatio < entry.intersectionRatio)
+            (!bestCandidate ||
+              bestCandidate.intersectionRatio < entry.intersectionRatio)
           ) {
-            bestCandidate = entry
+            bestCandidate = entry;
           }
         }
 
         if (bestCandidate) {
-          setActiveId(bestCandidate.target.id)
+          setActiveId(bestCandidate.target.id);
         }
       },
-      { rootMargin: "0% 0% -25% 0%", threshold: 0.1 }
-    )
+      { rootMargin: "0% 0% -25% 0%", threshold: 0.1 },
+    );
 
     for (const id of itemIds) {
-      const element = document.getElementById(id)
-      if (element) observer.observe(element)
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
     }
 
     return () => {
       for (const id of itemIds) {
-        const element = document.getElementById(id)
-        if (element) observer.unobserve(element)
+        const element = document.getElementById(id);
+        if (element) observer.unobserve(element);
       }
-    }
-  }, [itemIds])
+    };
+  }, [itemIds]);
 
-  return activeId
+  return activeId;
 }

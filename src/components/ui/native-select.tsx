@@ -1,27 +1,41 @@
-"use client"
+"use client";
 
-import { ChevronUpDownIcon } from "@heroicons/react/20/solid"
-import { cn } from "cn"
-import { fieldStyles } from "@/components/ui/field"
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { cn } from "cn";
+import { fieldStyles } from "@/components/ui/field";
 
-export function NativeSelect({ className, ...props }: React.ComponentProps<"div">) {
+export function NativeSelect({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="control"
       className={fieldStyles({
-        className: cn("relative w-full has-[select:disabled]:opacity-50", className),
+        className: cn(
+          "relative w-full has-[select:disabled]:opacity-50",
+          className,
+        ),
       })}
       {...props}
     />
-  )
+  );
 }
 
-export interface NativeSelectContentProps extends React.ComponentProps<"select"> {
-  isInvalid?: boolean
+export interface NativeSelectContentProps
+  extends React.ComponentProps<"select"> {
+  isInvalid?: boolean;
 }
-export function NativeSelectContent({ className, isInvalid, ...props }: NativeSelectContentProps) {
+export function NativeSelectContent({
+  className,
+  isInvalid,
+  ...props
+}: NativeSelectContentProps) {
   return (
-    <div data-slot="control" className="relative flex items-center justify-between">
+    <div
+      data-slot="control"
+      className="relative flex items-center justify-between"
+    >
       <select
         data-slot="select"
         aria-invalid={isInvalid ? "true" : undefined}
@@ -35,11 +49,11 @@ export function NativeSelectContent({ className, isInvalid, ...props }: NativeSe
           "disabled:bg-muted forced-colors:in-disabled:text-[GrayText]",
           "in-disabled:bg-muted forced-colors:in-disabled:text-[GrayText]",
           "dark:scheme-dark",
-          className
+          className,
         )}
         {...props}
       />
       <ChevronUpDownIcon className="pointer-events-none absolute top-1/2 right-3 size-5 -translate-y-1/2 text-muted-foreground sm:right-2.5 sm:size-4" />
     </div>
-  )
+  );
 }

@@ -1,12 +1,9 @@
-import { useMemo } from "react";
-
-import { $getRoot, $getSelection } from "lexical";
-
+import { H1Icon, H2Icon, H3Icon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $createHeadingNode, type HeadingTagType } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
-
-import { H1Icon, H2Icon, H3Icon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection } from "lexical";
+import { useMemo } from "react";
 
 import {
   type ComponentPickerItem,
@@ -19,9 +16,24 @@ const HEADINGS: {
   description: string;
   icon: React.ComponentType<React.ComponentProps<"svg">>;
 }[] = [
-  { tag: "h1", label: "Heading 1", description: "Big section heading.", icon: H1Icon },
-  { tag: "h2", label: "Heading 2", description: "Medium section heading.", icon: H2Icon },
-  { tag: "h3", label: "Heading 3", description: "Small section heading.", icon: H3Icon },
+  {
+    tag: "h1",
+    label: "Heading 1",
+    description: "Big section heading.",
+    icon: H1Icon,
+  },
+  {
+    tag: "h2",
+    label: "Heading 2",
+    description: "Medium section heading.",
+    icon: H2Icon,
+  },
+  {
+    tag: "h3",
+    label: "Heading 3",
+    description: "Small section heading.",
+    icon: H3Icon,
+  },
 ];
 
 export function HeadingPickerPlugin() {

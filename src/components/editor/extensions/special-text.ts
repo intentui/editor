@@ -1,4 +1,4 @@
-import { TextNode, defineExtension } from "lexical";
+import { defineExtension, TextNode } from "lexical";
 
 import {
   $createSpecialTextNode,
@@ -38,5 +38,6 @@ function $specialTextNodeTransform(node: TextNode): void {
 export const SpecialTextExtension = defineExtension({
   name: "@intentui-editor/editor/SpecialText",
   nodes: () => [SpecialTextNode],
-  register: (editor) => editor.registerNodeTransform(TextNode, $specialTextNodeTransform),
+  register: (editor) =>
+    editor.registerNodeTransform(TextNode, $specialTextNodeTransform),
 });

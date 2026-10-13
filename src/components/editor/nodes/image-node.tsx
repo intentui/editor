@@ -1,32 +1,29 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { JSX } from "react";
-
+import { PhotoIcon } from "@heroicons/react/24/outline";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection";
+import { twJoin } from "cn";
 import {
   $applyNodeReplacement,
   $getDocument,
   $getNodeByKey,
   CLICK_COMMAND,
   COMMAND_PRIORITY_LOW,
+  createCommand,
+  DecoratorNode,
   type DOMConversionOutput,
   type DOMExportOutput,
-  DecoratorNode,
   type EditorConfig,
   type LexicalCommand,
   type LexicalNode,
+  mergeRegister,
   type NodeKey,
+  registerEventListeners,
   type SerializedLexicalNode,
   type Spread,
-  createCommand,
-  mergeRegister,
-  registerEventListeners,
 } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection";
-
-import { twJoin } from "cn";
-import { PhotoIcon } from "@heroicons/react/24/outline";
+import type { JSX } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface ImagePayload {
   altText: string;
@@ -164,7 +161,10 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return this.getLatest().__altText;
   }
 
-  setWidthAndHeight(width: "inherit" | number, height: "inherit" | number): this {
+  setWidthAndHeight(
+    width: "inherit" | number,
+    height: "inherit" | number,
+  ): this {
     const writable = this.getWritable();
     writable.__width = width;
     writable.__height = height;
@@ -193,10 +193,14 @@ export function $createImageNode({
   width,
   key,
 }: ImagePayload): ImageNode {
-  return $applyNodeReplacement(new ImageNode(src, altText, maxWidth, width, height, key));
+  return $applyNodeReplacement(
+    new ImageNode(src, altText, maxWidth, width, height, key),
+  );
 }
 
-export function $isImageNode(node: LexicalNode | null | undefined): node is ImageNode {
+export function $isImageNode(
+  node: LexicalNode | null | undefined,
+): node is ImageNode {
   return node instanceof ImageNode;
 }
 
@@ -222,7 +226,8 @@ function ImageComponent({
   width: "inherit" | number;
 }) {
   const imageRef = useRef<HTMLImageElement | null>(null);
-  const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
+  const [isSelected, setSelected, clearSelection] =
+    useLexicalNodeSelection(nodeKey);
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const [isLoadError, setIsLoadError] = useState(false);
@@ -248,7 +253,10 @@ function ImageComponent({
   );
 
   useEffect(
-    () => mergeRegister(editor.registerCommand(CLICK_COMMAND, onClick, COMMAND_PRIORITY_LOW)),
+    () =>
+      mergeRegister(
+        editor.registerCommand(CLICK_COMMAND, onClick, COMMAND_PRIORITY_LOW),
+      ),
     [editor, onClick],
   );
 
@@ -271,7 +279,8 @@ function ImageComponent({
 
     const handlePointerMove = (moveEvent: PointerEvent) => {
       const nextWidth = clamp(
-        startWidth + (isRTL ? startX - moveEvent.clientX : moveEvent.clientX - startX),
+        startWidth +
+          (isRTL ? startX - moveEvent.clientX : moveEvent.clientX - startX),
         MIN_WIDTH,
         maxWidth,
       );
@@ -313,6 +322,7 @@ function ImageComponent({
           <span className="text-xs">{altText || "Image failed to load"}</span>
         </span>
       ) : (
+        // biome-ignore lint/performance/noImgElement: Editor images support arbitrary user URLs and native DOM resizing.
         <img
           ref={imageRef}
           src={src}

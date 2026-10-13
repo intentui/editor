@@ -15,7 +15,8 @@ export const editorTheme: EditorThemeClasses = {
     h5: "relative mt-3 mb-2 scroll-m-20 text-lg font-semibold tracking-tight first:mt-0 last:mb-0",
     h6: "relative mt-3 mb-2 scroll-m-20 text-base font-semibold tracking-tight first:mt-0 last:mb-0",
   },
-  quote: "relative my-4 border-s-2 ps-6 text-muted-foreground italic first:mt-0 last:mb-0",
+  quote:
+    "relative my-4 border-s-2 ps-6 text-muted-foreground italic first:mt-0 last:mb-0",
   list: {
     checklist: "ps-1!",
     listitem: "relative",
@@ -43,7 +44,8 @@ export const editorTheme: EditorThemeClasses = {
   mark: "editor-mark",
   markOverlap: "editor-mark-overlap",
   ruby: "editor-ruby relative inline-block align-baseline leading-[1.3]",
-  specialText: "rounded bg-warning-subtle px-1 font-semibold text-warning-subtle-foreground",
+  specialText:
+    "rounded bg-warning-subtle px-1 font-semibold text-warning-subtle-foreground",
   text: {
     bold: "font-bold",
     italic: "italic",

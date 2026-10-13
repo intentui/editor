@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import { ToggleButton } from "react-aria-components/ToggleButton"
-import { tv } from "tailwind-variants"
-import { buttonStyles } from "@/components/ui/button"
-import { Text } from "@/components/ui/text"
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import { ToggleButton } from "react-aria-components/ToggleButton";
+import { tv } from "tailwind-variants";
+import { buttonStyles } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
 
 const showMoreStyles = tv({
   base: "text-sm leading-6 before:border-border after:border-border",
@@ -29,13 +29,14 @@ const showMoreStyles = tv({
   defaultVariants: {
     orientation: "horizontal",
   },
-})
+});
 
-interface ShowMoreProps extends Omit<React.ComponentProps<typeof ToggleButton>, "className"> {
-  className?: string
-  orientation?: "horizontal" | "vertical"
-  as?: "text" | "button"
-  text?: string
+interface ShowMoreProps
+  extends Omit<React.ComponentProps<typeof ToggleButton>, "className"> {
+  className?: string;
+  orientation?: "horizontal" | "vertical";
+  as?: "text" | "button";
+  text?: string;
 }
 
 const ShowMore = ({
@@ -49,7 +50,11 @@ const ShowMore = ({
       {as === "button" ? (
         <ToggleButton
           {...props}
-          className={buttonStyles({ isCircle: true, intent: "outline", size: "sm" })}
+          className={buttonStyles({
+            isCircle: true,
+            intent: "outline",
+            size: "sm",
+          })}
         >
           {composeRenderProps(props.children, (children) => children)}
         </ToggleButton>
@@ -57,8 +62,8 @@ const ShowMore = ({
         <Text>{props.text}</Text>
       )}
     </div>
-  )
-}
+  );
+};
 
-export type { ShowMoreProps }
-export { ShowMore }
+export type { ShowMoreProps };
+export { ShowMore };

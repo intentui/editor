@@ -1,12 +1,9 @@
-import { useMemo } from "react";
-
-import { $getRoot, $getSelection } from "lexical";
-
+import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $createQuoteNode } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
-
-import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection } from "lexical";
+import { useMemo } from "react";
 
 import {
   type ComponentPickerItem,
@@ -23,7 +20,9 @@ export function QuotePickerPlugin() {
         label: "Quote",
         group: "Basic blocks",
         description: "Capture a quote.",
-        icon: <ChatBubbleBottomCenterTextIcon className="text-muted-foreground" />,
+        icon: (
+          <ChatBubbleBottomCenterTextIcon className="text-muted-foreground" />
+        ),
         keywords: ["quote", "block quote", "blockquote"],
         onSelect: () =>
           editor.update(() => {

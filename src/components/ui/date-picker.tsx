@@ -1,28 +1,29 @@
-"use client"
+"use client";
 
-import { CalendarDaysIcon } from "@heroicons/react/24/outline"
-import type { DateDuration } from "@internationalized/date"
-import { Button } from "react-aria-components/Button"
-import type { DateValue } from "react-aria-components/DateField"
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import type { DateDuration } from "@internationalized/date";
+import { twJoin } from "cn";
+import { Button } from "react-aria-components/Button";
+import type { DateValue } from "react-aria-components/DateField";
 import {
   DatePicker as DatePickerPrimitive,
   type DatePickerProps as DatePickerPrimitiveProps,
-} from "react-aria-components/DatePicker"
-import type { GroupProps } from "react-aria-components/Group"
-import type { PopoverProps } from "react-aria-components/Popover"
-import { twJoin } from "cn"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { cx } from "@/lib/primitive"
-import { Calendar } from "./calendar"
-import { DateInput } from "./date-field"
-import { fieldStyles } from "./field"
-import { InputGroup } from "./input"
-import { Dialog } from "./dialog"
-import { Popover } from "./popover"
-import { RangeCalendar } from "./range-calendar"
+} from "react-aria-components/DatePicker";
+import type { GroupProps } from "react-aria-components/Group";
+import type { PopoverProps } from "react-aria-components/Popover";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cx } from "@/lib/primitive";
+import { Calendar } from "./calendar";
+import { DateInput } from "./date-field";
+import { Dialog } from "./dialog";
+import { fieldStyles } from "./field";
+import { InputGroup } from "./input";
+import { Popover } from "./popover";
+import { RangeCalendar } from "./range-calendar";
 
-export interface DatePickerProps<T extends DateValue> extends DatePickerPrimitiveProps<T> {
-  popover?: Omit<PopoverProps, "children">
+export interface DatePickerProps<T extends DateValue>
+  extends DatePickerPrimitiveProps<T> {
+  popover?: Omit<PopoverProps, "children">;
 }
 
 export function DatePicker<T extends DateValue>({
@@ -44,13 +45,13 @@ export function DatePicker<T extends DateValue>({
         </>
       )}
     </DatePickerPrimitive>
-  )
+  );
 }
 
 export interface DatePickerOverlayProps extends Omit<PopoverProps, "children"> {
-  range?: boolean
-  visibleDuration?: DateDuration
-  pageBehavior?: "visible" | "single"
+  range?: boolean;
+  visibleDuration?: DateDuration;
+  pageBehavior?: "visible" | "single";
 }
 
 export function DatePickerOverlay({
@@ -60,13 +61,16 @@ export function DatePickerOverlay({
   range,
   ...props
 }: DatePickerOverlayProps) {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   return isMobile ? (
     <Dialog closeButton={false}>
       <div className="flex justify-center p-6">
         {range ? (
-          <RangeCalendar pageBehavior={pageBehavior} visibleDuration={visibleDuration} />
+          <RangeCalendar
+            pageBehavior={pageBehavior}
+            visibleDuration={visibleDuration}
+          />
         ) : (
           <Calendar />
         )}
@@ -78,22 +82,28 @@ export function DatePickerOverlay({
       arrow={false}
       className={twJoin(
         "flex min-w-auto max-w-none snap-x justify-center p-4 sm:min-w-[16.5rem] sm:p-2 sm:pt-3",
-        visibleDuration?.months === 1 ? "sm:max-w-2xs" : "sm:max-w-none"
+        visibleDuration?.months === 1 ? "sm:max-w-2xs" : "sm:max-w-none",
       )}
       {...props}
     >
       {range ? (
-        <RangeCalendar pageBehavior={pageBehavior} visibleDuration={visibleDuration} />
+        <RangeCalendar
+          pageBehavior={pageBehavior}
+          visibleDuration={visibleDuration}
+        />
       ) : (
         <Calendar />
       )}
     </Popover>
-  )
+  );
 }
 
 export function DatePickerTrigger({ className, ...props }: GroupProps) {
   return (
-    <InputGroup className={cx("*:data-[slot=control]:w-full", className)} {...props}>
+    <InputGroup
+      className={cx("*:data-[slot=control]:w-full", className)}
+      {...props}
+    >
       <DateInput />
       <Button
         data-slot="date-picker-trigger"
@@ -101,11 +111,11 @@ export function DatePickerTrigger({ className, ...props }: GroupProps) {
           "touch-target grid place-content-center outline-hidden",
           "pressed:text-foreground text-muted-foreground hover:text-foreground focus-visible:text-foreground",
           "px-[calc(--spacing(3.5)-1px)] py-[calc(--spacing(2.5)-1px)] sm:px-[calc(--spacing(3)-1px)] sm:py-[calc(--spacing(1.5)-1px)]",
-          "*:size-5 sm:*:size-4"
+          "*:size-5 sm:*:size-4",
         )}
       >
         <CalendarDaysIcon />
       </Button>
     </InputGroup>
-  )
+  );
 }

@@ -1,8 +1,12 @@
-"use client"
+"use client";
 
-import { ComputerDesktopIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline"
-import { useTheme } from "@/components/theme-provider"
-import { Button } from "@/components/ui/button"
+import {
+  ComputerDesktopIcon,
+  MoonIcon,
+  SunIcon,
+} from "@heroicons/react/24/outline";
+import { useTheme } from "@/components/theme-provider";
+import { Button } from "@/components/ui/button";
 
 export function ThemeSwitcher({
   isCircle = false,
@@ -10,12 +14,13 @@ export function ThemeSwitcher({
   className,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : theme === "dark" ? "system" : "light"
-    setTheme(nextTheme)
-  }
+    const nextTheme =
+      theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
+    setTheme(nextTheme);
+  };
 
   return (
     <Button
@@ -27,7 +32,13 @@ export function ThemeSwitcher({
       onPress={toggleTheme}
       {...props}
     >
-      {theme === "light" ? <SunIcon /> : theme === "dark" ? <MoonIcon /> : <ComputerDesktopIcon />}
+      {theme === "light" ? (
+        <SunIcon />
+      ) : theme === "dark" ? (
+        <MoonIcon />
+      ) : (
+        <ComputerDesktopIcon />
+      )}
     </Button>
-  )
+  );
 }

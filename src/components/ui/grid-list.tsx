@@ -1,28 +1,34 @@
-"use client"
+"use client";
 
-import { Button } from "react-aria-components/Button"
-import type { GridListItemProps, GridListProps } from "react-aria-components/GridList"
+import { cn } from "cn";
+import { Button } from "react-aria-components/Button";
+import type {
+  GridListItemProps,
+  GridListProps,
+} from "react-aria-components/GridList";
 import {
-  GridList as GridListPrimitive,
   GridListHeader as GridListHeaderPrimitive,
   GridListItem as GridListItemPrimitive,
+  GridList as GridListPrimitive,
   GridListSection as GridListSectionPrimitive,
-} from "react-aria-components/GridList"
-import { Text, type TextProps } from "react-aria-components/Text"
-import { cn } from "cn"
-import { cx } from "@/lib/primitive"
-import { Checkbox, CheckboxField } from "./checkbox"
+} from "react-aria-components/GridList";
+import { Text, type TextProps } from "react-aria-components/Text";
+import { cx } from "@/lib/primitive";
+import { Checkbox, CheckboxField } from "./checkbox";
 
-const GridList = <T extends object>({ className, ...props }: GridListProps<T>) => (
+const GridList = <T extends object>({
+  className,
+  ...props
+}: GridListProps<T>) => (
   <GridListPrimitive
     data-slot="grid-list"
     className={cx(
       "relative divide-y overflow-hidden rounded-lg border bg-background *:drop-target:border-accent sm:text-sm/6 dark:bg-muted",
-      className
+      className,
     )}
     {...props}
   />
-)
+);
 
 const GridListSection = <T extends object>({
   className,
@@ -34,8 +40,8 @@ const GridListSection = <T extends object>({
       className={cn("divide-y", className)}
       {...props}
     />
-  )
-}
+  );
+};
 
 const GridListHeader = ({
   className,
@@ -47,11 +53,11 @@ const GridListHeader = ({
       className={cn("px-3 py-2.5 font-semibold text-sm/6", className)}
       {...props}
     />
-  )
-}
+  );
+};
 
 const GridListItem = ({ className, children, ...props }: GridListItemProps) => {
-  const textValue = typeof children === "string" ? children : undefined
+  const textValue = typeof children === "string" ? children : undefined;
   return (
     <GridListItemPrimitive
       textValue={textValue}
@@ -63,7 +69,7 @@ const GridListItem = ({ className, children, ...props }: GridListItemProps) => {
         "hover:bg-accent/50 **:[svg:not([data-slot='check-indicator'])]:size-5 **:[svg:not([data-slot='check-indicator'])]:shrink-0 **:[svg:not([data-slot='check-indicator'])]:text-muted-foreground sm:**:[svg:not([data-slot='check-indicator'])]:size-4",
         "selected:bg-accent/40 selected:text-foreground selected:hover:bg-accent/80 selected:**:[.text-muted-foreground]:text-accent-foreground/80",
         "href" in props && "cursor-pointer",
-        className
+        className,
       )}
     >
       {(values) => (
@@ -105,54 +111,81 @@ const GridListItem = ({ className, children, ...props }: GridListItemProps) => {
             </Button>
           )}
 
-          {values.selectionMode === "multiple" && values.selectionBehavior === "toggle" && (
-            <CheckboxField className="gap-x-0" slot="selection">
-              <Checkbox className="col-span-1" />
-            </CheckboxField>
-          )}
+          {values.selectionMode === "multiple" &&
+            values.selectionBehavior === "toggle" && (
+              <CheckboxField className="gap-x-0" slot="selection">
+                <Checkbox className="col-span-1" />
+              </CheckboxField>
+            )}
           {typeof children === "function" ? children(values) : children}
         </>
       )}
     </GridListItemPrimitive>
-  )
-}
+  );
+};
 
-const GridListEmptyState = ({ ref, className, ...props }: React.ComponentProps<"div">) => (
+const GridListEmptyState = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<"div">) => (
   <div ref={ref} className={cn("p-6", className)} {...props} />
-)
+);
 
-const GridListSpacer = ({ className, ref, ...props }: React.ComponentProps<"div">) => {
-  return <div ref={ref} aria-hidden className={cn("-ms-4 flex-1", className)} {...props} />
-}
-
-const GridListStart = ({ className, ref, ...props }: React.ComponentProps<"div">) => {
+const GridListSpacer = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) => {
   return (
     <div
       ref={ref}
-      className={cn("relative flex items-center gap-x-2.5 sm:gap-x-3", className)}
+      aria-hidden
+      className={cn("-ms-4 flex-1", className)}
       {...props}
     />
-  )
-}
+  );
+};
+
+const GridListStart = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "relative flex items-center gap-x-2.5 sm:gap-x-3",
+        className,
+      )}
+      {...props}
+    />
+  );
+};
 
 interface GridListTextProps extends TextProps {
-  ref?: React.Ref<HTMLDivElement>
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 const GridListLabel = ({ className, ref, ...props }: GridListTextProps) => (
   <Text ref={ref} className={cn("font-medium", className)} {...props} />
-)
+);
 
-const GridListDescription = ({ className, ref, ...props }: GridListTextProps) => (
+const GridListDescription = ({
+  className,
+  ref,
+  ...props
+}: GridListTextProps) => (
   <Text
     slot="description"
     ref={ref}
     className={cn("font-normal text-muted-foreground text-sm", className)}
     {...props}
   />
-)
+);
 
-export type { GridListItemProps, GridListProps }
+export type { GridListItemProps, GridListProps };
 export {
   GridList,
   GridListDescription,
@@ -163,4 +196,4 @@ export {
   GridListSection,
   GridListSpacer,
   GridListStart,
-}
+};

@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { ArrowUpRightIcon } from "@heroicons/react/20/solid"
-import { usePathname } from "next/navigation"
-import { useEffect, useRef } from "react"
-import type { LinkProps } from "react-aria-components/Link"
-import { Link } from "react-aria-components/Link"
-import { cn } from "cn"
-import { Badge } from "@/components/ui/badge"
-import type { SidebarSection } from "@/lib/docs-nav"
+import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
+import { cn } from "cn";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
+import type { LinkProps } from "react-aria-components/Link";
+import { Link } from "react-aria-components/Link";
+import { Badge } from "@/components/ui/badge";
+import type { SidebarSection } from "@/lib/docs-nav";
 
 export function Aside({
   sections,
@@ -15,23 +15,25 @@ export function Aside({
   onNavigate,
   children,
 }: {
-  sections: SidebarSection[]
-  className?: string
-  onNavigate?: () => void
-  children?: React.ReactNode
+  sections: SidebarSection[];
+  className?: string;
+  onNavigate?: () => void;
+  children?: React.ReactNode;
 }) {
   return (
     <div
       className={cn(
         "sticky h-screen w-full [--gap:--spacing(6)] sm:top-[53px] sm:h-[calc(100dvh-53px)] sm:w-64 sm:[--gap:--spacing(8)]",
-        className
+        className,
       )}
     >
       <div
         data-docs-sidebar-scroll
         className="flex **:data-[slot=section]:px-4 flex-col gap-y-(--gap) h-full py-10 scrollbar-thin scroll-fade-y overflow-y-auto"
       >
-        {children && <ul className="px-4 space-y-2 sm:*:text-sm/6">{children}</ul>}
+        {children && (
+          <ul className="px-4 space-y-2 sm:*:text-sm/6">{children}</ul>
+        )}
         {sections.map((section) => (
           <div key={section.title}>
             <AsideHeader>{section.title}</AsideHeader>
@@ -55,32 +57,35 @@ export function Aside({
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 interface AsideLinkProps extends LinkProps {
-  isActive?: boolean
-  href: string
+  isActive?: boolean;
+  href: string;
 }
 
 export function AsideLink({ href, ...props }: AsideLinkProps) {
-  const pathname = usePathname()
-  const isActive = pathname === href
-  const ref = useRef<HTMLAnchorElement>(null)
+  const pathname = usePathname();
+  const isActive = pathname === href;
+  const ref = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
     if (isActive && ref.current) {
-      const scrollContainer = ref.current.closest<HTMLElement>("[data-docs-sidebar-scroll]")
-      if (!scrollContainer) return
+      const scrollContainer = ref.current.closest<HTMLElement>(
+        "[data-docs-sidebar-scroll]",
+      );
+      if (!scrollContainer) return;
 
-      const linkRect = ref.current.getBoundingClientRect()
-      const containerRect = scrollContainer.getBoundingClientRect()
-      const visibleTop = Math.max(containerRect.top, 0)
-      const visibleBottom = Math.min(containerRect.bottom, window.innerHeight)
-      const edgePadding = 32
+      const linkRect = ref.current.getBoundingClientRect();
+      const containerRect = scrollContainer.getBoundingClientRect();
+      const visibleTop = Math.max(containerRect.top, 0);
+      const visibleBottom = Math.min(containerRect.bottom, window.innerHeight);
+      const edgePadding = 32;
       const isWithinVisibleArea =
-        linkRect.top >= visibleTop + edgePadding && linkRect.bottom <= visibleBottom - edgePadding
+        linkRect.top >= visibleTop + edgePadding &&
+        linkRect.bottom <= visibleBottom - edgePadding;
 
-      if (isWithinVisibleArea) return
+      if (isWithinVisibleArea) return;
 
       scrollContainer.scrollTo({
         top:
@@ -88,9 +93,9 @@ export function AsideLink({ href, ...props }: AsideLinkProps) {
           (linkRect.top + linkRect.bottom) / 2 -
           (visibleTop + visibleBottom) / 2,
         behavior: "instant",
-      })
+      });
     }
-  }, [isActive])
+  }, [isActive]);
 
   return (
     <li className="relative">
@@ -108,25 +113,23 @@ export function AsideLink({ href, ...props }: AsideLinkProps) {
           "group relative mb-0.5 flex items-center gap-x-2 rounded-lg px-2 py-1 text-base text-foreground/70 sm:text-sm/6",
           "hover:text-foreground focus:text-foreground focus:outline-hidden",
           "*:[svg]:size-4.5 *:[svg]:text-muted-foreground hover:*:[svg]:text-foreground",
-          isActive && "font-medium text-foreground"
+          isActive && "font-medium text-foreground",
         )}
       >
-        <>
-          {props.children as React.ReactNode}
+        {props.children as React.ReactNode}
 
-          {props.target === "_blank" && (
-            <ArrowUpRightIcon
-              style={{
-                width: "16px",
-                height: "16px",
-              }}
-              className="-mr-1 ml-auto block text-muted-foreground lg:hidden lg:group-hover:block"
-            />
-          )}
-        </>
+        {props.target === "_blank" && (
+          <ArrowUpRightIcon
+            style={{
+              width: "16px",
+              height: "16px",
+            }}
+            className="-mr-1 ml-auto block text-muted-foreground lg:hidden lg:group-hover:block"
+          />
+        )}
       </Link>
     </li>
-  )
+  );
 }
 
 function AsideHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -134,9 +137,9 @@ function AsideHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       className={cn(
         "relative mb-2 block px-6 font-mono text-[11px] text-muted-foreground uppercase",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import {
   OverlayArrow,
   Popover as PopoverPrimitive,
   type PopoverProps as PopoverPrimitiveProps,
-} from "react-aria-components/Popover"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/Popover";
+import { cx } from "@/lib/primitive";
 import {
   DialogBody,
   DialogClose,
@@ -14,22 +14,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog"
+} from "./dialog";
 
-const PopoverTrigger = DialogTrigger
+const PopoverTrigger = DialogTrigger;
 
-const PopoverTitle = DialogTitle
-const PopoverHeader = DialogHeader
-const PopoverBody = DialogBody
-const PopoverFooter = DialogFooter
+const PopoverTitle = DialogTitle;
+const PopoverHeader = DialogHeader;
+const PopoverBody = DialogBody;
+const PopoverFooter = DialogFooter;
 
 interface PopoverProps extends PopoverPrimitiveProps {
-  arrow?: boolean
-  ref?: React.Ref<HTMLDivElement>
+  arrow?: boolean;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
-const Popover = ({ children, arrow = false, className, ref, ...props }: PopoverProps) => {
-  const offset = props.offset ?? (arrow ? 12 : 8)
+const Popover = ({
+  children,
+  arrow = false,
+  className,
+  ref,
+  ...props
+}: PopoverProps) => {
+  const offset = props.offset ?? (arrow ? 12 : 8);
   return (
     <PopoverPrimitive
       ref={ref}
@@ -42,7 +48,7 @@ const Popover = ({ children, arrow = false, className, ref, ...props }: PopoverP
         "placement-left:entering:slide-in-from-right-1 placement-right:entering:slide-in-from-left-1 placement-top:entering:slide-in-from-bottom-1 placement-bottom:entering:slide-in-from-top-1",
         "placement-left:exiting:slide-out-to-right-1 placement-right:exiting:slide-out-to-left-1 placement-top:exiting:slide-out-to-bottom-1 placement-bottom:exiting:slide-out-to-top-1",
         "forced-colors:bg-[Canvas]",
-        className
+        className,
       )}
       {...props}
     >
@@ -60,26 +66,29 @@ const Popover = ({ children, arrow = false, className, ref, ...props }: PopoverP
               </svg>
             </OverlayArrow>
           )}
-          <div data-slot="popover-inner" className="max-h-[inherit] overflow-y-auto flex flex-col">
+          <div
+            data-slot="popover-inner"
+            className="max-h-[inherit] overflow-y-auto flex flex-col"
+          >
             {typeof children === "function" ? children(values) : children}
           </div>
         </>
       )}
     </PopoverPrimitive>
-  )
-}
+  );
+};
 
-const PopoverClose = DialogClose
-const PopoverDescription = DialogDescription
+const PopoverClose = DialogClose;
+const PopoverDescription = DialogDescription;
 
-export type { PopoverProps }
+export type { PopoverProps };
 export {
-  PopoverTrigger,
+  Popover,
   PopoverBody,
   PopoverClose,
-  Popover,
   PopoverDescription,
   PopoverFooter,
   PopoverHeader,
   PopoverTitle,
-}
+  PopoverTrigger,
+};

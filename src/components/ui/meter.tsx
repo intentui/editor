@@ -1,21 +1,23 @@
-"use client"
+"use client";
 
-import { createContext, use } from "react"
+import { cn } from "cn";
+import { createContext, use } from "react";
 import {
   Meter as PrimitiveMeter,
   type MeterProps as PrimitiveMeterProps,
   type MeterRenderProps as PrimitiveMeterRenderProps,
-} from "react-aria-components/Meter"
-import { cn } from "cn"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/Meter";
+import { cx } from "@/lib/primitive";
 
 interface MeterRenderProps extends PrimitiveMeterRenderProps {
-  color?: string
+  color?: string;
 }
 
-const MeterContext = createContext<MeterRenderProps | null>(null)
+const MeterContext = createContext<MeterRenderProps | null>(null);
 
-interface MeterProps extends PrimitiveMeterProps, Pick<MeterRenderProps, "color"> {}
+interface MeterProps
+  extends PrimitiveMeterProps,
+    Pick<MeterRenderProps, "color"> {}
 
 export function Meter({ className, children, color, ...props }: MeterProps) {
   return (
@@ -31,7 +33,7 @@ export function Meter({ className, children, color, ...props }: MeterProps) {
         "[&>[data-slot=meter-track]+[slot=description]]:mt-2",
         "[&>[data-slot=meter-track]+[slot=errorMessage]]:mt-2",
         "*:data-[slot=meter-header]:font-medium",
-        className
+        className,
       )}
     >
       {(values) => (
@@ -40,54 +42,71 @@ export function Meter({ className, children, color, ...props }: MeterProps) {
         </MeterContext>
       )}
     </PrimitiveMeter>
-  )
+  );
 }
 
-export function MeterTrack({ className, ...props }: React.ComponentProps<"div">) {
-  const { percentage, color } = use(MeterContext)!
+export function MeterTrack({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  const context = use(MeterContext);
+  if (!context) throw new Error("This component requires its parent provider.");
+  const { percentage, color } = context;
   return (
     <div
       data-slot="meter-track"
       className={cn(
         "[--meter-height:--spacing(1.5)]",
         "relative h-(--meter-height) w-full overflow-hidden rounded-full bg-secondary outline outline-transparent -outline-offset-1",
-        className
+        className,
       )}
       {...props}
     >
       <div
         data-slot="meter-fill"
         className="absolute start-0 top-0 h-full rounded-full transition-[width] duration-200 ease-linear will-change-[width] motion-reduce:transition-none forced-colors:bg-[Highlight]"
-        style={{ width: `${percentage}%`, backgroundColor: color ?? getMeterColor(percentage) }}
+        style={{
+          width: `${percentage}%`,
+          backgroundColor: color ?? getMeterColor(percentage),
+        }}
       />
     </div>
-  )
+  );
 }
 
 export function MeterValue({
   className,
   ...props
 }: Omit<React.ComponentProps<"span">, "children">) {
-  const { valueText } = use(MeterContext)!
+  const context = use(MeterContext);
+  if (!context) throw new Error("This component requires its parent provider.");
+  const { valueText } = context;
   return (
-    <span data-slot="meter-value" className={cn("text-base/6 sm:text-sm/6", className)} {...props}>
+    <span
+      data-slot="meter-value"
+      className={cn("text-base/6 sm:text-sm/6", className)}
+      {...props}
+    >
       {valueText}
     </span>
-  )
+  );
 }
 
-export function MeterHeader({ className, ...props }: React.ComponentProps<"div">) {
+export function MeterHeader({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="meter-header"
       className={cn("flex items-center justify-between", className)}
       {...props}
     />
-  )
+  );
 }
 
 function getMeterColor(value: number): string {
-  if (value < 50) return "var(--color-success)"
-  if (value < 80) return "var(--color-warning)"
-  return "var(--color-danger)"
+  if (value < 50) return "var(--color-success)";
+  if (value < 80) return "var(--color-warning)";
+  return "var(--color-danger)";
 }

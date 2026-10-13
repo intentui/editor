@@ -1,6 +1,5 @@
-import { useMemo } from "react";
-
 import { PhotoIcon } from "@heroicons/react/16/solid";
+import { useMemo } from "react";
 
 import { useImageFilePicker } from "@/components/editor/plugins/block-insert/insert-image-plugin";
 import {

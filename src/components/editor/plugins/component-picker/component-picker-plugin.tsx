@@ -1,6 +1,14 @@
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
-  Fragment,
+  LexicalTypeaheadMenuPlugin,
+  MenuOption,
+  useBasicTypeaheadTriggerMatch,
+} from "@lexical/react/LexicalTypeaheadMenuPlugin";
+import { twJoin } from "cn";
+import type { TextNode } from "lexical";
+import {
   createContext,
+  Fragment,
   useCallback,
   useContext,
   useEffect,
@@ -9,19 +17,7 @@ import {
   useRef,
   useState,
 } from "react";
-
 import { createPortal } from "react-dom";
-
-import type { TextNode } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import {
-  LexicalTypeaheadMenuPlugin,
-  MenuOption,
-  useBasicTypeaheadTriggerMatch,
-} from "@lexical/react/LexicalTypeaheadMenuPlugin";
-
-import { twJoin } from "cn";
 
 export type ComponentPickerItem = {
   value: string;
@@ -40,12 +36,15 @@ type ComponentPickerContextValue = {
   queryString: string | null;
 };
 
-const ComponentPickerContext = createContext<ComponentPickerContextValue | null>(null);
+const ComponentPickerContext =
+  createContext<ComponentPickerContextValue | null>(null);
 
 function useComponentPickerContext(): ComponentPickerContextValue {
   const context = useContext(ComponentPickerContext);
   if (context === null) {
-    throw new Error("ComponentPicker plugins must be rendered inside <ComponentPicker>");
+    throw new Error(
+      "ComponentPicker plugins must be rendered inside <ComponentPicker>",
+    );
   }
   return context;
 }
@@ -80,23 +79,28 @@ export function ComponentPicker({
 }) {
   const [editor] = useLexicalComposerContext();
   const [queryString, setQueryString] = useState<string | null>(null);
-  const [itemsById, setItemsById] = useState(() => new Map<string, ComponentPickerItem[]>());
+  const [itemsById, setItemsById] = useState(
+    () => new Map<string, ComponentPickerItem[]>(),
+  );
   const registrationOrderRef = useRef(new Map<string, number>());
 
-  const registerItems = useCallback((id: string, items: ComponentPickerItem[]) => {
-    const order = registrationOrderRef.current;
-    if (!order.has(id)) {
-      order.set(id, order.size);
-    }
-    setItemsById((prev) => new Map(prev).set(id, items));
-    return () => {
-      setItemsById((prev) => {
-        const next = new Map(prev);
-        next.delete(id);
-        return next;
-      });
-    };
-  }, []);
+  const registerItems = useCallback(
+    (id: string, items: ComponentPickerItem[]) => {
+      const order = registrationOrderRef.current;
+      if (!order.has(id)) {
+        order.set(id, order.size);
+      }
+      setItemsById((prev) => new Map(prev).set(id, items));
+      return () => {
+        setItemsById((prev) => {
+          const next = new Map(prev);
+          next.delete(id);
+          return next;
+        });
+      };
+    },
+    [],
+  );
 
   const contextValue = useMemo(
     () => ({ registerItems, queryString }),
@@ -120,7 +124,9 @@ export function ComponentPicker({
         : allItems.filter(
             (item) =>
               item.label.toLowerCase().includes(query) ||
-              (item.keywords ?? []).some((keyword) => keyword.toLowerCase().includes(query)),
+              (item.keywords ?? []).some((keyword) =>
+                keyword.toLowerCase().includes(query),
+              ),
           );
     return matches.map((item) => new ComponentPickerOption(item));
   }, [itemsById, queryString]);
@@ -171,7 +177,8 @@ export function ComponentPicker({
                     >
                       {options.map((option, index) => {
                         const { group, icon, label, description } = option.item;
-                        const showGroup = group && group !== options[index - 1]?.item.group;
+                        const showGroup =
+                          group && group !== options[index - 1]?.item.group;
                         return (
                           <Fragment key={option.key}>
                             {showGroup && (
@@ -190,16 +197,29 @@ export function ComponentPicker({
                               onMouseDown={(event) => event.preventDefault()}
                               onMouseEnter={() => setHighlightedIndex(index)}
                               onClick={() => selectOptionAndCleanUp(option)}
+                              onKeyDown={(event) => {
+                                if (
+                                  event.key === "Enter" ||
+                                  event.key === " "
+                                ) {
+                                  event.preventDefault();
+                                  selectOptionAndCleanUp(option);
+                                }
+                              }}
                               className={twJoin(
                                 "flex cursor-default items-center gap-x-3 rounded-[calc(var(--radius-lg)-(--spacing(1)))] px-2 py-1.5 outline-hidden",
-                                selectedIndex === index ? "bg-accent text-accent-foreground" : "text-foreground",
+                                selectedIndex === index
+                                  ? "bg-accent text-accent-foreground"
+                                  : "text-foreground",
                               )}
                             >
                               <span className="grid size-9 shrink-0 place-content-center rounded-md border bg-background [&_svg]:size-5">
                                 {icon}
                               </span>
                               <span className="grid min-w-0">
-                                <span className="truncate font-medium">{label}</span>
+                                <span className="truncate font-medium">
+                                  {label}
+                                </span>
                                 {description && (
                                   <span className="truncate text-muted-foreground text-xs">
                                     {description}
@@ -227,6 +247,12 @@ export function ComponentPicker({
                           onMouseDown={(event) => event.preventDefault()}
                           onMouseEnter={() => setHighlightedIndex(index)}
                           onClick={() => selectOptionAndCleanUp(option)}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault();
+                              selectOptionAndCleanUp(option);
+                            }
+                          }}
                           className={twJoin(
                             "col-span-full grid cursor-default grid-cols-subgrid items-center gap-x-2 rounded-[calc(var(--radius-lg)-(--spacing(1)))] px-2.5 py-2 outline-hidden sm:px-2 sm:py-1.5",
                             "[&_svg]:size-4 [&_svg]:shrink-0",

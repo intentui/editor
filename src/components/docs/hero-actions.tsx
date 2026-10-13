@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { buttonStyles } from "@/components/ui/button"
+import Link from "next/link";
+import { buttonStyles } from "@/components/ui/button";
 
 export function HeroActions() {
   return (
@@ -19,5 +19,5 @@ export function HeroActions() {
         Installation
       </Link>
     </div>
-  )
+  );
 }

@@ -1,16 +1,24 @@
 import {
+  $createCodeNode,
+  $isCodeNode,
+  CodeIndentExtension,
+  CodeNode,
+} from "@lexical/code-core";
+import {
+  CodeShikiExtension,
+  ShikiTokenizer,
+  type Tokenizer,
+} from "@lexical/code-shiki";
+import { $setBlocksType } from "@lexical/selection";
+import {
   $getRoot,
   $getSelection,
   $isRangeSelection,
   $nodesOfType,
-  type LexicalEditor,
   configExtension,
   defineExtension,
+  type LexicalEditor,
 } from "lexical";
-
-import { $createCodeNode, $isCodeNode, CodeIndentExtension, CodeNode } from "@lexical/code-core";
-import { CodeShikiExtension, ShikiTokenizer, type Tokenizer } from "@lexical/code-shiki";
-import { $setBlocksType } from "@lexical/selection";
 
 export function insertCodeBlock(editor: LexicalEditor) {
   editor.update(() => {
@@ -46,7 +54,9 @@ function getPreferredCodeTheme() {
   if (typeof document === "undefined") {
     return LIGHT_CODE_THEME;
   }
-  return document.documentElement.classList.contains("dark") ? DARK_CODE_THEME : LIGHT_CODE_THEME;
+  return document.documentElement.classList.contains("dark")
+    ? DARK_CODE_THEME
+    : LIGHT_CODE_THEME;
 }
 
 const tokenizer: Tokenizer = {

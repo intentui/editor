@@ -1,17 +1,21 @@
-"use client"
+"use client";
 
-import { createContext, use } from "react"
+import { cn } from "cn";
+import { createContext, use } from "react";
 import {
   ProgressBar as ProgressBarPrimitive,
   type ProgressBarProps,
   type ProgressBarRenderProps,
-} from "react-aria-components/ProgressBar"
-import { cn } from "cn"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/ProgressBar";
+import { cx } from "@/lib/primitive";
 
-const ProgressBarContext = createContext<ProgressBarRenderProps | null>(null)
+const ProgressBarContext = createContext<ProgressBarRenderProps | null>(null);
 
-export function ProgressBar({ className, children, ...props }: ProgressBarProps) {
+export function ProgressBar({
+  className,
+  children,
+  ...props
+}: ProgressBarProps) {
   return (
     <ProgressBarPrimitive
       data-slot="control"
@@ -24,7 +28,7 @@ export function ProgressBar({ className, children, ...props }: ProgressBarProps)
         "[&>[data-slot=progress-bar-track]+[slot=description]]:mt-2",
         "[&>[data-slot=progress-bar-track]+[slot=errorMessage]]:mt-2",
         "*:data-[slot=progress-bar-header]:font-medium",
-        className
+        className,
       )}
       {...props}
     >
@@ -34,24 +38,29 @@ export function ProgressBar({ className, children, ...props }: ProgressBarProps)
         </ProgressBarContext>
       )}
     </ProgressBarPrimitive>
-  )
+  );
 }
 
-export function ProgressBarHeader({ className, ...props }: React.ComponentProps<"div">) {
+export function ProgressBarHeader({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="progress-bar-header"
       className={cn("flex items-center justify-between", className)}
       {...props}
     />
-  )
+  );
 }
 
 export function ProgressBarValue({
   className,
   ...props
 }: Omit<React.ComponentProps<"span">, "children">) {
-  const { valueText } = use(ProgressBarContext)!
+  const context = use(ProgressBarContext);
+  if (!context) throw new Error("This component requires its parent provider.");
+  const { valueText } = context;
   return (
     <span
       data-slot="progress-bar-value"
@@ -60,11 +69,17 @@ export function ProgressBarValue({
     >
       {valueText}
     </span>
-  )
+  );
 }
 
-export function ProgressBarTrack({ className, ref, ...props }: React.ComponentProps<"div">) {
-  const { isIndeterminate, percentage } = use(ProgressBarContext)!
+export function ProgressBarTrack({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) {
+  const context = use(ProgressBarContext);
+  if (!context) throw new Error("This component requires its parent provider.");
+  const { isIndeterminate, percentage } = context;
   return (
     <span data-slot="progress-bar-track" className="relative block w-full">
       <style>{`
@@ -80,7 +95,7 @@ export function ProgressBarTrack({ className, ref, ...props }: React.ComponentPr
           className={cn(
             "[--progress-content-bg:var(--color-primary)]",
             "relative h-1.5 w-full min-w-52 overflow-hidden rounded-full bg-(--progress-container-bg,var(--color-secondary)) outline-1 outline-transparent -outline-offset-1 will-change-transform",
-            className
+            className,
           )}
         >
           {!isIndeterminate ? (
@@ -99,5 +114,5 @@ export function ProgressBarTrack({ className, ref, ...props }: React.ComponentPr
         </div>
       </div>
     </span>
-  )
+  );
 }

@@ -1,7 +1,11 @@
-"use client"
+"use client";
 
-import { useMemo } from "react"
-import { Line, LineChart as LineChartPrimitive, type LineProps } from "recharts"
+import { useMemo } from "react";
+import {
+  Line,
+  LineChart as LineChartPrimitive,
+  type LineProps,
+} from "recharts";
 import {
   type BaseChartProps,
   CartesianGrid,
@@ -16,12 +20,15 @@ import {
   valueToPercent,
   XAxis,
   YAxis,
-} from "./chart"
+} from "./chart";
 
 export interface LineChartProps extends BaseChartProps {
-  connectNulls?: boolean
-  lineProps?: LineProps
-  chartProps?: Omit<React.ComponentProps<typeof LineChartPrimitive>, "data" | "stackOffset">
+  connectNulls?: boolean;
+  lineProps?: LineProps;
+  chartProps?: Omit<
+    React.ComponentProps<typeof LineChartPrimitive>,
+    "data" | "stackOffset"
+  >;
 }
 
 export function LineChart({
@@ -58,20 +65,20 @@ export function LineChart({
   lineProps,
   ...props
 }: LineChartProps) {
-  const configKeys = useMemo(() => Object.keys(config), [config])
+  const configKeys = useMemo(() => Object.keys(config), [config]);
   const categoryColors = useMemo(
     () => constructCategoryColors(configKeys, colors),
-    [configKeys, colors]
-  )
+    [configKeys, colors],
+  );
 
-  const configEntries = useMemo(() => Object.entries(config), [config])
+  const configEntries = useMemo(() => Object.entries(config), [config]);
 
   return (
     <Chart config={config} data={data} dataKey={dataKey} {...props}>
       {({ onLegendSelect, selectedLegend }) => (
         <LineChartPrimitive
           onClick={() => {
-            onLegendSelect(null)
+            onLegendSelect(null);
           }}
           data={data}
           margin={{
@@ -98,7 +105,9 @@ export function LineChart({
 
           {legend && (
             <ChartLegend
-              content={typeof legend === "boolean" ? <ChartLegendContent /> : legend}
+              content={
+                typeof legend === "boolean" ? <ChartLegendContent /> : legend
+              }
               {...legendProps}
             />
           )}
@@ -106,7 +115,11 @@ export function LineChart({
           {tooltip && (
             <ChartTooltip
               content={
-                typeof tooltip === "boolean" ? <ChartTooltipContent accessibilityLayer /> : tooltip
+                typeof tooltip === "boolean" ? (
+                  <ChartTooltipContent accessibilityLayer />
+                ) : (
+                  tooltip
+                )
               }
               {...tooltipProps}
             />
@@ -114,8 +127,11 @@ export function LineChart({
 
           {!children
             ? configEntries.map(([category, values]) => {
-                const strokeOpacity = selectedLegend && selectedLegend !== category ? 0.1 : 1
-                const color = getColorValue(values.color || categoryColors.get(category))
+                const strokeOpacity =
+                  selectedLegend && selectedLegend !== category ? 0.1 : 1;
+                const color = getColorValue(
+                  values.color || categoryColors.get(category),
+                );
 
                 return (
                   <Line
@@ -137,11 +153,11 @@ export function LineChart({
                     connectNulls={connectNulls}
                     {...lineProps}
                   />
-                )
+                );
               })
             : children}
         </LineChartPrimitive>
       )}
     </Chart>
-  )
+  );
 }

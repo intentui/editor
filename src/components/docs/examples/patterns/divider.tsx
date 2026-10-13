@@ -1,20 +1,22 @@
 "use client";
 
-import { useMemo } from "react";
-
+import {
+  $createHorizontalRuleNode,
+  HorizontalRuleExtension,
+  InitialStateExtension,
+} from "@lexical/extension";
+import { registerMarkdownShortcuts } from "@lexical/markdown";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { $createHorizontalRuleNode, HorizontalRuleExtension, InitialStateExtension } from "@lexical/extension";
-import { registerMarkdownShortcuts } from "@lexical/markdown";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { BlockInsert } from "@/components/editor/plugins/block-insert/block-insert-plugin";
 import { InsertHorizontalRulePlugin } from "@/components/editor/plugins/block-insert/insert-horizontal-rule-plugin";
@@ -40,10 +42,14 @@ export function DividerEditor() {
         ],
         $initialEditorState: () => {
           $getRoot().append(
-            $createParagraphNode().append($createTextNode("Above the divider.")),
+            $createParagraphNode().append(
+              $createTextNode("Above the divider."),
+            ),
             $createHorizontalRuleNode(),
             $createParagraphNode().append(
-              $createTextNode("Below it. On an empty line, type --- and press Space."),
+              $createTextNode(
+                "Below it. On an empty line, type --- and press Space.",
+              ),
             ),
           );
         },

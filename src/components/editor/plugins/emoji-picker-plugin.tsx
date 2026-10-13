@@ -1,19 +1,19 @@
-import { createPortal } from "react-dom";
-import { useCallback, useMemo, useState } from "react";
-
-import type { TextNode } from "lexical";
-
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   LexicalTypeaheadMenuPlugin,
   MenuOption,
   useBasicTypeaheadTriggerMatch,
 } from "@lexical/react/LexicalTypeaheadMenuPlugin";
-
 import { twJoin } from "cn";
 import compactEmojis from "emojibase-data/en/compact.json";
+import type { TextNode } from "lexical";
+import { useCallback, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
-import { $createEmojiNode, EMOJI_CLASS_NAME } from "@/components/editor/nodes/emoji-node";
+import {
+  $createEmojiNode,
+  EMOJI_CLASS_NAME,
+} from "@/components/editor/nodes/emoji-node";
 
 const MAX_SUGGESTIONS = 8;
 
@@ -27,7 +27,9 @@ type EmojiEntry = {
 };
 
 const EMOJI_ENTRIES: EmojiEntry[] = compactEmojis
-  .filter((entry) => entry.group !== undefined && !EXCLUDED_GROUPS.has(entry.group))
+  .filter(
+    (entry) => entry.group !== undefined && !EXCLUDED_GROUPS.has(entry.group),
+  )
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
   .map((entry) => ({
     emoji: entry.unicode,
@@ -61,12 +63,17 @@ function searchEmojis(query: string): EmojiEntry[] {
       startsWith.push(entry);
       continue;
     }
-    const keywordMatch = entry.keywords.some((keyword) => normalize(keyword).startsWith(q));
+    const keywordMatch = entry.keywords.some((keyword) =>
+      normalize(keyword).startsWith(q),
+    );
     if (keywordMatch) {
       startsWith.push(entry);
       continue;
     }
-    if (name.includes(q) || entry.keywords.some((keyword) => normalize(keyword).includes(q))) {
+    if (
+      name.includes(q) ||
+      entry.keywords.some((keyword) => normalize(keyword).includes(q))
+    ) {
       includes.push(entry);
     }
   }
@@ -95,14 +102,24 @@ export function EmojiPickerPlugin() {
     if (queryString === null) {
       return [];
     }
-    const matches = queryString === "" ? EMOJI_ENTRIES : searchEmojis(queryString);
-    return matches.slice(0, MAX_SUGGESTIONS).map((entry) => new EmojiTypeaheadOption(entry));
+    const matches =
+      queryString === "" ? EMOJI_ENTRIES : searchEmojis(queryString);
+    return matches
+      .slice(0, MAX_SUGGESTIONS)
+      .map((entry) => new EmojiTypeaheadOption(entry));
   }, [queryString]);
 
   const onSelectOption = useCallback(
-    (option: EmojiTypeaheadOption, nodeToReplace: TextNode | null, closeMenu: () => void) => {
+    (
+      option: EmojiTypeaheadOption,
+      nodeToReplace: TextNode | null,
+      closeMenu: () => void,
+    ) => {
       editor.update(() => {
-        const emojiNode = $createEmojiNode(EMOJI_CLASS_NAME, option.entry.emoji);
+        const emojiNode = $createEmojiNode(
+          EMOJI_CLASS_NAME,
+          option.entry.emoji,
+        );
         if (nodeToReplace) {
           nodeToReplace.replace(emojiNode);
         }
@@ -140,13 +157,24 @@ export function EmojiPickerPlugin() {
                       onMouseEnter={() => setHighlightedIndex(index)}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => selectOptionAndCleanUp(option)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          selectOptionAndCleanUp(option);
+                        }
+                      }}
                       className={twJoin(
                         "flex cursor-default select-none items-center gap-x-2 rounded-md px-3 py-2 text-base/6 text-foreground outline-0 sm:px-2.5 sm:py-1.5 sm:text-sm/6",
-                        selectedIndex === index && "bg-accent text-accent-foreground",
+                        selectedIndex === index &&
+                          "bg-accent text-accent-foreground",
                       )}
                     >
-                      <span className="text-base leading-none">{option.entry.emoji}</span>
-                      <span className="truncate text-muted-foreground">:{option.entry.name}:</span>
+                      <span className="text-base leading-none">
+                        {option.entry.emoji}
+                      </span>
+                      <span className="truncate text-muted-foreground">
+                        :{option.entry.name}:
+                      </span>
                     </div>
                   ))}
                 </div>

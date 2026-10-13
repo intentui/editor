@@ -1,13 +1,22 @@
-"use client"
+"use client";
 
-import { createContext, use } from "react"
-import type { GridListItemProps, GridListProps, TextProps } from "react-aria-components"
-import { composeRenderProps, GridList, GridListItem, Text } from "react-aria-components"
-import { cn } from "cn"
-import type { VariantProps } from "tailwind-variants"
-import { tv } from "tailwind-variants"
-import { cx } from "@/lib/primitive"
-import { Checkbox, CheckboxField } from "./checkbox"
+import { cn } from "cn";
+import { createContext, use } from "react";
+import type {
+  GridListItemProps,
+  GridListProps,
+  TextProps,
+} from "react-aria-components";
+import {
+  composeRenderProps,
+  GridList,
+  GridListItem,
+  Text,
+} from "react-aria-components";
+import type { VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { cx } from "@/lib/primitive";
+import { Checkbox, CheckboxField } from "./checkbox";
 
 const choiceBoxStyles = tv({
   base: "grid [--gutter:--spacing(4)]",
@@ -45,15 +54,20 @@ const choiceBoxStyles = tv({
         "rounded-lg *:data-[slot=choice-box-item]:inset-ring *:data-[slot=choice-box-item]:-mt-px *:data-[slot=choice-box-item]:rounded-none *:data-[slot=choice-box-item]:last:rounded-b-[calc(var(--radius-lg)-1px)] *:data-[slot=choice-box-item]:first:rounded-t-[calc(var(--radius-lg)-1px)]",
     },
   ],
-})
+});
 
-const ChoiceBoxContext = createContext<{ columns?: number; gap?: number; isReadOnly?: boolean }>({})
+const ChoiceBoxContext = createContext<{
+  columns?: number;
+  gap?: number;
+  isReadOnly?: boolean;
+}>({});
 
-const useChoiceBoxContext = () => use(ChoiceBoxContext)
+const useChoiceBoxContext = () => use(ChoiceBoxContext);
 
 interface ChoiceBoxProps<T extends object>
-  extends GridListProps<T>, VariantProps<typeof choiceBoxStyles> {
-  isReadOnly?: boolean
+  extends GridListProps<T>,
+    VariantProps<typeof choiceBoxStyles> {
+  isReadOnly?: boolean;
 }
 
 const ChoiceBox = <T extends object>({
@@ -75,13 +89,13 @@ const ChoiceBox = <T extends object>({
             columns,
             gap,
           }),
-          className
+          className,
         )}
         {...props}
       />
     </ChoiceBoxContext>
-  )
-}
+  );
+};
 
 const choiceBoxItemStyles = tv({
   base: [
@@ -123,11 +137,13 @@ const choiceBoxItemStyles = tv({
       true: "z-10 opacity-50 **:data-[slot=label]:text-muted-foreground forced-colors:text-[GrayText] **:[[slot=description]]:text-muted-foreground/70",
     },
   },
-})
+});
 
-interface ChoiceBoxItemProps extends GridListItemProps, VariantProps<typeof choiceBoxItemStyles> {
-  label?: string
-  description?: string
+interface ChoiceBoxItemProps
+  extends GridListItemProps,
+    VariantProps<typeof choiceBoxItemStyles> {
+  label?: string;
+  description?: string;
 }
 
 const ChoiceBoxItem = ({
@@ -137,8 +153,8 @@ const ChoiceBoxItem = ({
   children,
   ...props
 }: ChoiceBoxItemProps) => {
-  const textValue = typeof children === "string" ? children : undefined
-  const { columns, isReadOnly } = useChoiceBoxContext()
+  const textValue = typeof children === "string" ? children : undefined;
+  const { columns, isReadOnly } = useChoiceBoxContext();
   return (
     <GridListItem
       textValue={textValue}
@@ -155,12 +171,12 @@ const ChoiceBoxItem = ({
             isFocused: !isReadOnly && renderProps.isFocused,
             isActive: (!isReadOnly && isSelected) || isFocusVisible,
             className,
-          })
+          }),
       )}
     >
       {composeRenderProps(children, (children, { selectionMode }) => {
-        const isStringChild = typeof children === "string"
-        const hasCustomChildren = typeof children !== "undefined"
+        const isStringChild = typeof children === "string";
+        const hasCustomChildren = typeof children !== "undefined";
 
         const content = hasCustomChildren ? (
           isStringChild ? (
@@ -171,9 +187,11 @@ const ChoiceBoxItem = ({
         ) : (
           <>
             {label && <ChoiceBoxLabel>{label}</ChoiceBoxLabel>}
-            {description && <ChoiceBoxDescription>{description}</ChoiceBoxDescription>}
+            {description && (
+              <ChoiceBoxDescription>{description}</ChoiceBoxDescription>
+            )}
           </>
-        )
+        );
         return (
           <>
             {content}
@@ -186,14 +204,14 @@ const ChoiceBoxItem = ({
               </CheckboxField>
             )}
           </>
-        )
+        );
       })}
     </GridListItem>
-  )
-}
+  );
+};
 
 interface ChoiceBoxLabelProps extends TextProps {
-  ref?: React.Ref<HTMLDivElement>
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 const ChoiceBoxLabel = ({ className, ref, ...props }: ChoiceBoxLabelProps) => {
@@ -206,16 +224,20 @@ const ChoiceBoxLabel = ({ className, ref, ...props }: ChoiceBoxLabelProps) => {
         "col-start-1 row-start-1",
         "group-has-[svg:not([data-slot=check-indicator])]:col-start-2",
         "group-has-data-[slot=avatar]:col-start-2",
-        className
+        className,
       )}
       {...props}
     />
-  )
-}
+  );
+};
 
-type ChoiceBoxDescriptionProps = ChoiceBoxLabelProps
+type ChoiceBoxDescriptionProps = ChoiceBoxLabelProps;
 
-const ChoiceBoxDescription = ({ className, ref, ...props }: ChoiceBoxDescriptionProps) => {
+const ChoiceBoxDescription = ({
+  className,
+  ref,
+  ...props
+}: ChoiceBoxDescriptionProps) => {
   return (
     <Text
       slot="description"
@@ -226,12 +248,12 @@ const ChoiceBoxDescription = ({ className, ref, ...props }: ChoiceBoxDescription
         "group-has-data-[slot=avatar]:col-start-2",
         "text-base/6 text-muted-foreground sm:text-sm/6",
         "group-disabled:opacity-50",
-        className
+        className,
       )}
       {...props}
     />
-  )
-}
+  );
+};
 
-export type { ChoiceBoxItemProps, ChoiceBoxProps }
-export { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel }
+export type { ChoiceBoxItemProps, ChoiceBoxProps };
+export { ChoiceBox, ChoiceBoxDescription, ChoiceBoxItem, ChoiceBoxLabel };

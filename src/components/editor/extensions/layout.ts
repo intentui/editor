@@ -1,3 +1,4 @@
+import { $insertNodeToNearestRoot } from "@lexical/utils";
 import {
   $createParagraphNode,
   $findMatchingParent,
@@ -5,17 +6,15 @@ import {
   $isRangeSelection,
   COMMAND_PRIORITY_EDITOR,
   COMMAND_PRIORITY_LOW,
+  createCommand,
+  defineExtension,
   KEY_ARROW_DOWN_COMMAND,
   KEY_ARROW_LEFT_COMMAND,
   KEY_ARROW_RIGHT_COMMAND,
   KEY_ARROW_UP_COMMAND,
   type LexicalCommand,
-  createCommand,
-  defineExtension,
   mergeRegister,
 } from "lexical";
-
-import { $insertNodeToNearestRoot } from "@lexical/utils";
 
 import {
   $createLayoutContainerNode,
@@ -26,7 +25,9 @@ import {
   LayoutItemNode,
 } from "@/components/editor/nodes/layout-node";
 
-export const INSERT_LAYOUT_COMMAND: LexicalCommand<string> = createCommand("INSERT_LAYOUT_COMMAND");
+export const INSERT_LAYOUT_COMMAND: LexicalCommand<string> = createCommand(
+  "INSERT_LAYOUT_COMMAND",
+);
 
 function getItemsCountFromTemplate(templateColumns: string): number {
   return templateColumns.trim().split(/\s+/).filter(Boolean).length;
@@ -34,15 +35,27 @@ function getItemsCountFromTemplate(templateColumns: string): number {
 
 function $onEscape(before: boolean): boolean {
   const selection = $getSelection();
-  if ($isRangeSelection(selection) && selection.isCollapsed() && selection.anchor.offset === 0) {
-    const container = $findMatchingParent(selection.anchor.getNode(), $isLayoutContainerNode);
+  if (
+    $isRangeSelection(selection) &&
+    selection.isCollapsed() &&
+    selection.anchor.offset === 0
+  ) {
+    const container = $findMatchingParent(
+      selection.anchor.getNode(),
+      $isLayoutContainerNode,
+    );
     if ($isLayoutContainerNode(container)) {
       const parent = container.getParent();
-      const child = parent && (before ? parent.getFirstChild() : parent.getLastChild());
+      const child =
+        parent && (before ? parent.getFirstChild() : parent.getLastChild());
       const descendant = before
         ? container.getFirstDescendant()?.getKey()
         : container.getLastDescendant()?.getKey();
-      if (parent !== null && child === container && descendant === selection.anchor.key) {
+      if (
+        parent !== null &&
+        child === container &&
+        descendant === selection.anchor.key
+      ) {
         if (before) {
           container.insertBefore($createParagraphNode());
         } else {
@@ -65,7 +78,9 @@ export const LayoutExtension = defineExtension({
           const container = $createLayoutContainerNode(templateColumns);
           const itemsCount = getItemsCountFromTemplate(templateColumns);
           for (let i = 0; i < itemsCount; i++) {
-            container.append($createLayoutItemNode().append($createParagraphNode()));
+            container.append(
+              $createLayoutItemNode().append($createParagraphNode()),
+            );
           }
           $insertNodeToNearestRoot(container);
           container.selectStart();
@@ -93,10 +108,26 @@ export const LayoutExtension = defineExtension({
           node.remove();
         }
       }),
-      editor.registerCommand(KEY_ARROW_DOWN_COMMAND, () => $onEscape(false), COMMAND_PRIORITY_LOW),
-      editor.registerCommand(KEY_ARROW_RIGHT_COMMAND, () => $onEscape(false), COMMAND_PRIORITY_LOW),
-      editor.registerCommand(KEY_ARROW_UP_COMMAND, () => $onEscape(true), COMMAND_PRIORITY_LOW),
-      editor.registerCommand(KEY_ARROW_LEFT_COMMAND, () => $onEscape(true), COMMAND_PRIORITY_LOW),
+      editor.registerCommand(
+        KEY_ARROW_DOWN_COMMAND,
+        () => $onEscape(false),
+        COMMAND_PRIORITY_LOW,
+      ),
+      editor.registerCommand(
+        KEY_ARROW_RIGHT_COMMAND,
+        () => $onEscape(false),
+        COMMAND_PRIORITY_LOW,
+      ),
+      editor.registerCommand(
+        KEY_ARROW_UP_COMMAND,
+        () => $onEscape(true),
+        COMMAND_PRIORITY_LOW,
+      ),
+      editor.registerCommand(
+        KEY_ARROW_LEFT_COMMAND,
+        () => $onEscape(true),
+        COMMAND_PRIORITY_LOW,
+      ),
     );
   },
 });

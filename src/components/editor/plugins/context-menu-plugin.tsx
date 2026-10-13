@@ -1,5 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
+import {
+  ClipboardDocumentIcon,
+  ClipboardIcon,
+  DocumentDuplicateIcon,
+  LinkSlashIcon,
+  ScissorsIcon,
+  TrashIcon,
+} from "@heroicons/react/16/solid";
+import { $isAutoLinkNode, $isLinkNode } from "@lexical/link";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   $getNearestNodeFromDOMNode,
   $getNodeByKey,
@@ -12,26 +20,22 @@ import {
   PASTE_COMMAND,
   registerEventListener,
 } from "lexical";
-
-import { $isAutoLinkNode, $isLinkNode } from "@lexical/link";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
-import {
-  ClipboardDocumentIcon,
-  ClipboardIcon,
-  DocumentDuplicateIcon,
-  LinkSlashIcon,
-  ScissorsIcon,
-  TrashIcon,
-} from "@heroicons/react/16/solid";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "react-aria-components/Button";
 
-import { Menu, MenuItem, MenuSeparator, MenuTrigger } from "@/components/ui/menu";
+import {
+  Menu,
+  MenuItem,
+  MenuSeparator,
+  MenuTrigger,
+} from "@/components/ui/menu";
 
 export function ContextMenuPlugin() {
   const [editor] = useLexicalComposerContext();
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const [target, setTarget] = useState<{ key: string; isLink: boolean } | null>(null);
+  const [target, setTarget] = useState<{ key: string; isLink: boolean } | null>(
+    null,
+  );
 
   useEffect(() => {
     function onContextMenu(event: MouseEvent) {
@@ -43,7 +47,8 @@ export function ContextMenuPlugin() {
       trigger.style.left = `${event.clientX}px`;
       trigger.style.top = `${event.clientY}px`;
       editor.read(() => {
-        const node = $getNearestNodeFromDOMNode(event.target as Node) ?? $getRoot();
+        const node =
+          $getNearestNodeFromDOMNode(event.target as Node) ?? $getRoot();
         setTarget({
           key: node.getKey(),
           isLink: $isLinkNode(node) || $isLinkNode(node.getParent()),
@@ -73,7 +78,11 @@ export function ContextMenuPlugin() {
     editor.update(() => {
       const node = $getNodeByKey(target.key);
       const parent = node?.getParent();
-      const link = $isLinkNode(node) ? node : $isLinkNode(parent) ? parent : null;
+      const link = $isLinkNode(node)
+        ? node
+        : $isLinkNode(parent)
+          ? parent
+          : null;
       if (link === null) {
         return;
       }
@@ -100,7 +109,10 @@ export function ContextMenuPlugin() {
             data.setData(type, await (await item.getType(type)).text());
           }
         }
-        editor.dispatchCommand(PASTE_COMMAND, new ClipboardEvent("paste", { clipboardData: data }));
+        editor.dispatchCommand(
+          PASTE_COMMAND,
+          new ClipboardEvent("paste", { clipboardData: data }),
+        );
       } catch {
         window.alert("Clipboard access is not allowed");
       }

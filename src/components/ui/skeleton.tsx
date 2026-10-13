@@ -1,10 +1,15 @@
-import { cn } from "cn"
+import { cn } from "cn";
 
 export interface SkeletonProps extends React.ComponentProps<"div"> {
-  isLoading?: boolean
+  isLoading?: boolean;
 }
 
-export function Skeleton({ ref, isLoading = false, className, ...props }: SkeletonProps) {
+export function Skeleton({
+  ref,
+  isLoading = false,
+  className,
+  ...props
+}: SkeletonProps) {
   return (
     <div
       data-slot="skeleton"
@@ -19,9 +24,9 @@ export function Skeleton({ ref, isLoading = false, className, ...props }: Skelet
               "[&>*>*>*_:not(:has(*)):not(:empty)]:animate-pulse [&>*>*>*_:not(:has(*)):not(:empty)]:select-none [&>*>*>*_:not(:has(*)):not(:empty)]:rounded-md [&>*>*>*_:not(:has(*)):not(:empty)]:bg-secondary [&>*>*>*_:not(:has(*)):not(:empty)]:text-transparent [&>*>*>*_:not(:has(*)):not(:empty)]:shadow-none",
             ]
           : "shrink-0",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }

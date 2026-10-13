@@ -1,21 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { registerMarkdownShortcuts } from "@lexical/markdown";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { registerMarkdownShortcuts } from "@lexical/markdown";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { DragDropPasteExtension } from "@/components/editor/extensions/drag-drop-paste";
 import { ImageExtension } from "@/components/editor/extensions/image";
@@ -52,13 +49,20 @@ export function ImageEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Click the image to select it, then drag its corner handle to resize."),
+              $createTextNode(
+                "Click the image to select it, then drag its corner handle to resize.",
+              ),
             ),
             $createParagraphNode().append(
-              $createImageNode({ altText: "Mountains at sunset", src: SAMPLE_IMAGE }),
+              $createImageNode({
+                altText: "Mountains at sunset",
+                src: SAMPLE_IMAGE,
+              }),
             ),
             $createParagraphNode().append(
-              $createTextNode("Use the toolbar, type /, paste, or drop a file to add more."),
+              $createTextNode(
+                "Use the toolbar, type /, paste, or drop a file to add more.",
+              ),
             ),
           );
         },

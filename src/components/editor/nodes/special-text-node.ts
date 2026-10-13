@@ -1,10 +1,10 @@
 import {
   $applyNodeReplacement,
   $getDocument,
+  addClassNamesToElement,
   type EditorConfig,
   type LexicalNode,
   TextNode,
-  addClassNamesToElement,
 } from "lexical";
 
 export class SpecialTextNode extends TextNode {
@@ -40,6 +40,8 @@ export function $createSpecialTextNode(text = ""): SpecialTextNode {
   return $applyNodeReplacement(new SpecialTextNode(text));
 }
 
-export function $isSpecialTextNode(node: LexicalNode | null | undefined): node is SpecialTextNode {
+export function $isSpecialTextNode(
+  node: LexicalNode | null | undefined,
+): node is SpecialTextNode {
   return node instanceof SpecialTextNode;
 }

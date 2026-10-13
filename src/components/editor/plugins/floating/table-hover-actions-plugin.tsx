@@ -1,15 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
-import {
-  $getNearestNodeFromDOMNode,
-  type EditorThemeClasses,
-  getComposedEventTarget,
-  isHTMLElement,
-  isHTMLTableRowElement,
-  mergeRegister,
-  registerEventListener,
-} from "lexical";
-
+import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import {
@@ -19,12 +8,20 @@ import {
   $insertTableRowAtSelection,
   $isTableCellNode,
 } from "@lexical/table";
-
-import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
+import {
+  $getNearestNodeFromDOMNode,
+  type EditorThemeClasses,
+  getComposedEventTarget,
+  isHTMLElement,
+  isHTMLTableRowElement,
+  mergeRegister,
+  registerEventListener,
+} from "lexical";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { Button } from "@/components/ui/button";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 type ActionsPosition = { x: number; y: number; canDelete: boolean };
 
@@ -41,7 +38,10 @@ function getColumnCount(tableElement: HTMLTableElement): number {
   if (!firstRow) {
     return 0;
   }
-  return Array.from(firstRow.cells).reduce((count, cell) => count + cell.colSpan, 0);
+  return Array.from(firstRow.cells).reduce(
+    (count, cell) => count + cell.colSpan,
+    0,
+  );
 }
 
 function getClosestTopCell(
@@ -71,7 +71,9 @@ function getClosestTopCell(
 export function TableHoverActionsPlugin() {
   const [editor, { getTheme }] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
-  const [columnPosition, setColumnPosition] = useState<ActionsPosition | null>(null);
+  const [columnPosition, setColumnPosition] = useState<ActionsPosition | null>(
+    null,
+  );
   const [rowPosition, setRowPosition] = useState<ActionsPosition | null>(null);
   const columnActionsRef = useRef<HTMLDivElement | null>(null);
   const rowActionsRef = useRef<HTMLDivElement | null>(null);
@@ -127,11 +129,16 @@ export function TableHoverActionsPlugin() {
       if (!isHTMLElement(target)) {
         return;
       }
-      if (columnActionsRef.current?.contains(target) || rowActionsRef.current?.contains(target)) {
+      if (
+        columnActionsRef.current?.contains(target) ||
+        rowActionsRef.current?.contains(target)
+      ) {
         return;
       }
 
-      const cell = target.closest<HTMLTableCellElement>(getCellSelector(getTheme()));
+      const cell = target.closest<HTMLTableCellElement>(
+        getCellSelector(getTheme()),
+      );
       const tableElement = cell?.closest("table") ?? null;
       const rootElement = editor.getRootElement();
 
@@ -145,7 +152,9 @@ export function TableHoverActionsPlugin() {
         return;
       }
 
-      const rowIndex = isHTMLTableRowElement(cell.parentElement) ? cell.parentElement.rowIndex : -1;
+      const rowIndex = isHTMLTableRowElement(cell.parentElement)
+        ? cell.parentElement.rowIndex
+        : -1;
       columnCellRef.current =
         rowIndex === 0 ? getClosestTopCell(tableElement, event.clientX) : null;
       rowCellRef.current = cell.cellIndex === 0 ? cell : null;
@@ -177,7 +186,11 @@ export function TableHoverActionsPlugin() {
 
     return editor.registerRootListener((rootElement) => {
       if (rootElement) {
-        return registerEventListener(rootElement, "mouseleave", handleMouseLeave);
+        return registerEventListener(
+          rootElement,
+          "mouseleave",
+          handleMouseLeave,
+        );
       }
     });
   }, [editor, hideActions, isEditable]);
@@ -190,7 +203,10 @@ export function TableHoverActionsPlugin() {
     );
   }, [editor, updatePositions]);
 
-  const withCell = (cellRef: React.RefObject<HTMLTableCellElement | null>, $action: () => void) => {
+  const withCell = (
+    cellRef: React.RefObject<HTMLTableCellElement | null>,
+    $action: () => void,
+  ) => {
     const cell = cellRef.current;
     if (!cell) {
       return;
@@ -223,7 +239,9 @@ export function TableHoverActionsPlugin() {
               aria-label="Add column"
               className={BUTTON_CLASSNAME}
               preventFocusOnPress
-              onPress={() => withCell(columnCellRef, $insertTableColumnAtSelection)}
+              onPress={() =>
+                withCell(columnCellRef, $insertTableColumnAtSelection)
+              }
             >
               <PlusIcon />
             </Button>
@@ -237,7 +255,9 @@ export function TableHoverActionsPlugin() {
                 aria-label="Delete column"
                 className={DELETE_BUTTON_CLASSNAME}
                 preventFocusOnPress
-                onPress={() => withCell(columnCellRef, $deleteTableColumnAtSelection)}
+                onPress={() =>
+                  withCell(columnCellRef, $deleteTableColumnAtSelection)
+                }
               >
                 <TrashIcon />
               </Button>

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import {
   ColorArea as ColorAreaPrimitive,
   type ColorAreaProps,
-} from "react-aria-components/ColorArea"
-import { cx } from "@/lib/primitive"
-import { ColorThumb } from "./color-thumb"
+} from "react-aria-components/ColorArea";
+import { cx } from "@/lib/primitive";
+import { ColorThumb } from "./color-thumb";
 
 export function ColorArea({ className, ...props }: ColorAreaProps) {
   return (
@@ -14,7 +14,7 @@ export function ColorArea({ className, ...props }: ColorAreaProps) {
       data-slot="color-area"
       className={cx(
         "size-56 shrink-0 rounded-md bg-muted disabled:bg-muted-foreground forced-colors:bg-[GrayText]",
-        className
+        className,
       )}
       style={({ defaultStyle, isDisabled }) => ({
         ...defaultStyle,
@@ -23,5 +23,5 @@ export function ColorArea({ className, ...props }: ColorAreaProps) {
     >
       <ColorThumb />
     </ColorAreaPrimitive>
-  )
+  );
 }

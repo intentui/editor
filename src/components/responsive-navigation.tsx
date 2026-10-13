@@ -1,54 +1,76 @@
-"use client"
+"use client";
 
 import {
   BookOpenIcon,
   HomeIcon,
   Square3Stack3DIcon,
   Squares2X2Icon,
-} from "@heroicons/react/24/outline"
-import { motion, useScroll, useTransform } from "motion/react"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
-import { Link } from "react-aria-components/Link"
-import { twJoin, cn } from "cn"
-import { Aside, AsideLink } from "@/components/docs/aside"
-import { BrandDiscordIcon } from "@/components/icons/brand-discord-icon"
-import { BrandGithubIcon } from "@/components/icons/brand-github-icon"
-import { BrandXIcon } from "@/components/icons/brand-x-icon"
-import { Logo } from "@/components/logo"
-import { ThemeSwitcher } from "@/components/theme-switcher"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { app } from "@/config/app"
-import type { SidebarSection } from "@/lib/docs-nav"
+} from "@heroicons/react/24/outline";
+import { cn, twJoin } from "cn";
+import { motion, useScroll, useTransform } from "motion/react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Link } from "react-aria-components/Link";
+import { Aside, AsideLink } from "@/components/docs/aside";
+import { BrandDiscordIcon } from "@/components/icons/brand-discord-icon";
+import { BrandGithubIcon } from "@/components/icons/brand-github-icon";
+import { BrandXIcon } from "@/components/icons/brand-x-icon";
+import { Logo } from "@/components/logo";
+import { ThemeSwitcher } from "@/components/theme-switcher";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { app } from "@/config/app";
+import type { SidebarSection } from "@/lib/docs-nav";
 
 const menus = [
-  { href: "/docs/getting-started/introduction", label: "Docs", icon: BookOpenIcon },
-  { href: "/docs/patterns/full-editor", label: "Patterns", icon: Square3Stack3DIcon },
-  { href: app.site.showcase, label: "Showcase", icon: Squares2X2Icon, external: true },
-]
+  {
+    href: "/docs/getting-started/introduction",
+    label: "Docs",
+    icon: BookOpenIcon,
+  },
+  {
+    href: "/docs/patterns/full-editor",
+    label: "Patterns",
+    icon: Square3Stack3DIcon,
+  },
+  {
+    href: app.site.showcase,
+    label: "Showcase",
+    icon: Squares2X2Icon,
+    external: true,
+  },
+];
 
 interface ResponsiveNavigationProps {
-  className?: string
-  sections: SidebarSection[]
+  className?: string;
+  sections: SidebarSection[];
 }
 
-export function ResponsiveNavigation({ className, sections }: ResponsiveNavigationProps) {
-  const [open, setOpen] = useState(false)
-  const { scrollY } = useScroll()
-  const scrollDecorationOpacity = useTransform(scrollY, [0, 16], [0, 1])
-  const pathname = usePathname()
+export function ResponsiveNavigation({
+  className,
+  sections,
+}: ResponsiveNavigationProps) {
+  const [open, setOpen] = useState(false);
+  const { scrollY } = useScroll();
+  const scrollDecorationOpacity = useTransform(scrollY, [0, 16], [0, 1]);
+  const pathname = usePathname();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu whenever the route changes
   useEffect(() => {
-    setOpen(false)
-  }, [pathname])
+    setOpen(false);
+  }, [pathname]);
   return (
     <nav
       className={cn(
         "sticky top-0 z-40 flex items-center bg-background px-2 py-2 lg:hidden",
         pathname === "/" && "bg-background",
-        className
+        className,
       )}
     >
       <motion.div
@@ -66,19 +88,23 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
       <div className="flex items-center gap-x-0.5">
         <ThemeSwitcher className="**:data-[slot=icon]:size-5" intent="plain" />
         <SheetTrigger isOpen={open} onOpenChange={setOpen}>
-          <Button size="sq-sm" intent="plain" className="pressed:bg-transparent outline-hidden">
+          <Button
+            size="sq-sm"
+            intent="plain"
+            className="pressed:bg-transparent outline-hidden"
+          >
             <span className="relative flex h-8 w-(--width) items-center justify-center [--width:--spacing(4.5)]">
               <span className="relative size-(--width)">
                 <span
                   className={twJoin(
                     "absolute left-0 block h-0.5 w-(--width) bg-foreground transition-all duration-100",
-                    open ? "top-[0.4rem] -rotate-45" : "top-1"
+                    open ? "top-[0.4rem] -rotate-45" : "top-1",
                   )}
                 />
                 <span
                   className={twJoin(
                     "absolute left-0 block h-0.5 w-(--width) bg-foreground transition-all duration-100",
-                    open ? "top-[0.4rem] rotate-45" : "top-[--spacing(2.6)]"
+                    open ? "top-[0.4rem] rotate-45" : "top-[--spacing(2.6)]",
                   )}
                 />
               </span>
@@ -122,13 +148,25 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
             </Aside>
             <SheetFooter className="p-2 border-t bg-background/60">
               <ul className="rounded-sm p-2 bg-overlay border">
-                <AsideLink href={app.links.twitter} target="_blank" onPress={() => setOpen(false)}>
+                <AsideLink
+                  href={app.links.twitter}
+                  target="_blank"
+                  onPress={() => setOpen(false)}
+                >
                   <BrandXIcon /> Twitter
                 </AsideLink>
-                <AsideLink href={app.links.discord} target="_blank" onPress={() => setOpen(false)}>
+                <AsideLink
+                  href={app.links.discord}
+                  target="_blank"
+                  onPress={() => setOpen(false)}
+                >
                   <BrandDiscordIcon /> Discord
                 </AsideLink>
-                <AsideLink href={app.links.github} target="_blank" onPress={() => setOpen(false)}>
+                <AsideLink
+                  href={app.links.github}
+                  target="_blank"
+                  onPress={() => setOpen(false)}
+                >
                   <BrandGithubIcon /> Github
                 </AsideLink>
               </ul>
@@ -137,5 +175,5 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
         </SheetTrigger>
       </div>
     </nav>
-  )
+  );
 }

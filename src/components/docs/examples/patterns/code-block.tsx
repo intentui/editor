@@ -1,25 +1,22 @@
 "use client";
 
-import { useMemo } from "react";
-
-import {
-  $createParagraphNode,
-  $createTextNode,
-  $getRoot,
-  HISTORY_MERGE_TAG,
-  configExtension,
-  defineExtension,
-} from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
 import { $createCodeNode } from "@lexical/code-core";
+import { InitialStateExtension } from "@lexical/extension";
 import {
   MULTILINE_ELEMENT_TRANSFORMERS,
   registerMarkdownShortcuts,
 } from "@lexical/markdown";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
+import {
+  $createParagraphNode,
+  $createTextNode,
+  $getRoot,
+  configExtension,
+  defineExtension,
+  HISTORY_MERGE_TAG,
+} from "lexical";
+import { useMemo } from "react";
 
 import { CodeExtension } from "@/components/editor/extensions/code";
 import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
@@ -48,14 +45,20 @@ export function CodeBlockEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Type ```js and press Space to start a new code block."),
+              $createTextNode(
+                "Type ```js and press Space to start a new code block.",
+              ),
             ),
             $createCodeNode("js").append(
-              $createTextNode('function greet(name) {\n  return `Hello, ${name}!`;\n}'),
+              $createTextNode(
+                // biome-ignore lint/suspicious/noTemplateCurlyInString: this is literal example source code
+                "function greet(name) {\n  return `Hello, ${name}!`;\n}",
+              ),
             ),
           );
         },
-        register: (editor) => registerMarkdownShortcuts(editor, MULTILINE_ELEMENT_TRANSFORMERS),
+        register: (editor) =>
+          registerMarkdownShortcuts(editor, MULTILINE_ELEMENT_TRANSFORMERS),
         theme: editorTheme,
       }),
     [],

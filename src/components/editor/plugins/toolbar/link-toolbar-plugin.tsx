@@ -1,13 +1,12 @@
+import { LinkIcon } from "@heroicons/react/16/solid";
 import { TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
-import { LinkIcon } from "@heroicons/react/16/solid";
-
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
 import { OPEN_LINK_EDITOR_COMMAND } from "@/components/editor/extensions/link";
 import { ToolbarGroup, ToolbarItem } from "@/components/ui/toolbar";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function LinkToolbarPlugin() {
   const [editor] = useLexicalComposerContext();

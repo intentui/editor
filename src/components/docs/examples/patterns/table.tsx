@@ -1,22 +1,22 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import {
+  $convertFromMarkdownString,
+  registerMarkdownShortcuts,
+} from "@lexical/markdown";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
+import { TableExtension } from "@lexical/table";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { $convertFromMarkdownString, registerMarkdownShortcuts } from "@lexical/markdown";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
-import { TableExtension } from "@lexical/table";
+import { useMemo } from "react";
 
 import { BlockInsert } from "@/components/editor/plugins/block-insert/block-insert-plugin";
 import { InsertTablePlugin } from "@/components/editor/plugins/block-insert/insert-table-plugin";
@@ -49,7 +49,9 @@ export function TableEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Hover the first row or column to add and remove cells."),
+              $createTextNode(
+                "Hover the first row or column to add and remove cells.",
+              ),
             ),
           );
           $convertFromMarkdownString(SAMPLE_TABLE, [TABLE], undefined, false);

@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { ChevronRightIcon } from "@heroicons/react/20/solid"
-import { Button } from "react-aria-components/Button"
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import { cn, twJoin } from "cn";
+import { Button } from "react-aria-components/Button";
 import type {
   TreeItemContentProps,
   TreeItemContentRenderProps,
   TreeItemProps,
   TreeProps,
-} from "react-aria-components/Tree"
+} from "react-aria-components/Tree";
 import {
-  Tree as TreePrimitive,
-  TreeItem as TreeItemPrimitive,
   TreeItemContent,
-} from "react-aria-components/Tree"
-import { twJoin, cn } from "cn"
-import { cx } from "@/lib/primitive"
-import { Checkbox, CheckboxField } from "./checkbox"
+  TreeItem as TreeItemPrimitive,
+  Tree as TreePrimitive,
+} from "react-aria-components/Tree";
+import { cx } from "@/lib/primitive";
+import { Checkbox, CheckboxField } from "./checkbox";
 
 const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
   return (
@@ -23,16 +23,19 @@ const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
       className={cx(
         twJoin(
           "flex cursor-default flex-col gap-y-2 overflow-auto outline-hidden forced-color-adjust-none",
-          "[--tree-active-bg:var(--color-primary-subtle)] [--tree-active-foreground:var(--color-primary-subtle-foreground)]"
+          "[--tree-active-bg:var(--color-primary-subtle)] [--tree-active-foreground:var(--color-primary-subtle-foreground)]",
         ),
-        className
+        className,
       )}
       {...props}
     />
-  )
-}
+  );
+};
 
-const TreeItem = <T extends object>({ className, ...props }: TreeItemProps<T>) => {
+const TreeItem = <T extends object>({
+  className,
+  ...props
+}: TreeItemProps<T>) => {
   return (
     <TreeItemPrimitive
       className={cx(
@@ -46,15 +49,15 @@ const TreeItem = <T extends object>({ className, ...props }: TreeItemProps<T>) =
           "disabled:opacity-50 forced-colors:[",
           "href" in props ? "cursor-pointer" : "cursor-default",
         ],
-        className
+        className,
       )}
       {...props}
     />
-  )
-}
+  );
+};
 
 interface TreeContentProps extends TreeItemContentProps {
-  className?: string
+  className?: string;
 }
 
 const TreeContent = ({ className, children, ...props }: TreeContentProps) => {
@@ -64,19 +67,20 @@ const TreeContent = ({ className, children, ...props }: TreeContentProps) => {
         <div
           className={cn(
             "relative flex w-full min-w-0 items-center gap-x-1 truncate text-sm/6",
-            className
+            className,
           )}
         >
           {values.allowsDragging && <Button className="sr-only" slot="drag" />}
-          {values.selectionMode === "multiple" && values.selectionBehavior === "toggle" && (
-            <CheckboxField className="gap-x-0" slot="selection">
-              <Checkbox className="col-span-1" />
-            </CheckboxField>
-          )}
+          {values.selectionMode === "multiple" &&
+            values.selectionBehavior === "toggle" && (
+              <CheckboxField className="gap-x-0" slot="selection">
+                <Checkbox className="col-span-1" />
+              </CheckboxField>
+            )}
           <div
             className={twJoin(
               "relative w-[calc(calc(var(--tree-item-level)-1)*(--spacing(5)))] shrink-0",
-              "before:absolute before:inset-0 before:-ms-1 before:bg-[repeating-linear-gradient(to_right,transparent_0,transparent_calc(var(--tree-item-level)-1px),var(--border)_calc(var(--tree-item-level)-1px),var(--border)_calc(var(--tree-item-level)))]"
+              "before:absolute before:inset-0 before:-ms-1 before:bg-[repeating-linear-gradient(to_right,transparent_0,transparent_calc(var(--tree-item-level)-1px),var(--border)_calc(var(--tree-item-level)-1px),var(--border)_calc(var(--tree-item-level)))]",
             )}
           />
           {values.hasChildItems ? (
@@ -93,13 +97,13 @@ const TreeContent = ({ className, children, ...props }: TreeContentProps) => {
         </div>
       )}
     </TreeItemContent>
-  )
-}
+  );
+};
 
 const TreeIndicator = ({
   values,
 }: {
-  values: Pick<TreeItemContentRenderProps, "isDisabled" | "isExpanded">
+  values: Pick<TreeItemContentRenderProps, "isDisabled" | "isExpanded">;
 }) => {
   return (
     <Button
@@ -107,19 +111,19 @@ const TreeIndicator = ({
       isDisabled={values.isDisabled}
       className={twJoin(
         "shrink-0 content-center text-muted-foreground hover:text-foreground",
-        values.isExpanded && "text-foreground"
+        values.isExpanded && "text-foreground",
       )}
     >
       <ChevronRightIcon
         data-slot="chevron"
         className={twJoin(
           "size-5 transition-transform duration-200 ease-in-out sm:size-4",
-          values.isExpanded && "rotate-90"
+          values.isExpanded && "rotate-90",
         )}
       />
     </Button>
-  )
-}
+  );
+};
 
-export type { TreeItemProps, TreeProps }
-export { Tree, TreeContent, TreeIndicator, TreeItem }
+export type { TreeItemProps, TreeProps };
+export { Tree, TreeContent, TreeIndicator, TreeItem };

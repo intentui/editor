@@ -1,7 +1,11 @@
-"use client"
+"use client";
 
-import { type ComponentProps, type ReactNode, useMemo } from "react"
-import { PolarAngleAxis, RadialBar, RadialBarChart as RadialBarChartPrimitive } from "recharts"
+import { type ComponentProps, type ReactNode, useMemo } from "react";
+import {
+  PolarAngleAxis,
+  RadialBar,
+  RadialBarChart as RadialBarChartPrimitive,
+} from "recharts";
 import {
   type BaseChartProps,
   Chart,
@@ -13,29 +17,30 @@ import {
   constructCategoryColors,
   DEFAULT_COLORS,
   getColorValue,
-} from "./chart"
+} from "./chart";
 
 export interface RadialBarChartSeries {
-  dataKey: string
-  name?: string
-  radialBarProps?: Omit<ComponentProps<typeof RadialBar>, "dataKey" | "name">
+  dataKey: string;
+  name?: string;
+  radialBarProps?: Omit<ComponentProps<typeof RadialBar>, "dataKey" | "name">;
 }
 
-export interface RadialBarChartProps extends Omit<ComponentProps<"div">, "children"> {
-  config: ChartConfig
-  data: Record<string, any>[]
-  dataKey: string
-  nameKey?: string
-  series: RadialBarChartSeries[]
-  colors?: readonly string[]
-  containerHeight?: number
-  legend?: BaseChartProps["legend"]
-  legendProps?: BaseChartProps["legendProps"]
-  tooltip?: boolean | ComponentProps<typeof ChartTooltip>["content"]
-  tooltipProps?: Omit<ComponentProps<typeof ChartTooltip>, "content">
-  angleAxisProps?: ComponentProps<typeof PolarAngleAxis>
-  chartProps?: Omit<ComponentProps<typeof RadialBarChartPrimitive>, "data">
-  children?: ReactNode
+export interface RadialBarChartProps
+  extends Omit<ComponentProps<"div">, "children"> {
+  config: ChartConfig;
+  data: Record<string, unknown>[];
+  dataKey: string;
+  nameKey?: string;
+  series: RadialBarChartSeries[];
+  colors?: readonly string[];
+  containerHeight?: number;
+  legend?: BaseChartProps["legend"];
+  legendProps?: BaseChartProps["legendProps"];
+  tooltip?: boolean | ComponentProps<typeof ChartTooltip>["content"];
+  tooltipProps?: Omit<ComponentProps<typeof ChartTooltip>, "content">;
+  angleAxisProps?: ComponentProps<typeof PolarAngleAxis>;
+  chartProps?: Omit<ComponentProps<typeof RadialBarChartPrimitive>, "data">;
+  children?: ReactNode;
 }
 
 export function RadialBarChart({
@@ -55,32 +60,40 @@ export function RadialBarChart({
   children,
   ...props
 }: RadialBarChartProps) {
-  const seriesKeys = useMemo(() => series.map((item) => item.dataKey), [series])
+  const seriesKeys = useMemo(
+    () => series.map((item) => item.dataKey),
+    [series],
+  );
   const categoryColors = useMemo(
     () => constructCategoryColors(seriesKeys, colors),
-    [seriesKeys, colors]
-  )
-  const usesDataColors = series.length === 1 && typeof series[0]?.radialBarProps?.fill !== "string"
+    [seriesKeys, colors],
+  );
+  const usesDataColors =
+    series.length === 1 && typeof series[0]?.radialBarProps?.fill !== "string";
   const chartData = useMemo(() => {
     if (!usesDataColors) {
-      return data
+      return data;
     }
 
     return data.map((item, index) => {
       if (typeof item.fill === "string") {
-        return item
+        return item;
       }
 
-      const category = nameKey && typeof item[nameKey] === "string" ? item[nameKey] : undefined
+      const category =
+        nameKey && typeof item[nameKey] === "string"
+          ? item[nameKey]
+          : undefined;
 
       return {
         ...item,
         fill: getColorValue(
-          (category ? config[category]?.color : undefined) ?? colors[index % colors.length]
+          (category ? config[category]?.color : undefined) ??
+            colors[index % colors.length],
         ),
-      }
-    })
-  }, [colors, config, data, nameKey, usesDataColors])
+      };
+    });
+  }, [colors, config, data, nameKey, usesDataColors]);
   const legendPayload = series.map((item, index) => ({
     color:
       typeof item.radialBarProps?.fill === "string"
@@ -88,12 +101,12 @@ export function RadialBarChart({
         : getColorValue(
             config[item.dataKey]?.color ??
               categoryColors.get(item.dataKey) ??
-              colors[index % colors.length]
+              colors[index % colors.length],
           ),
     dataKey: item.dataKey,
     type: "circle" as const,
     value: item.name ?? item.dataKey,
-  }))
+  }));
 
   return (
     <Chart
@@ -145,10 +158,11 @@ export function RadialBarChart({
               : getColorValue(
                   config[item.dataKey]?.color ??
                     categoryColors.get(item.dataKey) ??
-                    colors[index % colors.length]
-                )
-            const isDimmed = selectedLegend && selectedLegend !== item.dataKey
-            const { fillOpacity = 1, ...radialBarProps } = item.radialBarProps ?? {}
+                    colors[index % colors.length],
+                );
+            const isDimmed = selectedLegend && selectedLegend !== item.dataKey;
+            const { fillOpacity = 1, ...radialBarProps } =
+              item.radialBarProps ?? {};
 
             return (
               <RadialBar
@@ -159,10 +173,10 @@ export function RadialBarChart({
                 fillOpacity={isDimmed ? 0.12 : fillOpacity}
                 {...radialBarProps}
               />
-            )
+            );
           })}
         </RadialBarChartPrimitive>
       )}
     </Chart>
-  )
+  );
 }

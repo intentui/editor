@@ -1,5 +1,18 @@
-import { useMemo } from "react";
-
+import {
+  computed,
+  defineExtension,
+  type ReadonlySignal,
+  watchedSignal,
+} from "@lexical/extension";
+import { $isAutoLinkNode, $isLinkNode, type LinkNode } from "@lexical/link";
+import { useExtensionDependency } from "@lexical/react/useExtensionComponent";
+import { useSignalValue } from "@lexical/react/useExtensionSignalValue";
+import {
+  $getSelectionStyleValueForProperty,
+  $isAtNodeEnd,
+  $patchStyleText,
+} from "@lexical/selection";
+import { $findMatchingParent, mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isElementNode,
@@ -14,17 +27,7 @@ import {
   type TextFormatType,
   type TextNode,
 } from "lexical";
-
-import { type ReadonlySignal, computed, defineExtension, watchedSignal } from "@lexical/extension";
-import { $isAutoLinkNode, $isLinkNode, type LinkNode } from "@lexical/link";
-import { useExtensionDependency } from "@lexical/react/useExtensionComponent";
-import { useSignalValue } from "@lexical/react/useExtensionSignalValue";
-import {
-  $getSelectionStyleValueForProperty,
-  $isAtNodeEnd,
-  $patchStyleText,
-} from "@lexical/selection";
-import { $findMatchingParent, mergeRegister } from "@lexical/utils";
+import { useMemo } from "react";
 
 export const TEXT_FORMATS = [
   "bold",
@@ -68,7 +71,9 @@ export function clearFormatting(editor: LexicalEditor) {
     if (!$isRangeSelection(selection)) {
       return;
     }
-    TEXT_FORMATS.forEach((format) => selection.formatText(format, 0));
+    TEXT_FORMATS.forEach((format) => {
+      selection.formatText(format, 0);
+    });
     $patchStyleText(selection, {
       "font-family": null,
       "font-size": null,
@@ -78,7 +83,9 @@ export function clearFormatting(editor: LexicalEditor) {
   });
 }
 
-export function $getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
+export function $getSelectedNode(
+  selection: RangeSelection,
+): TextNode | ElementNode {
   const anchor = selection.anchor;
   const focus = selection.focus;
   const anchorNode = anchor.getNode();
@@ -92,7 +99,9 @@ export function $getSelectedNode(selection: RangeSelection): TextNode | ElementN
   return $isAtNodeEnd(anchor) ? anchorNode : focusNode;
 }
 
-export function $getSelectedLinkNode(selection: RangeSelection): LinkNode | null {
+export function $getSelectedLinkNode(
+  selection: RangeSelection,
+): LinkNode | null {
   const node = $getSelectedNode(selection);
   if ($isLinkNode(node)) {
     return node;
@@ -133,14 +142,17 @@ function $isSelectionInLink(selection: RangeSelection): boolean {
         (focusLinkNode && !focusLinkNode.is(linkNode)) ||
         (linkNode && !linkNode.is(focusLinkNode)) ||
         (focusAutoLinkNode && !focusAutoLinkNode.is(autoLinkNode)) ||
-        (autoLinkNode && (!autoLinkNode.is(focusAutoLinkNode) || autoLinkNode.getIsUnlinked()))
+        (autoLinkNode &&
+          (!autoLinkNode.is(focusAutoLinkNode) || autoLinkNode.getIsUnlinked()))
       );
     });
   return !badNode;
 }
 
 function formatsEqual(a: TextFormatType[], b: TextFormatType[]): boolean {
-  return a.length === b.length && a.every((format, index) => format === b[index]);
+  return (
+    a.length === b.length && a.every((format, index) => format === b[index])
+  );
 }
 
 function shallowEqual(a: FormatState, b: FormatState): boolean {
@@ -161,11 +173,12 @@ function $getFormatState(prev: FormatState): FormatState {
   const node = $getSelectedNode(selection);
   const element = $findMatchingParent(
     node,
-    (parent): parent is ElementNode => $isElementNode(parent) && !parent.isInline(),
+    (parent): parent is ElementNode =>
+      $isElementNode(parent) && !parent.isInline(),
   );
   const next: FormatState = {
     formats: formatsEqual(prev.formats, formats) ? prev.formats : formats,
-    elementFormat: (element && element.getFormatType()) || "left",
+    elementFormat: element?.getFormatType() || "left",
     fontFamily: $getSelectionStyleValueForProperty(
       selection,
       "font-family",
@@ -176,7 +189,11 @@ function $getFormatState(prev: FormatState): FormatState {
       "font-size",
       DEFAULT_FORMAT_STATE.fontSize,
     ),
-    color: $getSelectionStyleValueForProperty(selection, "color", DEFAULT_FORMAT_STATE.color),
+    color: $getSelectionStyleValueForProperty(
+      selection,
+      "color",
+      DEFAULT_FORMAT_STATE.color,
+    ),
     backgroundColor: $getSelectionStyleValueForProperty(
       selection,
       "background-color",
@@ -192,7 +209,10 @@ export const FormatStateExtension = defineExtension({
   name: "@intentui-editor/format-state",
   build(editor) {
     return watchedSignal(
-      () => editor.getEditorState().read(() => $getFormatState(DEFAULT_FORMAT_STATE)),
+      () =>
+        editor
+          .getEditorState()
+          .read(() => $getFormatState(DEFAULT_FORMAT_STATE)),
       (self) =>
         mergeRegister(
           editor.registerUpdateListener(({ editorState }) => {
@@ -219,14 +239,21 @@ export function useFormatState(): FormatState {
   return useSignalValue(useFormatStateSignal());
 }
 
-export function useFormatStateValue<K extends keyof FormatState>(key: K): FormatState[K] {
+export function useFormatStateValue<K extends keyof FormatState>(
+  key: K,
+): FormatState[K] {
   const state = useFormatStateSignal();
-  return useSignalValue(useMemo(() => computed(() => state.value[key]), [state, key]));
+  return useSignalValue(
+    useMemo(() => computed(() => state.value[key]), [state, key]),
+  );
 }
 
 export function useHasFormat(format: TextFormatType): boolean {
   const state = useFormatStateSignal();
   return useSignalValue(
-    useMemo(() => computed(() => state.value.formats.includes(format)), [state, format]),
+    useMemo(
+      () => computed(() => state.value.formats.includes(format)),
+      [state, format],
+    ),
   );
 }

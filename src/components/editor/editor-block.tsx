@@ -1,25 +1,26 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { defineExtension } from "lexical";
-
 import { ClipboardDOMImportExtension } from "@lexical/clipboard";
-import { HorizontalRuleExtension, TabIndentationExtension } from "@lexical/extension";
+import {
+  HorizontalRuleExtension,
+  TabIndentationExtension,
+} from "@lexical/extension";
 import { HistoryExtension } from "@lexical/history";
 import { CheckListExtension, ListExtension } from "@lexical/list";
 import {
   CHECK_LIST,
   ELEMENT_TRANSFORMERS,
   MULTILINE_ELEMENT_TRANSFORMERS,
+  registerMarkdownShortcuts,
   TEXT_FORMAT_TRANSFORMERS,
   TEXT_MATCH_TRANSFORMERS,
   type Transformer,
-  registerMarkdownShortcuts,
 } from "@lexical/markdown";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 import { TableExtension } from "@lexical/table";
+import { defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
 import { CodeExtension } from "@/components/editor/extensions/code";
@@ -89,7 +90,8 @@ export function DemoBlockEditor() {
           FormatStateExtension,
           ClipboardDOMImportExtension,
         ],
-        register: (editor) => registerMarkdownShortcuts(editor, BLOCK_TRANSFORMERS),
+        register: (editor) =>
+          registerMarkdownShortcuts(editor, BLOCK_TRANSFORMERS),
         theme: editorTheme,
       }),
     [],

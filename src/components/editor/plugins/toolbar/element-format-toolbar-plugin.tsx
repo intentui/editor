@@ -1,10 +1,3 @@
-import { Fragment } from "react";
-
-import { type ElementFormatType, FORMAT_ELEMENT_COMMAND } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-
 import {
   Bars3BottomLeftIcon,
   Bars3BottomRightIcon,
@@ -13,10 +6,18 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/16/solid";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { type ElementFormatType, FORMAT_ELEMENT_COMMAND } from "lexical";
+import { Fragment } from "react";
 
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
-import { ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@/components/ui/toolbar";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import {
+  ToolbarGroup,
+  ToolbarItem,
+  ToolbarSeparator,
+} from "@/components/ui/toolbar";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 type AlignItem = {
   value: Exclude<ElementFormatType, "">;
@@ -36,7 +37,9 @@ function AlignToggleGroup({ items }: { items: AlignItem[] }) {
             size="sq-xs"
             aria-label={label}
             isSelected={elementFormat === value}
-            onChange={() => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value)}
+            onChange={() =>
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value)
+            }
           >
             <Icon />
           </ToolbarItem>
@@ -47,7 +50,11 @@ function AlignToggleGroup({ items }: { items: AlignItem[] }) {
   );
 }
 
-export function ElementFormatToolbarPlugin({ formats = "all" }: { formats?: "basic" | "all" }) {
+export function ElementFormatToolbarPlugin({
+  formats = "all",
+}: {
+  formats?: "basic" | "all";
+}) {
   const alignGroups: AlignItem[][] = [
     [
       { value: "left", icon: Bars3BottomLeftIcon, label: "Align left" },
@@ -74,7 +81,7 @@ export function ElementFormatToolbarPlugin({ formats = "all" }: { formats?: "bas
   return (
     <>
       {groups.map((items, groupIndex) => (
-        <Fragment key={groupIndex}>
+        <Fragment key={items.map((item) => item.value).join("-")}>
           {groupIndex > 0 && <ToolbarSeparator />}
           <AlignToggleGroup items={items} />
         </Fragment>

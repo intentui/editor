@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid"
-import { useState } from "react"
-import { BrandChatgptIcon } from "@/components/icons/brand-chatgpt-icon"
-import { BrandClaudeIcon } from "@/components/icons/brand-claude-icon"
-import { BrandGithubIcon } from "@/components/icons/brand-github-icon"
-import { BrandGrokIcon } from "@/components/icons/brand-grok-icon"
-import { BrandPerflexityIcon } from "@/components/icons/brand-perflexity-icon"
-import { DuplicateIcon } from "@/components/icons/duplicate-icon"
-import { IconMarkdown } from "@/components/icons/icon-markdown"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
-import { Loader } from "@/components/ui/loader"
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
+import { BrandChatgptIcon } from "@/components/icons/brand-chatgpt-icon";
+import { BrandClaudeIcon } from "@/components/icons/brand-claude-icon";
+import { BrandGithubIcon } from "@/components/icons/brand-github-icon";
+import { BrandGrokIcon } from "@/components/icons/brand-grok-icon";
+import { BrandPerflexityIcon } from "@/components/icons/brand-perflexity-icon";
+import { DuplicateIcon } from "@/components/icons/duplicate-icon";
+import { IconMarkdown } from "@/components/icons/icon-markdown";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Loader } from "@/components/ui/loader";
 import {
   Menu,
   MenuDescription,
@@ -19,41 +19,41 @@ import {
   MenuLabel,
   MenuSeparator,
   MenuTrigger,
-} from "@/components/ui/menu"
-import { app } from "@/config/app"
-import { useClipboard } from "@/hooks/use-clipboard"
+} from "@/components/ui/menu";
+import { app } from "@/config/app";
+import { useClipboard } from "@/hooks/use-clipboard";
 
 function getPromptUrl(baseURL: string, url: string) {
   return `${baseURL}?q=${encodeURIComponent(
     `I'm currently reading the ${app.name} documentation at: ${url}\n\n` +
       `Please help me understand it thoroughly. ` +
-      `Explain the key concepts, show practical examples, and be ready to help me debug or implement features based on this documentation.`
-  )}`
+      `Explain the key concepts, show practical examples, and be ready to help me debug or implement features based on this documentation.`,
+  )}`;
 }
 
 function getPerplexityUrl(url: string) {
   return `https://www.perplexity.ai/search/new?q=${encodeURIComponent(
     `I'm currently reading the ${app.name} documentation at: ${url}\n\n` +
       `Please help me understand it thoroughly. ` +
-      `Explain the key concepts, show practical examples, and be ready to help me debug or implement features based on this documentation.`
-  )}`
+      `Explain the key concepts, show practical examples, and be ready to help me debug or implement features based on this documentation.`,
+  )}`;
 }
 
 export function OpenIn({ url, page }: { url: string; page: string }) {
-  const fullUrl = `${app.url}${url}`
-  const [pending, setPending] = useState(false)
-  const llmUrl = `${fullUrl}.md`
-  const { copied, copy } = useClipboard()
+  const fullUrl = `${app.url}${url}`;
+  const [pending, setPending] = useState(false);
+  const llmUrl = `${fullUrl}.md`;
+  const { copied, copy } = useClipboard();
 
   async function getMarkdown() {
-    setPending(true)
+    setPending(true);
 
     try {
-      const res = await fetch(`${url}.md`, { method: "GET" })
-      const text = res.ok ? await res.text() : page
-      await copy(text)
+      const res = await fetch(`${url}.md`, { method: "GET" });
+      const text = res.ok ? await res.text() : page;
+      await copy(text);
     } finally {
-      setPending(false)
+      setPending(false);
     }
   }
 
@@ -79,7 +79,11 @@ export function OpenIn({ url, page }: { url: string; page: string }) {
           <ChevronDownIcon className="group-pressed:rotate-180 transition-transform" />
         </Button>
         <Menu className="min-w-64" placement="bottom end">
-          <MenuItem href={`${url}.md`} target="_blank" rel="noopener noreferrer">
+          <MenuItem
+            href={`${url}.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <IconMarkdown />
             <MenuLabel>View as Markdown</MenuLabel>
             <MenuDescription>Open the raw Markdown version.</MenuDescription>
@@ -103,10 +107,16 @@ export function OpenIn({ url, page }: { url: string; page: string }) {
             <MenuLabel>Open in ChatGPT</MenuLabel>
             <MenuDescription>Ask ChatGPT about this page.</MenuDescription>
           </MenuItem>
-          <MenuItem href={getPerplexityUrl(llmUrl)} target="_blank" rel="noopener noreferrer">
+          <MenuItem
+            href={getPerplexityUrl(llmUrl)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <BrandPerflexityIcon />
             <MenuLabel>Open in Perplexity</MenuLabel>
-            <MenuDescription>Explore this page with Perplexity.</MenuDescription>
+            <MenuDescription>
+              Explore this page with Perplexity.
+            </MenuDescription>
           </MenuItem>
           <MenuItem
             href={getPromptUrl("https://claude.ai/new", fullUrl)}
@@ -117,7 +127,11 @@ export function OpenIn({ url, page }: { url: string; page: string }) {
             <MenuLabel>Open in Claude</MenuLabel>
             <MenuDescription>Ask Claude about this page.</MenuDescription>
           </MenuItem>
-          <MenuItem href={app.repo.url} target="_blank" rel="noopener noreferrer">
+          <MenuItem
+            href={app.repo.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <BrandGithubIcon />
             <MenuLabel>Open in GitHub</MenuLabel>
             <MenuDescription>View the source on GitHub.</MenuDescription>
@@ -125,5 +139,5 @@ export function OpenIn({ url, page }: { url: string; page: string }) {
         </Menu>
       </MenuTrigger>
     </ButtonGroup>
-  )
+  );
 }

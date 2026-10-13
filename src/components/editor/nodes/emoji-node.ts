@@ -1,24 +1,31 @@
 import {
   $applyNodeReplacement,
+  addClassNamesToElement,
   type EditorConfig,
   type LexicalNode,
   type LexicalUpdateJSON,
   type NodeKey,
+  removeClassNamesFromElement,
   type SerializedTextNode,
   type Spread,
   TextNode,
-  addClassNamesToElement,
-  removeClassNamesFromElement,
 } from "lexical";
 
 export const EMOJI_CLASS_NAME = "editor-emoji";
 
-export type SerializedEmojiNode = Spread<{ className: string }, SerializedTextNode>;
+export type SerializedEmojiNode = Spread<
+  { className: string },
+  SerializedTextNode
+>;
 
 export class EmojiNode extends TextNode {
   __className: string;
 
-  constructor(className: string = EMOJI_CLASS_NAME, text: string = "", key?: NodeKey) {
+  constructor(
+    className: string = EMOJI_CLASS_NAME,
+    text: string = "",
+    key?: NodeKey,
+  ) {
     super(text, key);
     this.__className = className;
   }
@@ -62,7 +69,9 @@ export class EmojiNode extends TextNode {
   }
 
   updateFromJSON(serializedNode: LexicalUpdateJSON<SerializedEmojiNode>): this {
-    return super.updateFromJSON(serializedNode).setClassName(serializedNode.className);
+    return super
+      .updateFromJSON(serializedNode)
+      .setClassName(serializedNode.className);
   }
 
   exportJSON(): SerializedEmojiNode {
@@ -73,11 +82,16 @@ export class EmojiNode extends TextNode {
   }
 }
 
-export function $isEmojiNode(node: LexicalNode | null | undefined): node is EmojiNode {
+export function $isEmojiNode(
+  node: LexicalNode | null | undefined,
+): node is EmojiNode {
   return node instanceof EmojiNode;
 }
 
-export function $createEmojiNode(className: string, emojiText: string): EmojiNode {
+export function $createEmojiNode(
+  className: string,
+  emojiText: string,
+): EmojiNode {
   const node = new EmojiNode(className, emojiText).setMode("token");
   return $applyNodeReplacement(node);
 }

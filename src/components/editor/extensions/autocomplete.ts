@@ -1,37 +1,36 @@
 import {
+  effect,
+  IMEExtension,
+  namedSignals,
+  RootElementExtension,
+  shallowMergeConfig,
+  WatchEditableExtension,
+} from "@lexical/extension";
+import { $isAtNodeEnd } from "@lexical/selection";
+import {
   $getNodeByKey,
   $getSelection,
   $isRangeSelection,
   $isTextNode,
   $setCompositionKey,
-  BLUR_COMMAND,
   type BaseSelection,
+  BLUR_COMMAND,
   COMMAND_PRIORITY_LOW,
   COMPOSITION_END_TAG,
   COMPOSITION_START_COMMAND,
+  defineExtension,
   type EditorState,
+  getActiveElement,
+  isHTMLElement,
   KEY_ARROW_RIGHT_COMMAND,
   KEY_TAB_COMMAND,
   type LexicalEditor,
-  type NodeKey,
-  defineExtension,
-  getActiveElement,
-  isHTMLElement,
   mergeRegister,
+  type NodeKey,
   registerEventListener,
   safeCast,
   setDOMUnmanaged,
 } from "lexical";
-
-import {
-  IMEExtension,
-  RootElementExtension,
-  WatchEditableExtension,
-  effect,
-  namedSignals,
-  shallowMergeConfig,
-} from "@lexical/extension";
-import { $isAtNodeEnd } from "@lexical/selection";
 
 export interface AutocompleteDictionary {
   readonly minPrefixLength: number;
@@ -48,12 +47,15 @@ export function createWordlistDictionary(
   options: WordlistDictionaryOptions = {},
 ): AutocompleteDictionary {
   const { minPrefixLength = 2, caseSensitive = false } = options;
-  const fold = (text: string): string => (caseSensitive ? text : text.toLowerCase());
+  const fold = (text: string): string =>
+    caseSensitive ? text : text.toLowerCase();
   const folded = words.map(fold);
   const order = Uint32Array.from(
     words
       .map((_, index) => index)
-      .sort((a, b) => (folded[a] < folded[b] ? -1 : folded[a] > folded[b] ? 1 : a - b)),
+      .sort((a, b) =>
+        folded[a] < folded[b] ? -1 : folded[a] > folded[b] ? 1 : a - b,
+      ),
   );
   return {
     minPrefixLength,
@@ -80,7 +82,10 @@ export function createWordlistDictionary(
         if (!fold(word).startsWith(needle)) {
           break;
         }
-        if (word.length > prefix.length && (bestIndex === -1 || index < bestIndex)) {
+        if (
+          word.length > prefix.length &&
+          (bestIndex === -1 || index < bestIndex)
+        ) {
           bestIndex = index;
           bestWord = word;
         }
@@ -94,12 +99,16 @@ export function detectLanguage(_text: string): string {
   return "en";
 }
 
-export type AutocompleteDictionaryLoader = () => Promise<AutocompleteDictionary>;
+export type AutocompleteDictionaryLoader =
+  () => Promise<AutocompleteDictionary>;
 
-export const defaultDictionaries: Readonly<Record<string, AutocompleteDictionaryLoader>> = {
+export const defaultDictionaries: Readonly<
+  Record<string, AutocompleteDictionaryLoader>
+> = {
   en: () =>
-    import("@/components/editor/dictionaries/english").then(({ ENGLISH_WORDS }) =>
-      createWordlistDictionary(ENGLISH_WORDS, { minPrefixLength: 4 }),
+    import("@/components/editor/dictionaries/english").then(
+      ({ ENGLISH_WORDS }) =>
+        createWordlistDictionary(ENGLISH_WORDS, { minPrefixLength: 4 }),
     ),
 };
 
@@ -120,10 +129,10 @@ function $search(selection: null | BaseSelection): [boolean, string] {
   }
   const word = [];
   const text = node.getTextContent();
-  let i = node.getTextContentSize();
-  let c;
-  while (i-- && i >= 0 && (c = text[i]) !== " ") {
-    word.push(c);
+  for (let i = text.length - 1; i >= 0; i--) {
+    const character = text[i];
+    if (character === " ") break;
+    word.push(character);
   }
   if (word.length === 0) {
     return [false, ""];
@@ -179,7 +188,10 @@ export function getCompositionTextFromDOM(dom: HTMLElement): string {
   for (const node of dom.childNodes) {
     if (node.nodeType === Node.TEXT_NODE) {
       text += node.textContent ?? "";
-    } else if (isHTMLElement(node) && !node.hasAttribute(AUTOCOMPLETE_GHOST_ATTR)) {
+    } else if (
+      isHTMLElement(node) &&
+      !node.hasAttribute(AUTOCOMPLETE_GHOST_ATTR)
+    ) {
       text += node.textContent ?? "";
     }
   }
@@ -187,8 +199,9 @@ export function getCompositionTextFromDOM(dom: HTMLElement): string {
 }
 
 function formatSuggestionText(suggestion: string): string {
-  const userAgentData = (window.navigator as Navigator & { userAgentData?: { mobile: boolean } })
-    .userAgentData;
+  const userAgentData = (
+    window.navigator as Navigator & { userAgentData?: { mobile: boolean } }
+  ).userAgentData;
   const isMobile =
     userAgentData !== undefined
       ? userAgentData.mobile
@@ -375,9 +388,18 @@ export const AutocompleteExtension = defineExtension({
       const controller = new AbortController();
       searchController = controller;
       const language = output.detectLanguage.value(prefix);
-      query(loadDictionary(output.dictionaries.value[language]), prefix, controller.signal)
+      query(
+        loadDictionary(output.dictionaries.value[language]),
+        prefix,
+        controller.signal,
+      )
         .then((newSuggestion) => {
-          applyCompositionSuggestion(controller, composingKey, prefix, newSuggestion);
+          applyCompositionSuggestion(
+            controller,
+            composingKey,
+            prefix,
+            newSuggestion,
+          );
         })
         .catch((e) => {
           if (!(e instanceof DOMException && e.name === "AbortError")) {
@@ -419,7 +441,10 @@ export const AutocompleteExtension = defineExtension({
         return;
       }
       clearPendingCompositionTimer();
-      pendingCompositionTimer = window.setTimeout(tryCompositionSuggestion, debounceMs);
+      pendingCompositionTimer = window.setTimeout(
+        tryCompositionSuggestion,
+        debounceMs,
+      );
     }
 
     function onCompositionEndDOM() {
@@ -432,7 +457,10 @@ export const AutocompleteExtension = defineExtension({
       });
     }
 
-    function applyAsyncSuggestion(refController: AbortController, newSuggestion: string | null) {
+    function applyAsyncSuggestion(
+      refController: AbortController,
+      newSuggestion: string | null,
+    ) {
       if (searchController !== refController || newSuggestion === null) {
         return;
       }
@@ -451,11 +479,21 @@ export const AutocompleteExtension = defineExtension({
         }
         activeTextNodeKey = node.getKey();
         lastSuggestion = newSuggestion;
-        syncGhost(editor, activeTextNodeKey, formatSuggestionText(newSuggestion));
+        syncGhost(
+          editor,
+          activeTextNodeKey,
+          formatSuggestionText(newSuggestion),
+        );
       });
     }
 
-    function handleUpdate({ editorState, tags }: { editorState: EditorState; tags: Set<string> }) {
+    function handleUpdate({
+      editorState,
+      tags,
+    }: {
+      editorState: EditorState;
+      tags: Set<string>;
+    }) {
       if (!isEditorFocused()) {
         dismiss();
         return;
@@ -481,7 +519,9 @@ export const AutocompleteExtension = defineExtension({
                   syncGhost(
                     editor,
                     activeTextNodeKey,
-                    lastSuggestion ? formatSuggestionText(lastSuggestion) : null,
+                    lastSuggestion
+                      ? formatSuggestionText(lastSuggestion)
+                      : null,
                   );
                 }
               }
@@ -498,7 +538,11 @@ export const AutocompleteExtension = defineExtension({
           const controller = new AbortController();
           searchController = controller;
           const language = output.detectLanguage.value(match);
-          query(loadDictionary(output.dictionaries.value[language]), match, controller.signal)
+          query(
+            loadDictionary(output.dictionaries.value[language]),
+            match,
+            controller.signal,
+          )
             .then((newSuggestion) => {
               applyAsyncSuggestion(controller, newSuggestion);
             })
@@ -522,7 +566,10 @@ export const AutocompleteExtension = defineExtension({
         return false;
       }
       const composingNode = ime.composingTextNode.value;
-      if (composingNode !== null && composingNode.getKey() === activeTextNodeKey) {
+      if (
+        composingNode !== null &&
+        composingNode.getKey() === activeTextNodeKey
+      ) {
         const dom = editor.getElementByKey(activeTextNodeKey);
         if (dom !== null) {
           const liveText = getCompositionTextFromDOM(dom);
@@ -571,7 +618,11 @@ export const AutocompleteExtension = defineExtension({
         loadDictionary(loader);
       }
       return mergeRegister(
-        registerEventListener(rootElem, "compositionupdate", onCompositionUpdateDOM),
+        registerEventListener(
+          rootElem,
+          "compositionupdate",
+          onCompositionUpdateDOM,
+        ),
         registerEventListener(rootElem, "compositionend", onCompositionEndDOM),
         editor.registerUpdateListener(handleUpdate),
         editor.registerCommand(
@@ -590,8 +641,16 @@ export const AutocompleteExtension = defineExtension({
           },
           COMMAND_PRIORITY_LOW,
         ),
-        editor.registerCommand(KEY_TAB_COMMAND, $handleCommitCommand, COMMAND_PRIORITY_LOW),
-        editor.registerCommand(KEY_ARROW_RIGHT_COMMAND, $handleCommitCommand, COMMAND_PRIORITY_LOW),
+        editor.registerCommand(
+          KEY_TAB_COMMAND,
+          $handleCommitCommand,
+          COMMAND_PRIORITY_LOW,
+        ),
+        editor.registerCommand(
+          KEY_ARROW_RIGHT_COMMAND,
+          $handleCommitCommand,
+          COMMAND_PRIORITY_LOW,
+        ),
         addSwipeRightListener(rootElem, handleSwipeRight),
         clearPendingCompositionTimer,
         dismiss,

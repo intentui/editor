@@ -1,15 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
-
-import {
-  COMMAND_PRIORITY_HIGH,
-  FORMAT_TEXT_COMMAND,
-  defineExtension,
-  mergeRegister,
-  type TextFormatType,
-} from "lexical";
-
 import { ClipboardDOMImportExtension } from "@lexical/clipboard";
 import {
   ClearEditorExtension,
@@ -22,14 +12,22 @@ import {
   CHECK_LIST,
   ELEMENT_TRANSFORMERS,
   MULTILINE_ELEMENT_TRANSFORMERS,
+  registerMarkdownShortcuts,
   TEXT_FORMAT_TRANSFORMERS,
   TEXT_MATCH_TRANSFORMERS,
   type Transformer,
-  registerMarkdownShortcuts,
 } from "@lexical/markdown";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 import { TableExtension } from "@lexical/table";
+import {
+  COMMAND_PRIORITY_HIGH,
+  defineExtension,
+  FORMAT_TEXT_COMMAND,
+  mergeRegister,
+  type TextFormatType,
+} from "lexical";
+import { useMemo } from "react";
 
 import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
 import { CodeExtension } from "@/components/editor/extensions/code";
@@ -84,12 +82,18 @@ const MARKDOWN_TRANSFORMERS: Transformer[] = [
   ...ELEMENT_TRANSFORMERS,
   ...MULTILINE_ELEMENT_TRANSFORMERS,
   ...TEXT_FORMAT_TRANSFORMERS.filter(
-    (transformer) => !("format" in transformer && transformer.format.includes("highlight")),
+    (transformer) =>
+      !("format" in transformer && transformer.format.includes("highlight")),
   ),
   ...TEXT_MATCH_TRANSFORMERS,
 ];
 
-const MARKDOWN_TEXT_FORMATS: TextFormatType[] = ["bold", "italic", "strikethrough", "code"];
+const MARKDOWN_TEXT_FORMATS: TextFormatType[] = [
+  "bold",
+  "italic",
+  "strikethrough",
+  "code",
+];
 
 export function DemoMarkdownEditor() {
   const app = useMemo(

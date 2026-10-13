@@ -1,22 +1,20 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { defineExtension } from "lexical";
-
 import { HorizontalRuleExtension } from "@lexical/extension";
 import { CheckListExtension, ListExtension } from "@lexical/list";
 import {
   CHECK_LIST,
   ELEMENT_TRANSFORMERS,
   MULTILINE_ELEMENT_TRANSFORMERS,
+  registerMarkdownShortcuts,
   TEXT_FORMAT_TRANSFORMERS,
   TEXT_MATCH_TRANSFORMERS,
   type Transformer,
-  registerMarkdownShortcuts,
 } from "@lexical/markdown";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
+import { defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { CodeExtension } from "@/components/editor/extensions/code";
 import { LinkExtension } from "@/components/editor/extensions/link";

@@ -2,24 +2,29 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   InformationCircleIcon,
-} from "@heroicons/react/24/solid"
-import { twJoin, cn } from "cn"
+} from "@heroicons/react/24/solid";
+import { cn, twJoin } from "cn";
 
 export interface NoteProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
-  intent?: "default" | "info" | "warning" | "danger" | "success"
-  indicator?: boolean
+  intent?: "default" | "info" | "warning" | "danger" | "success";
+  indicator?: boolean;
 }
 
-export function Note({ indicator = true, intent = "default", className, ...props }: NoteProps) {
+export function Note({
+  indicator = true,
+  intent = "default",
+  className,
+  ...props
+}: NoteProps) {
   const iconMap: Record<string, React.ElementType | null> = {
     info: InformationCircleIcon,
     warning: ExclamationCircleIcon,
     danger: ExclamationCircleIcon,
     success: CheckCircleIcon,
     default: null,
-  }
+  };
 
-  const IconComponent = iconMap[intent] || null
+  const IconComponent = iconMap[intent] || null;
 
   return (
     <div
@@ -47,7 +52,7 @@ export function Note({ indicator = true, intent = "default", className, ...props
             intent === "warning" && "border-warning-subtle-foreground/40",
             intent === "success" && "border-success-subtle-foreground/40",
             intent === "danger" && "border-danger-subtle-foreground/40",
-            intent === "info" && "border-info-subtle-foreground/40"
+            intent === "info" && "border-info-subtle-foreground/40",
           )}
         >
           <div
@@ -56,14 +61,16 @@ export function Note({ indicator = true, intent = "default", className, ...props
               intent === "warning" && "border-warning-subtle-foreground/85",
               intent === "success" && "border-success-subtle-foreground/85",
               intent === "danger" && "border-danger-subtle-foreground/85",
-              intent === "info" && "border-info-subtle-foreground/85"
+              intent === "info" && "border-info-subtle-foreground/85",
             )}
           >
             <IconComponent className="size-5 shrink-0" />
           </div>
         </div>
       )}
-      <div className="text-pretty group-has-[svg]:col-start-2">{props.children}</div>
+      <div className="text-pretty group-has-[svg]:col-start-2">
+        {props.children}
+      </div>
     </div>
-  )
+  );
 }

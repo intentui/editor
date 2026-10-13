@@ -1,20 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { MentionExtension } from "@/components/editor/extensions/mention";
 import { $createMentionNode } from "@/components/editor/nodes/mention-node";
@@ -43,7 +40,9 @@ export function MentionEditor() {
               $createTextNode(" for the review."),
             ),
             $createParagraphNode().append(
-              $createTextNode("Type @ and a name, for example @lu, to mention someone: "),
+              $createTextNode(
+                "Type @ and a name, for example @lu, to mention someone: ",
+              ),
             ),
           );
         },

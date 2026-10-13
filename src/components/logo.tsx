@@ -1,4 +1,7 @@
-export const Logo = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
+export const Logo = ({
+  className,
+  ...props
+}: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       className={className}
@@ -42,10 +45,17 @@ export const Logo = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => 
           <feGaussianBlur stdDeviation=".032" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0" />
-          <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_419_1316" />
-          <feBlend in="SourceGraphic" in2="effect1_dropShadow_419_1316" result="shape" />
+          <feBlend
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_419_1316"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect1_dropShadow_419_1316"
+            result="shape"
+          />
         </filter>
       </defs>
     </svg>
-  )
-}
+  );
+};

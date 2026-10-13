@@ -1,27 +1,28 @@
-"use client"
+"use client";
 
-import { useEffect, useMemo, useRef, useState } from "react"
-import type { Key, Selection } from "react-aria-components/TagGroup"
-import type { TextFieldProps } from "react-aria-components/TextField"
-import { cn } from "cn"
-import { FieldError } from "@/components/ui/field"
-import { Tag, TagGroup, TagList } from "@/components/ui/tag-group"
-import { TextField } from "@/components/ui/text-field"
+import { cn } from "cn";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { Key, Selection } from "react-aria-components/TagGroup";
+import type { TextFieldProps } from "react-aria-components/TextField";
+import { FieldError } from "@/components/ui/field";
+import { Tag, TagGroup, TagList } from "@/components/ui/tag-group";
+import { TextField } from "@/components/ui/text-field";
 
-interface TagInputProps extends Pick<
-  TextFieldProps,
-  "isDisabled" | "isReadOnly" | "children" | "aria-label" | "aria-labelledby"
-> {
-  value?: Selection
-  onChange?: (next: Selection) => void
-  defaultValue?: string[]
-  splitPattern?: RegExp
-  className?: string
-  inputValue?: string
-  onInputValueChange?: (v: string) => void
-  isRequired?: boolean
-  requiredMessage?: string
-  name?: string
+interface TagInputProps
+  extends Pick<
+    TextFieldProps,
+    "isDisabled" | "isReadOnly" | "children" | "aria-label" | "aria-labelledby"
+  > {
+  value?: Selection;
+  onChange?: (next: Selection) => void;
+  defaultValue?: string[];
+  splitPattern?: RegExp;
+  className?: string;
+  inputValue?: string;
+  onInputValueChange?: (v: string) => void;
+  isRequired?: boolean;
+  requiredMessage?: string;
+  name?: string;
 }
 
 export function TagField({
@@ -38,75 +39,81 @@ export function TagField({
   children,
   ...props
 }: TagInputProps) {
-  const [internalSelection, setInternalSelection] = useState<Selection>(new Set(defaultValue))
-  const [uncontrolledInput, setUncontrolledInput] = useState("")
-  const [touched, setTouched] = useState(false)
-  const hiddenRef = useRef<HTMLInputElement>(null)
+  const [internalSelection, setInternalSelection] = useState<Selection>(
+    new Set(defaultValue),
+  );
+  const [uncontrolledInput, setUncontrolledInput] = useState("");
+  const [touched, setTouched] = useState(false);
+  const hiddenRef = useRef<HTMLInputElement>(null);
 
-  const selection: Selection = value ?? internalSelection
-  const inputValue = controlledInput ?? uncontrolledInput
-  const setInputValue = onInputValueChange ?? setUncontrolledInput
-  const applySelection = (next: Selection) => (onChange ?? setInternalSelection)(next as Selection)
+  const selection: Selection = value ?? internalSelection;
+  const inputValue = controlledInput ?? uncontrolledInput;
+  const setInputValue = onInputValueChange ?? setUncontrolledInput;
+  const applySelection = (next: Selection) =>
+    (onChange ?? setInternalSelection)(next as Selection);
 
   const list = useMemo(() => {
-    return selection === "all" ? [] : Array.from(selection).map((v) => String(v))
-  }, [selection])
+    return selection === "all"
+      ? []
+      : Array.from(selection).map((v) => String(v));
+  }, [selection]);
 
-  const isInvalid = Boolean(isRequired && list.length === 0 && touched)
-  const errorText = requiredMessage ?? "At least one item is required"
+  const isInvalid = Boolean(isRequired && list.length === 0 && touched);
+  const errorText = requiredMessage ?? "At least one item is required";
 
   useEffect(() => {
-    const input = hiddenRef.current
-    const form = input?.form
-    if (!form || !input) return
+    const input = hiddenRef.current;
+    const form = input?.form;
+    if (!form || !input) return;
     const onSubmit = (e: Event) => {
       if (isRequired && list.length === 0) {
-        e.preventDefault()
-        setTouched(true)
-        input.setCustomValidity(errorText)
-        form.reportValidity()
+        e.preventDefault();
+        setTouched(true);
+        input.setCustomValidity(errorText);
+        form.reportValidity();
       } else {
-        input.setCustomValidity("")
+        input.setCustomValidity("");
       }
-    }
-    form.addEventListener("submit", onSubmit)
-    return () => form.removeEventListener("submit", onSubmit)
-  }, [isRequired, list.length, errorText])
+    };
+    form.addEventListener("submit", onSubmit);
+    return () => form.removeEventListener("submit", onSubmit);
+  }, [isRequired, list.length, errorText]);
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === "Enter" || e.key === "," || e.key === ";") {
-      e.preventDefault()
-      addTag()
+      e.preventDefault();
+      addTag();
     }
   }
 
   function addTag() {
-    if (selection === "all") return
-    const next = new Set<Key>(Array.from(selection))
+    if (selection === "all") return;
+    const next = new Set<Key>(Array.from(selection));
     inputValue.split(splitPattern).forEach((raw) => {
       const formatted = raw
         .trim()
         .replace(/\s\s+/g, " ")
-        .replace(/\t|\\t|\r|\\r|\n|\\n/g, "")
-      if (formatted === "") return
+        .replace(/\t|\\t|\r|\\r|\n|\\n/g, "");
+      if (formatted === "") return;
       const exists = Array.from(next).some(
-        (id) => String(id).toLocaleLowerCase() === formatted.toLocaleLowerCase()
-      )
-      if (!exists) next.add(formatted)
-    })
-    applySelection(next)
-    setInputValue("")
-    setTouched(true)
+        (id) =>
+          String(id).toLocaleLowerCase() === formatted.toLocaleLowerCase(),
+      );
+      if (!exists) next.add(formatted);
+    });
+    applySelection(next);
+    setInputValue("");
+    setTouched(true);
   }
 
   function removeKeys(keys: Selection) {
-    if (selection === "all") return
-    const next = new Set<Key>(Array.from(selection))
+    if (selection === "all") return;
+    const next = new Set<Key>(Array.from(selection));
     if (keys !== "all") {
-      for (const k of keys) next.delete(k)
+      for (const k of keys) next.delete(k);
     }
-    applySelection(next)
-    setTouched(true)
+    applySelection(next);
+    setTouched(true);
   }
 
   return (
@@ -131,7 +138,9 @@ export function TagField({
           disabledKeys={props.isDisabled ? new Set(list) : undefined}
           className="mt-1"
           aria-label="Selected tags"
-          {...(!props.isReadOnly && !props.isDisabled ? { onRemove: removeKeys } : {})}
+          {...(!props.isReadOnly && !props.isDisabled
+            ? { onRemove: removeKeys }
+            : {})}
         >
           <TagList>
             {list.map((id) => (
@@ -153,5 +162,5 @@ export function TagField({
         className="sr-only absolute -z-10 h-0 w-0 opacity-0"
       />
     </div>
-  )
+  );
 }

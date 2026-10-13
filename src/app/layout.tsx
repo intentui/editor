@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
-import { headers } from "next/headers";
 import { AppBootstrap } from "@/components/app-bootstrap";
 import { JsonLd } from "@/components/json-ld";
 import { Providers } from "@/components/providers";
@@ -60,13 +59,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const acceptLanguage = (await headers()).get("accept-language");
-  const lang = acceptLanguage?.split(/[,;]/)[0] || "en-US";
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -107,7 +104,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-svh font-sans antialiased">
-        <Providers lang={lang}>
+        <Providers lang="en-US">
           <AppBootstrap />
           <main>{children}</main>
         </Providers>

@@ -1,20 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { FormatStateExtension } from "@/components/editor/extensions/format-state";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
@@ -38,9 +35,13 @@ export function ColorEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Select some text, then pick a text or background color. "),
+              $createTextNode(
+                "Select some text, then pick a text or background color. ",
+              ),
               $createTextNode("Red text. ").setStyle("color: #dc2626"),
-              $createTextNode("Yellow background.").setStyle("background-color: #fde047"),
+              $createTextNode("Yellow background.").setStyle(
+                "background-color: #fde047",
+              ),
             ),
           );
         },

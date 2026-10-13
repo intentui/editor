@@ -1,6 +1,11 @@
 export function BrandPerflexityIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -8,5 +13,5 @@ export function BrandPerflexityIcon(props: React.SVGProps<SVGSVGElement>) {
         fill="currentColor"
       />
     </svg>
-  )
+  );
 }

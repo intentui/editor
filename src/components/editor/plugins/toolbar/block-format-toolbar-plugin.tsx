@@ -1,16 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
-
 import {
-  $createParagraphNode,
-  $getRoot,
-  $getSelection,
-  $isElementNode,
-  $isRangeSelection,
-  COMMAND_PRIORITY_CRITICAL,
-  type ElementNode,
-  SELECTION_CHANGE_COMMAND,
-} from "lexical";
-
+  Bars3BottomLeftIcon,
+  ChatBubbleBottomCenterTextIcon,
+  CheckCircleIcon,
+  H1Icon,
+  H2Icon,
+  H3Icon,
+  ListBulletIcon,
+  NumberedListIcon,
+} from "@heroicons/react/16/solid";
 import { getPeerDependencyFromEditor } from "@lexical/extension";
 import {
   $isListNode,
@@ -30,17 +27,17 @@ import {
 } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
 import { $findMatchingParent, mergeRegister } from "@lexical/utils";
-
 import {
-  Bars3BottomLeftIcon,
-  ChatBubbleBottomCenterTextIcon,
-  CheckCircleIcon,
-  H1Icon,
-  H2Icon,
-  H3Icon,
-  ListBulletIcon,
-  NumberedListIcon,
-} from "@heroicons/react/16/solid";
+  $createParagraphNode,
+  $getRoot,
+  $getSelection,
+  $isElementNode,
+  $isRangeSelection,
+  COMMAND_PRIORITY_CRITICAL,
+  type ElementNode,
+  SELECTION_CHANGE_COMMAND,
+} from "lexical";
+import { useEffect, useMemo, useState } from "react";
 
 import { $getSelectedNode } from "@/components/editor/extensions/format-state";
 import {
@@ -51,7 +48,16 @@ import {
   ComboBoxLabel,
 } from "@/components/ui/combo-box";
 
-const BLOCK_TYPES = ["paragraph", "h1", "h2", "h3", "number", "bullet", "check", "quote"] as const;
+const BLOCK_TYPES = [
+  "paragraph",
+  "h1",
+  "h2",
+  "h3",
+  "number",
+  "bullet",
+  "check",
+  "quote",
+] as const;
 
 type BlockType = (typeof BLOCK_TYPES)[number];
 
@@ -81,11 +87,14 @@ function $getBlockType(): BlockType | null {
   }
   const element = $findMatchingParent(
     node,
-    (parent): parent is ElementNode => $isElementNode(parent) && !parent.isInline(),
+    (parent): parent is ElementNode =>
+      $isElementNode(parent) && !parent.isInline(),
   );
   if ($isHeadingNode(element)) {
     const tag = element.getTag();
-    return (BLOCK_TYPES as readonly string[]).includes(tag) ? (tag as BlockType) : "paragraph";
+    return (BLOCK_TYPES as readonly string[]).includes(tag)
+      ? (tag as BlockType)
+      : "paragraph";
   }
   return $isQuoteNode(element) ? "quote" : "paragraph";
 }
@@ -141,10 +150,15 @@ export function BlockFormatToolbarPlugin() {
 
   const items = useMemo(() => {
     const hasList =
-      getPeerDependencyFromEditor<typeof ListExtension>(editor, "@lexical/list/List") !== undefined;
+      getPeerDependencyFromEditor<typeof ListExtension>(
+        editor,
+        "@lexical/list/List",
+      ) !== undefined;
     const hasCheckList =
-      getPeerDependencyFromEditor<typeof CheckListExtension>(editor, "@lexical/list/CheckList") !==
-      undefined;
+      getPeerDependencyFromEditor<typeof CheckListExtension>(
+        editor,
+        "@lexical/list/CheckList",
+      ) !== undefined;
     return BLOCK_TYPES.filter((item) => {
       if (item === "number" || item === "bullet") {
         return hasList;
@@ -194,7 +208,11 @@ export function BlockFormatToolbarPlugin() {
     >
       <ComboBoxInput className="h-7 py-0 sm:py-0 sm:text-xs" />
       <ComboBoxContent
-        renderEmptyState={() => <span className="block p-2 text-sm text-muted-foreground">No matches</span>}
+        renderEmptyState={() => (
+          <span className="block p-2 text-sm text-muted-foreground">
+            No matches
+          </span>
+        )}
       >
         {(item: { id: BlockType }) => {
           const { label, icon: Icon } = BLOCK_ITEMS[item.id];

@@ -1,11 +1,10 @@
-import { $getRoot, $getSelection } from "lexical";
+import { MinusIcon, PlusIcon } from "@heroicons/react/16/solid";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { $patchStyleText } from "@lexical/selection";
-
+import { $getRoot, $getSelection } from "lexical";
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
-import { MinusIcon, PlusIcon } from "@heroicons/react/16/solid";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,11 +42,21 @@ export function FontSizeToolbarPlugin() {
           });
         }}
       >
-        <Button slot="decrement" intent="outline" size="sq-xs" aria-label="Decrease font size">
+        <Button
+          slot="decrement"
+          intent="outline"
+          size="sq-xs"
+          aria-label="Decrease font size"
+        >
           <MinusIcon />
         </Button>
         <Input className="h-7 w-14 px-1 py-0 text-center tabular-nums sm:px-1 sm:py-0 sm:text-xs" />
-        <Button slot="increment" intent="outline" size="sq-xs" aria-label="Increase font size">
+        <Button
+          slot="increment"
+          intent="outline"
+          size="sq-xs"
+          aria-label="Increase font size"
+        >
           <PlusIcon />
         </Button>
       </NumberField>

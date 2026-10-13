@@ -1,21 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { HistoryExtension } from "@lexical/history";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { HistoryExtension } from "@lexical/history";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { HistoryToolbarPlugin } from "@/components/editor/plugins/toolbar/history-toolbar-plugin";
@@ -38,7 +35,9 @@ export function HistoryEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Type something, then undo and redo it with the buttons or the keyboard."),
+              $createTextNode(
+                "Type something, then undo and redo it with the buttons or the keyboard.",
+              ),
             ),
           );
         },

@@ -1,20 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { FormatStateExtension } from "@/components/editor/extensions/format-state";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
@@ -40,8 +37,12 @@ export function FontEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Select some text, then change its font family or size. "),
-              $createTextNode("Georgia at 20px. ").setStyle("font-family: Georgia; font-size: 20px"),
+              $createTextNode(
+                "Select some text, then change its font family or size. ",
+              ),
+              $createTextNode("Georgia at 20px. ").setStyle(
+                "font-family: Georgia; font-size: 20px",
+              ),
               $createTextNode("Courier New at 14px.").setStyle(
                 "font-family: Courier New; font-size: 14px",
               ),

@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-
+import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/16/solid";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { DraggableBlockPlugin_EXPERIMENTAL } from "@lexical/react/LexicalDraggableBlockPlugin";
+import { twMerge } from "cn";
 import {
   $createParagraphNode,
   $createTextNode,
   $getNearestNodeFromDOMNode,
   $isElementNode,
 } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { DraggableBlockPlugin_EXPERIMENTAL } from "@lexical/react/LexicalDraggableBlockPlugin";
-
-import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/16/solid";
-import { twMerge } from "cn";
+import { useEffect, useRef, useState } from "react";
 import type { PressEvent } from "react-aria-components/Button";
 
 import { Button } from "@/components/ui/button";
@@ -26,7 +23,9 @@ export function DraggableBlockPlugin() {
   const [editor] = useLexicalComposerContext();
   const menuRef = useRef<HTMLDivElement>(null);
   const targetLineRef = useRef<HTMLDivElement>(null);
-  const [draggableElement, setDraggableElement] = useState<HTMLElement | null>(null);
+  const [draggableElement, setDraggableElement] = useState<HTMLElement | null>(
+    null,
+  );
   const [anchorElem, setAnchorElem] = useState<HTMLElement | null>(null);
 
   useEffect(() => {

@@ -1,11 +1,8 @@
-import { useMemo } from "react";
-
-import { $getRoot, $getSelection } from "lexical";
-
+import { NumberedListIcon } from "@heroicons/react/16/solid";
 import { INSERT_ORDERED_LIST_COMMAND } from "@lexical/list";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
-import { NumberedListIcon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection } from "lexical";
+import { useMemo } from "react";
 
 import {
   type ComponentPickerItem,

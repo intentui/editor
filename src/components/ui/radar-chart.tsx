@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { type ComponentProps, type ReactNode, useMemo } from "react"
+import { type ComponentProps, type ReactNode, useMemo } from "react";
 import {
   PolarAngleAxis,
   PolarGrid,
   PolarRadiusAxis,
   Radar,
   RadarChart as RadarChartPrimitive,
-} from "recharts"
-import { useIsMobile } from "@/hooks/use-mobile"
+} from "recharts";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Chart,
   type ChartConfig,
@@ -19,29 +19,30 @@ import {
   constructCategoryColors,
   DEFAULT_COLORS,
   getColorValue,
-} from "./chart"
+} from "./chart";
 
 export interface RadarChartSeries {
-  dataKey: string
-  name?: string
-  radarProps?: Omit<ComponentProps<typeof Radar>, "dataKey" | "name">
+  dataKey: string;
+  name?: string;
+  radarProps?: Omit<ComponentProps<typeof Radar>, "dataKey" | "name">;
 }
 
-export interface RadarChartProps extends Omit<ComponentProps<"div">, "children"> {
-  config: ChartConfig
-  data: Record<string, any>[]
-  dataKey: string
-  series: RadarChartSeries[]
-  colors?: readonly string[]
-  containerHeight?: number
-  legend?: boolean
-  tooltip?: boolean | ComponentProps<typeof ChartTooltip>["content"]
-  tooltipProps?: Omit<ComponentProps<typeof ChartTooltip>, "content">
-  polarGridProps?: ComponentProps<typeof PolarGrid>
-  angleAxisProps?: Omit<ComponentProps<typeof PolarAngleAxis>, "dataKey">
-  radiusAxisProps?: ComponentProps<typeof PolarRadiusAxis>
-  chartProps?: Omit<ComponentProps<typeof RadarChartPrimitive>, "data">
-  children?: ReactNode
+export interface RadarChartProps
+  extends Omit<ComponentProps<"div">, "children"> {
+  config: ChartConfig;
+  data: Record<string, unknown>[];
+  dataKey: string;
+  series: RadarChartSeries[];
+  colors?: readonly string[];
+  containerHeight?: number;
+  legend?: boolean;
+  tooltip?: boolean | ComponentProps<typeof ChartTooltip>["content"];
+  tooltipProps?: Omit<ComponentProps<typeof ChartTooltip>, "content">;
+  polarGridProps?: ComponentProps<typeof PolarGrid>;
+  angleAxisProps?: Omit<ComponentProps<typeof PolarAngleAxis>, "dataKey">;
+  radiusAxisProps?: ComponentProps<typeof PolarRadiusAxis>;
+  chartProps?: Omit<ComponentProps<typeof RadarChartPrimitive>, "data">;
+  children?: ReactNode;
 }
 
 export function RadarChart({
@@ -61,12 +62,15 @@ export function RadarChart({
   children,
   ...props
 }: RadarChartProps) {
-  const isMobile = useIsMobile()
-  const seriesKeys = useMemo(() => series.map((item) => item.dataKey), [series])
+  const isMobile = useIsMobile();
+  const seriesKeys = useMemo(
+    () => series.map((item) => item.dataKey),
+    [series],
+  );
   const categoryColors = useMemo(
     () => constructCategoryColors(seriesKeys, colors),
-    [seriesKeys, colors]
-  )
+    [seriesKeys, colors],
+  );
 
   return (
     <Chart
@@ -78,11 +82,18 @@ export function RadarChart({
       {...props}
     >
       {({ selectedLegend }) => (
-        <RadarChartPrimitive data={data} outerRadius={isMobile ? "52%" : "72%"} {...chartProps}>
+        <RadarChartPrimitive
+          data={data}
+          outerRadius={isMobile ? "52%" : "72%"}
+          {...chartProps}
+        >
           <PolarGrid {...polarGridProps} />
           <PolarAngleAxis
             dataKey={dataKey}
-            tick={{ fill: "var(--color-muted-foreground)", fontSize: isMobile ? 10 : 12 }}
+            tick={{
+              fill: "var(--color-muted-foreground)",
+              fontSize: isMobile ? 10 : 12,
+            }}
             {...angleAxisProps}
           />
           <PolarRadiusAxis tick={false} axisLine={false} {...radiusAxisProps} />
@@ -90,7 +101,11 @@ export function RadarChart({
           {tooltip ? (
             <ChartTooltip
               content={
-                typeof tooltip === "boolean" ? <ChartTooltipContent accessibilityLayer /> : tooltip
+                typeof tooltip === "boolean" ? (
+                  <ChartTooltipContent accessibilityLayer />
+                ) : (
+                  tooltip
+                )
               }
               {...tooltipProps}
             />
@@ -100,14 +115,14 @@ export function RadarChart({
             const color = getColorValue(
               config[item.dataKey]?.color ??
                 categoryColors.get(item.dataKey) ??
-                colors[index % colors.length]
-            )
-            const isDimmed = selectedLegend && selectedLegend !== item.dataKey
+                colors[index % colors.length],
+            );
+            const isDimmed = selectedLegend && selectedLegend !== item.dataKey;
             const {
               fillOpacity = series.length > 1 ? 0.16 : 0.28,
               strokeOpacity = 1,
               ...radarProps
-            } = item.radarProps ?? {}
+            } = item.radarProps ?? {};
 
             return (
               <Radar
@@ -121,10 +136,10 @@ export function RadarChart({
                 strokeWidth={2}
                 {...radarProps}
               />
-            )
+            );
           })}
         </RadarChartPrimitive>
       )}
     </Chart>
-  )
+  );
 }

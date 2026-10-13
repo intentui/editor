@@ -1,20 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { TabFocusExtension } from "@/components/editor/extensions/tab-focus";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
@@ -36,7 +33,9 @@ export function TabFocusEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Press Tab from the page to move focus into this editor."),
+              $createTextNode(
+                "Press Tab from the page to move focus into this editor.",
+              ),
             ),
           );
         },

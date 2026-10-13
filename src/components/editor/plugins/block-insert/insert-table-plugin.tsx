@@ -1,5 +1,8 @@
-import { useCallback, useState } from "react";
-
+import { TableCellsIcon } from "@heroicons/react/16/solid";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { $findTableNode, INSERT_TABLE_COMMAND } from "@lexical/table";
+import { twMerge } from "cn";
 import {
   $getRoot,
   $getSelection,
@@ -7,23 +10,21 @@ import {
   $isRangeSelection,
   type LexicalEditor,
 } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-import { $findTableNode, INSERT_TABLE_COMMAND } from "@lexical/table";
-
-import { twMerge } from "cn";
-import { TableCellsIcon } from "@heroicons/react/16/solid";
+import { useCallback, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { Popover } from "@/components/ui/popover";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 const MAX_ROWS = 8;
 const MAX_COLUMNS = 10;
 
-export function insertTable(editor: LexicalEditor, rows: number, columns: number) {
+export function insertTable(
+  editor: LexicalEditor,
+  rows: number,
+  columns: number,
+) {
   editor.update(() => {
     if (!$getSelection()) {
       $getRoot().selectEnd();
@@ -56,7 +57,11 @@ export function insertTable(editor: LexicalEditor, rows: number, columns: number
   });
 }
 
-function TableGridPicker({ onSelect }: { onSelect: (rows: number, columns: number) => void }) {
+function TableGridPicker({
+  onSelect,
+}: {
+  onSelect: (rows: number, columns: number) => void;
+}) {
   const [hovered, setHovered] = useState({ rows: 1, columns: 1 });
 
   return (
@@ -72,11 +77,12 @@ function TableGridPicker({ onSelect }: { onSelect: (rows: number, columns: numbe
           const active = row <= hovered.rows && column <= hovered.columns;
 
           return (
-            <div
-              key={index}
-              role="button"
+            <button
+              type="button"
+              key={`${row}-${column}`}
               aria-label={`${column} x ${row}`}
               onPointerEnter={() => setHovered({ rows: row, columns: column })}
+              onFocus={() => setHovered({ rows: row, columns: column })}
               onClick={() => onSelect(row, column)}
               className={twMerge(
                 "size-[1.125rem] rounded-xs border",
@@ -109,7 +115,12 @@ export function InsertTablePlugin() {
   return (
     <DialogTrigger isOpen={open} onOpenChange={setOpen}>
       <TooltipTrigger>
-        <Button intent="outline" size="sq-xs" aria-label="Insert table" isDisabled={!isEditable}>
+        <Button
+          intent="outline"
+          size="sq-xs"
+          aria-label="Insert table"
+          isDisabled={!isEditable}
+        >
           <TableCellsIcon />
         </Button>
         <Tooltip>Insert table</Tooltip>

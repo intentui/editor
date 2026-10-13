@@ -2,13 +2,19 @@ import { CommandLineIcon } from "@heroicons/react/16/solid";
 
 import {
   type BuiltinShortcutName,
-  type ShortcutName,
   formatShortcut,
+  type ShortcutName,
 } from "@/components/editor/extensions/shortcuts";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogBody,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Keyboard } from "@/components/ui/keyboard";
-import { Dialog, DialogBody, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 type ShortcutRow = {
   name: ShortcutName | BuiltinShortcutName;
@@ -84,7 +90,9 @@ export function ShortcutPlugin() {
         <DialogBody className="max-h-[60vh] space-y-4">
           {SHORTCUT_GROUPS.map(({ title, rows }) => (
             <section key={title}>
-              <h3 className="mb-1.5 text-xs font-medium text-muted-foreground">{title}</h3>
+              <h3 className="mb-1.5 text-xs font-medium text-muted-foreground">
+                {title}
+              </h3>
               <div className="divide-y divide-border rounded-lg border border-border">
                 {rows.map(({ name, label }) => (
                   <div
@@ -93,8 +101,11 @@ export function ShortcutPlugin() {
                   >
                     <span>{label}</span>
                     <span className="flex items-center gap-1">
-                      {formatShortcut(name).map((segment, index) => (
-                        <Keyboard key={index} className="inline text-foreground">
+                      {formatShortcut(name).map((segment) => (
+                        <Keyboard
+                          key={segment}
+                          className="inline text-foreground"
+                        >
                           {segment}
                         </Keyboard>
                       ))}

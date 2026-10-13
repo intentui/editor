@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
-
-import { $getRoot } from "lexical";
-
 import { CharacterLimitPlugin } from "@lexical/react/LexicalCharacterLimitPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
 import { twJoin } from "cn";
+import { $getRoot } from "lexical";
+import { useEffect, useState } from "react";
 
 const graphemeSegmenter =
   typeof Intl.Segmenter === "undefined"
@@ -45,16 +42,22 @@ function computeCounts(text: string): { words: number; characters: number } {
 export function CountPlugin({ maxLength }: { maxLength?: number }) {
   const [editor] = useLexicalComposerContext();
   const [counts, setCounts] = useState(() =>
-    editor.getEditorState().read(() => computeCounts($getRoot().getTextContent())),
+    editor
+      .getEditorState()
+      .read(() => computeCounts($getRoot().getTextContent())),
   );
 
   useEffect(() => {
-    return editor.registerUpdateListener(({ editorState, dirtyElements, dirtyLeaves }) => {
-      if (dirtyElements.size === 0 && dirtyLeaves.size === 0) {
-        return;
-      }
-      setCounts(editorState.read(() => computeCounts($getRoot().getTextContent())));
-    });
+    return editor.registerUpdateListener(
+      ({ editorState, dirtyElements, dirtyLeaves }) => {
+        if (dirtyElements.size === 0 && dirtyLeaves.size === 0) {
+          return;
+        }
+        setCounts(
+          editorState.read(() => computeCounts($getRoot().getTextContent())),
+        );
+      },
+    );
   }, [editor]);
 
   const format = new Intl.NumberFormat();
@@ -70,8 +73,8 @@ export function CountPlugin({ maxLength }: { maxLength?: number }) {
           maxLength={maxLength}
           renderer={({ remainingCharacters }) => (
             <span className={twJoin(remainingCharacters < 0 && "text-danger")}>
-              {format.format(maxLength - remainingCharacters)} / {format.format(maxLength)}{" "}
-              characters
+              {format.format(maxLength - remainingCharacters)} /{" "}
+              {format.format(maxLength)} characters
             </span>
           )}
         />

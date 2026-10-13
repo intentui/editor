@@ -1,20 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { SpecialTextExtension } from "@/components/editor/extensions/special-text";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
@@ -36,7 +33,9 @@ export function SpecialTextEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Type a word in square brackets, like [this], and it is highlighted."),
+              $createTextNode(
+                "Type a word in square brackets, like [this], and it is highlighted.",
+              ),
             ),
           );
         },

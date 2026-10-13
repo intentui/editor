@@ -1,21 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { $createLinkNode } from "@lexical/link";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { $createLinkNode } from "@lexical/link";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { LinkExtension } from "@/components/editor/extensions/link";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
@@ -38,11 +35,15 @@ export function ContextMenuEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Right-click anywhere in this editor to open the menu."),
+              $createTextNode(
+                "Right-click anywhere in this editor to open the menu.",
+              ),
             ),
             $createParagraphNode().append(
               $createTextNode("Right-click a link, like "),
-              $createLinkNode("https://lexical.dev").append($createTextNode("this one")),
+              $createLinkNode("https://lexical.dev").append(
+                $createTextNode("this one"),
+              ),
               $createTextNode(", to see Remove link."),
             ),
           );

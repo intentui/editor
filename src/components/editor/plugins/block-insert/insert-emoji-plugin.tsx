@@ -1,12 +1,16 @@
-import { $getRoot, $getSelection, $isRangeSelection, type LexicalEditor } from "lexical";
+import { FaceSmileIcon } from "@heroicons/react/16/solid";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-
-import { FaceSmileIcon } from "@heroicons/react/16/solid";
+import {
+  $getRoot,
+  $getSelection,
+  $isRangeSelection,
+  type LexicalEditor,
+} from "lexical";
 
 import { Button } from "@/components/ui/button";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 function insertEmojiTrigger(editor: LexicalEditor) {
   editor.update(() => {

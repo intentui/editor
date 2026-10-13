@@ -1,7 +1,7 @@
-import { BrandGithubIcon } from "@/components/icons/brand-github-icon"
-import { buttonStyles } from "@/components/ui/button"
-import { Link } from "@/components/ui/link"
-import { app } from "@/config/app"
+import { BrandGithubIcon } from "@/components/icons/brand-github-icon";
+import { buttonStyles } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
+import { app } from "@/config/app";
 
 export function GithubLink() {
   return (
@@ -9,9 +9,13 @@ export function GithubLink() {
       aria-label="GitHub"
       target="_blank"
       href={app.repo.url}
-      className={buttonStyles({ intent: "plain", size: "sq-sm", isCircle: true })}
+      className={buttonStyles({
+        intent: "plain",
+        size: "sq-sm",
+        isCircle: true,
+      })}
     >
       <BrandGithubIcon />
     </Link>
-  )
+  );
 }

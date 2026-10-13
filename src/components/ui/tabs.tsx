@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
-import { createContext, use, useSyncExternalStore } from "react"
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import { SelectionIndicator } from "react-aria-components/SelectionIndicator"
-import { useSlottedContext } from "react-aria-components/slots"
+import { cn } from "cn";
+import { createContext, use, useSyncExternalStore } from "react";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import { SelectionIndicator } from "react-aria-components/SelectionIndicator";
+import { useSlottedContext } from "react-aria-components/slots";
 import type {
   TabListProps as TabListPrimitiveProps,
   TabPanelProps as TabPanelPrimitiveProps,
   TabPanelsProps,
   TabProps as TabPrimitiveProps,
   TabsProps as TabsPrimitiveProps,
-} from "react-aria-components/Tabs"
+} from "react-aria-components/Tabs";
 import {
   TabPanels as PrimitiveTabPanels,
   TabList as TabListPrimitive,
@@ -18,14 +19,18 @@ import {
   Tab as TabPrimitive,
   TabsContext,
   Tabs as TabsPrimitive,
-} from "react-aria-components/Tabs"
-import { cn } from "cn"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/Tabs";
+import { cx } from "@/lib/primitive";
 
 interface TabsProps extends TabsPrimitiveProps {
-  ref?: React.RefObject<HTMLDivElement>
+  ref?: React.RefObject<HTMLDivElement>;
 }
-const Tabs = ({ className, ref, orientation = "horizontal", ...props }: TabsProps) => {
+const Tabs = ({
+  className,
+  ref,
+  orientation = "horizontal",
+  ...props
+}: TabsProps) => {
   return (
     <TabsContext value={{ orientation }}>
       <TabsPrimitive
@@ -33,29 +38,33 @@ const Tabs = ({ className, ref, orientation = "horizontal", ...props }: TabsProp
         className={cx(
           orientation === "vertical" ? "w-full flex-row" : "flex-col",
           "group/tabs flex gap-4 self-start forced-color-adjust-none",
-          className
+          className,
         )}
         ref={ref}
         {...props}
       />
     </TabsContext>
-  )
-}
+  );
+};
 interface TabListContextValue {
-  selectionIndicator?: boolean
+  selectionIndicator?: boolean;
 }
-const TabListContext = createContext<TabListContextValue | undefined>(undefined)
+const TabListContext = createContext<TabListContextValue | undefined>(
+  undefined,
+);
 
 export function useTabListContext() {
-  const context = use(TabListContext)
+  const context = use(TabListContext);
   if (!context) {
-    throw new Error("useTabsContext must be used within TabsContext.Provider")
+    throw new Error("useTabsContext must be used within TabsContext.Provider");
   }
-  return context
+  return context;
 }
 
-interface TabListProps<T extends object> extends TabListPrimitiveProps<T>, TabListContextValue {
-  ref?: React.RefObject<HTMLDivElement>
+interface TabListProps<T extends object>
+  extends TabListPrimitiveProps<T>,
+    TabListContextValue {
+  ref?: React.RefObject<HTMLDivElement>;
 }
 const TabList = <T extends object>({
   className,
@@ -78,17 +87,25 @@ const TabList = <T extends object>({
             orientation === "vertical" &&
               "min-w-56 shrink-0 flex-col items-start gap-y-(--tab-list-gutter) border-l px-(--tab-list-gutter) [--tab-list-gutter:--spacing(2)]",
             className,
-          ])
+          ]),
         )}
       />
     </TabListContext>
-  )
-}
+  );
+};
 
-export function TabScrollArea({ className, ...props }: React.ComponentProps<"div">) {
+export function TabScrollArea({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
   return (
     <div className="relative">
-      <div className={cn("scrollbar-none overflow-x-auto sm:overflow-x-visible", className)}>
+      <div
+        className={cn(
+          "scrollbar-none overflow-x-auto sm:overflow-x-visible",
+          className,
+        )}
+      >
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-px w-full bg-border"
           aria-hidden
@@ -96,25 +113,27 @@ export function TabScrollArea({ className, ...props }: React.ComponentProps<"div
         {props.children}
       </div>
     </div>
-  )
+  );
 }
 
 interface TabProps extends TabPrimitiveProps {
-  ref?: React.RefObject<HTMLDivElement>
+  ref?: React.RefObject<HTMLDivElement>;
 }
 
 function subscribeToHydration() {
-  return () => {}
+  return () => {};
 }
 
 function Tab({ className, ref, ...props }: TabProps) {
   const isHydrated = useSyncExternalStore(
     subscribeToHydration,
     () => true,
-    () => false
-  )
-  const { orientation } = useSlottedContext(TabsContext)!
-  const { selectionIndicator } = useTabListContext()
+    () => false,
+  );
+  const context = useSlottedContext(TabsContext);
+  if (!context) throw new Error("This component requires Tabs.");
+  const { orientation } = context;
+  const { selectionIndicator } = useTabListContext();
   return (
     <TabPrimitive
       {...props}
@@ -131,7 +150,7 @@ function Tab({ className, ref, ...props }: TabProps) {
         "selected:text-primary-subtle-foreground text-muted-foreground hover:bg-secondary selected:hover:bg-primary-subtle hover:text-foreground selected:hover:text-primary-subtle-foreground focus:ring-0",
         "disabled:opacity-50",
         "href" in props ? "cursor-pointer" : "cursor-default",
-        className
+        className,
       )}
     >
       {composeRenderProps(props.children, (children) => (
@@ -144,23 +163,23 @@ function Tab({ className, ref, ...props }: TabProps) {
                 "absolute bg-primary-subtle-foreground duration-200 will-change-transform",
                 orientation === "horizontal"
                   ? "inset-e-(--tab-gutter-x) start-(--tab-gutter-x) -bottom-[calc(var(--tab-gutter-y)+1px)] h-0.5 motion-safe:transition-[translate,width]"
-                  : "-inset-s-[calc(var(--tab-gutter-x)-var(--tab-list-gutter)+1px)] top-(--tab-gutter-y) bottom-(--tab-gutter-y) w-0.5 motion-safe:transition-[translate,height]"
+                  : "-inset-s-[calc(var(--tab-gutter-x)-var(--tab-list-gutter)+1px)] top-(--tab-gutter-y) bottom-(--tab-gutter-y) w-0.5 motion-safe:transition-[translate,height]",
               )}
             />
           )}
         </>
       ))}
     </TabPrimitive>
-  )
+  );
 }
 
 interface TabPanelProps extends TabPanelPrimitiveProps {
-  ref?: React.RefObject<HTMLDivElement>
+  ref?: React.RefObject<HTMLDivElement>;
 }
 
 const TabPanels = <T extends object>(props: TabPanelsProps<T>) => {
-  return <PrimitiveTabPanels {...props} />
-}
+  return <PrimitiveTabPanels {...props} />;
+};
 
 const TabPanel = ({ className, ref, ...props }: TabPanelProps) => {
   return (
@@ -168,10 +187,13 @@ const TabPanel = ({ className, ref, ...props }: TabPanelProps) => {
       {...props}
       ref={ref}
       data-slot="tab-panel"
-      className={cx("flex-1 text-foreground text-sm/6 focus-visible:outline-hidden", className)}
+      className={cx(
+        "flex-1 text-foreground text-sm/6 focus-visible:outline-hidden",
+        className,
+      )}
     />
-  )
-}
+  );
+};
 
-export type { TabListProps, TabPanelProps, TabProps, TabsProps }
-export { Tab, TabList, TabPanel, TabPanels, Tabs }
+export type { TabListProps, TabPanelProps, TabProps, TabsProps };
+export { Tab, TabList, TabPanel, TabPanels, Tabs };

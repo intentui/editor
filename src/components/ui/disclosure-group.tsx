@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { use } from "react"
-import { Button, type ButtonProps } from "react-aria-components/Button"
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import { cn, twJoin } from "cn";
+import { use } from "react";
+import { Button, type ButtonProps } from "react-aria-components/Button";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import {
-  Disclosure as PrimitiveDisclosure,
   type DisclosureProps,
-} from "react-aria-components/Disclosure"
+  Disclosure as PrimitiveDisclosure,
+} from "react-aria-components/Disclosure";
 import type {
   DisclosureGroupProps,
   DisclosurePanelProps,
-} from "react-aria-components/DisclosureGroup"
+} from "react-aria-components/DisclosureGroup";
 import {
+  DisclosureStateContext,
   DisclosureGroup as PrimitiveDisclosureGroup,
   DisclosurePanel as PrimitiveDisclosurePanel,
-  DisclosureStateContext,
-} from "react-aria-components/DisclosureGroup"
-import { Heading } from "react-aria-components/Heading"
-import { twJoin, cn } from "cn"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/DisclosureGroup";
+import { Heading } from "react-aria-components/Heading";
+import { cx } from "@/lib/primitive";
 
 export function DisclosureGroup({ className, ...props }: DisclosureGroupProps) {
   return (
@@ -35,33 +35,35 @@ export function DisclosureGroup({ className, ...props }: DisclosureGroupProps) {
           "[--disclosure-expanded-foreground:var(--color-foreground)]",
           "flex flex-col gap-y-2",
         ],
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 export function Disclosure({ className, ...props }: DisclosureProps) {
   return (
     <PrimitiveDisclosure
-      className={composeRenderProps(className, (className, { isExpanded, isFocusVisibleWithin }) =>
-        cn(
-          "group/disclosure-item inset-ring inset-ring-(--disclosure-collapsed-border,transparent) w-full rounded-(--disclosure-radius,--spacing(0)) bg-(--disclosure-collapsed-bg,transparent) duration-200",
-          (isExpanded || isFocusVisibleWithin) &&
-            "inset-ring-(--disclosure-expanded-border,transparent) bg-(--disclosure-expanded-bg)",
-          "has-data-hovered:inset-ring-(--disclosure-expanded-border,transparent) has-data-hovered:bg-(--disclosure-expanded-bg)",
-          className
-        )
+      className={composeRenderProps(
+        className,
+        (className, { isExpanded, isFocusVisibleWithin }) =>
+          cn(
+            "group/disclosure-item inset-ring inset-ring-(--disclosure-collapsed-border,transparent) w-full rounded-(--disclosure-radius,--spacing(0)) bg-(--disclosure-collapsed-bg,transparent) duration-200",
+            (isExpanded || isFocusVisibleWithin) &&
+              "inset-ring-(--disclosure-expanded-border,transparent) bg-(--disclosure-expanded-bg)",
+            "has-data-hovered:inset-ring-(--disclosure-expanded-border,transparent) has-data-hovered:bg-(--disclosure-expanded-bg)",
+            className,
+          ),
       )}
       {...props}
     />
-  )
+  );
 }
 
 export interface DisclosureTriggerProps extends ButtonProps {
-  ref?: React.Ref<HTMLButtonElement>
-  triggerIndicator?: boolean
+  ref?: React.Ref<HTMLButtonElement>;
+  triggerIndicator?: boolean;
 }
 
 export function DisclosureTrigger({
@@ -70,7 +72,8 @@ export function DisclosureTrigger({
   triggerIndicator = true,
   ...props
 }: DisclosureTriggerProps) {
-  const state = use(DisclosureStateContext)!
+  const state = use(DisclosureStateContext);
+  if (!state) throw new Error("This component requires its parent provider.");
   return (
     <Heading>
       <Button
@@ -86,27 +89,32 @@ export function DisclosureTrigger({
               ? "rounded-t-(--disclosure-radius) rounded-b-none text-(--disclosure-expanded-foreground)"
               : "rounded-(--disclosure-radius) text-(--disclosure-collapsed-foreground) hover:text-(--disclosure-expanded-foreground)",
           ],
-          className
+          className,
         )}
       >
         {(values) => (
           <>
-            {typeof props.children === "function" ? props.children(values) : props.children}
+            {typeof props.children === "function"
+              ? props.children(values)
+              : props.children}
             {triggerIndicator && <DisclosureIndicator />}
           </>
         )}
       </Button>
     </Heading>
-  )
+  );
 }
 
-export function DisclosureIndicator({ className, ...props }: React.ComponentProps<"span">) {
+export function DisclosureIndicator({
+  className,
+  ...props
+}: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="disclosure-indicator"
       className={cn(
         "pointer-events-none relative ms-(--disclosure-gutter-x,--spacing(0)) -me-[calc(var(--disclosure-gutter-x,--spacing(0))-(--spacing(2)))] flex size-6 shrink-0 items-center justify-center [--width:--spacing(2.5)]",
-        className
+        className,
       )}
       {...props}
     >
@@ -118,7 +126,7 @@ export function DisclosureIndicator({ className, ...props }: React.ComponentProp
       />
       <span className="absolute h-[1.5px] w-(--width) origin-center bg-current transition-transform duration-300" />
     </span>
-  )
+  );
 }
 
 export function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
@@ -127,7 +135,7 @@ export function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
       data-slot="disclosure-panel"
       className={cx(
         "h-(--disclosure-panel-height) overflow-clip text-sm/6 transition-[height] duration-200",
-        className
+        className,
       )}
     >
       <div
@@ -137,5 +145,5 @@ export function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
         {props.children}
       </div>
     </PrimitiveDisclosurePanel>
-  )
+  );
 }

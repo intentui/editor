@@ -1,39 +1,46 @@
-"use client"
+"use client";
 
-import { CheckIcon } from "@heroicons/react/20/solid"
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import { CheckIcon } from "@heroicons/react/20/solid";
+import { cn, twJoin } from "cn";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import type {
   ListBoxItemProps,
   ListBoxProps,
   ListBoxSectionProps,
-} from "react-aria-components/ListBox"
+} from "react-aria-components/ListBox";
 import {
-  ListBox as ListBoxPrimitive,
   ListBoxItem as ListBoxItemPrimitive,
-} from "react-aria-components/ListBox"
-import { twJoin, cn } from "cn"
-import { cx } from "@/lib/primitive"
+  ListBox as ListBoxPrimitive,
+} from "react-aria-components/ListBox";
+import { cx } from "@/lib/primitive";
 import {
   DropdownDescription,
-  dropdownItemStyles,
   DropdownLabel,
   DropdownSection,
   type DropdownSectionProps,
-} from "./dropdown"
+  dropdownItemStyles,
+} from "./dropdown";
 
-const ListBox = <T extends object>({ className, ...props }: ListBoxProps<T>) => (
+const ListBox = <T extends object>({
+  className,
+  ...props
+}: ListBoxProps<T>) => (
   <ListBoxPrimitive
     {...props}
     data-slot="list-box"
     className={cx(
       "scrollbar-thin grid max-h-96 w-full min-w-56 scroll-py-1 grid-cols-[auto_1fr] flex-col gap-y-1 overflow-y-auto overscroll-contain rounded-xl border bg-background p-1 outline-hidden has-data-[slot=drag-icon]:grid-cols-[auto_auto_1fr] *:[[role='group']+[role=group]]:mt-4 *:[[role='group']+[role=separator]]:mt-1",
-      className
+      className,
     )}
   />
-)
+);
 
-const ListBoxItem = <T extends object>({ children, className, ...props }: ListBoxItemProps<T>) => {
-  const textValue = typeof children === "string" ? children : undefined
+const ListBoxItem = <T extends object>({
+  children,
+  className,
+  ...props
+}: ListBoxItemProps<T>) => {
+  const textValue = typeof children === "string" ? children : undefined;
   return (
     <ListBoxItemPrimitive
       textValue={textValue}
@@ -45,15 +52,15 @@ const ListBoxItem = <T extends object>({ children, className, ...props }: ListBo
             "has-data-[slot=drag-icon]:*:[[slot=label]]:col-start-3",
             "has-data-[slot=drag-icon]:*:[svg]:col-start-2",
             "href" in props ? "cursor-pointer" : "cursor-default",
-            className
+            className,
           ),
-        })
+        }),
       )}
       data-slot="list-box-item"
       {...props}
     >
       {(renderProps) => {
-        const { allowsDragging, isSelected } = renderProps
+        const { allowsDragging, isSelected } = renderProps;
 
         return (
           <>
@@ -105,23 +112,35 @@ const ListBoxItem = <T extends object>({ children, className, ...props }: ListBo
               children
             )}
           </>
-        )
+        );
       }}
     </ListBoxItemPrimitive>
-  )
-}
+  );
+};
 
-const ListBoxSection = <T extends object>({ className, ...props }: DropdownSectionProps<T>) => {
+const ListBoxSection = <T extends object>({
+  className,
+  ...props
+}: DropdownSectionProps<T>) => {
   return (
     <DropdownSection
-      className={cn("gap-y-1 *:data-[slot=list-box-item]:last:-mb-1.5", className)}
+      className={cn(
+        "gap-y-1 *:data-[slot=list-box-item]:last:-mb-1.5",
+        className,
+      )}
       {...props}
     />
-  )
-}
+  );
+};
 
-const ListBoxLabel = DropdownLabel
-const ListBoxDescription = DropdownDescription
+const ListBoxLabel = DropdownLabel;
+const ListBoxDescription = DropdownDescription;
 
-export type { ListBoxItemProps, ListBoxSectionProps }
-export { ListBox, ListBoxDescription, ListBoxItem, ListBoxLabel, ListBoxSection }
+export type { ListBoxItemProps, ListBoxSectionProps };
+export {
+  ListBox,
+  ListBoxDescription,
+  ListBoxItem,
+  ListBoxLabel,
+  ListBoxSection,
+};

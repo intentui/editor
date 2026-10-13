@@ -1,7 +1,7 @@
 import { loader } from "fumadocs-core/source";
+import { pageSchema } from "fumadocs-core/source/schema";
 import { defineDocs } from "fumadocs-mdx/macro";
 import { z } from "zod";
-import { pageSchema } from "fumadocs-core/source/schema";
 
 const docs = defineDocs({
   dir: "src/content/docs",

@@ -1,15 +1,21 @@
+import {
+  DocumentArrowDownIcon,
+  DocumentArrowUpIcon,
+} from "@heroicons/react/16/solid";
 import { exportFile, importFile } from "@lexical/file";
 import { $generateHtmlFromNodes } from "@lexical/html";
-import { $convertToMarkdownString, TRANSFORMERS, type Transformer } from "@lexical/markdown";
+import {
+  $convertToMarkdownString,
+  TRANSFORMERS,
+  type Transformer,
+} from "@lexical/markdown";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
-import { DocumentArrowDownIcon, DocumentArrowUpIcon } from "@heroicons/react/16/solid";
-
 import { Button } from "@/components/ui/button";
-import { ToolbarGroup } from "@/components/ui/toolbar";
 import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { ToolbarGroup } from "@/components/ui/toolbar";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 function toSafeFileName(value: string) {
   return value
@@ -38,7 +44,8 @@ export function ImportExportToolbarPlugin({
 
   const namespace = editor._config.namespace;
 
-  const getFileName = () => toSafeFileName(`${namespace} ${new Date().toISOString()}`);
+  const getFileName = () =>
+    toSafeFileName(`${namespace} ${new Date().toISOString()}`);
 
   const exportLexical = () => {
     exportFile(editor, {

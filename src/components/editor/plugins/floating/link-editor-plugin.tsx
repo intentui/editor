@@ -1,30 +1,40 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
+import {
+  CheckIcon,
+  PencilIcon,
+  TrashIcon,
+  XMarkIcon,
+} from "@heroicons/react/16/solid";
+import {
+  $createLinkNode,
+  $isAutoLinkNode,
+  $isLinkNode,
+  TOGGLE_LINK_COMMAND,
+} from "@lexical/link";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { $findMatchingParent, mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isRangeSelection,
   CLICK_COMMAND,
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
+  getDOMSelection,
   KEY_ESCAPE_COMMAND,
   type NodeKey,
-  SELECTION_CHANGE_COMMAND,
-  getDOMSelection,
   registerEventListener,
+  SELECTION_CHANGE_COMMAND,
 } from "lexical";
-
-import { $createLinkNode, $isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-import { $findMatchingParent, mergeRegister } from "@lexical/utils";
-
-import { CheckIcon, PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   $getSelectedLinkNode,
   $getSelectedNode,
 } from "@/components/editor/extensions/format-state";
-import { OPEN_LINK_EDITOR_COMMAND, sanitizeUrl } from "@/components/editor/extensions/link";
+import {
+  OPEN_LINK_EDITOR_COMMAND,
+  sanitizeUrl,
+} from "@/components/editor/extensions/link";
 import {
   getDOMRangeRect,
   hideFloatingAnchor,
@@ -36,7 +46,7 @@ import { Link } from "@/components/ui/link";
 import { Popover } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { TextField } from "@/components/ui/text-field";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function LinkEditorPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -65,7 +75,9 @@ export function LinkEditorPlugin() {
 
   const $updateLinkState = useCallback(() => {
     const selection = $getSelection();
-    const linkNode = $isRangeSelection(selection) ? $getSelectedLinkNode(selection) : null;
+    const linkNode = $isRangeSelection(selection)
+      ? $getSelectedLinkNode(selection)
+      : null;
     if (linkNode) {
       setLinkNodeKey(linkNode.getKey());
       setLinkUrl(linkNode.getURL());
@@ -96,7 +108,9 @@ export function LinkEditorPlugin() {
           setDismissed(false);
           $updateLinkState();
           const selection = $getSelection();
-          if (!($isRangeSelection(selection) && $getSelectedLinkNode(selection))) {
+          if (
+            !($isRangeSelection(selection) && $getSelectedLinkNode(selection))
+          ) {
             setIsEditMode(false);
           }
           return false;
@@ -163,7 +177,8 @@ export function LinkEditorPlugin() {
       return;
     }
     const update = () => {
-      const element = linkNodeKey !== null ? editor.getElementByKey(linkNodeKey) : null;
+      const element =
+        linkNodeKey !== null ? editor.getElementByKey(linkNodeKey) : null;
       if (element) {
         positionToRect(element.getBoundingClientRect());
         return;
@@ -171,7 +186,9 @@ export function LinkEditorPlugin() {
       const nativeSelection = getDOMSelection(editor._window);
       const rootElement = editor.getRootElement();
       positionToRect(
-        nativeSelection && rootElement ? getDOMRangeRect(nativeSelection, rootElement) : null,
+        nativeSelection && rootElement
+          ? getDOMRangeRect(nativeSelection, rootElement)
+          : null,
       );
     };
     update();
@@ -229,6 +246,7 @@ export function LinkEditorPlugin() {
         offset={8}
         className="w-auto min-w-0 max-w-md"
       >
+        {/* biome-ignore lint/a11y/useSemanticElements: this groups controls outside form fieldset semantics. */}
         <div
           role="group"
           aria-label="Link"
@@ -258,7 +276,10 @@ export function LinkEditorPlugin() {
                 onChange={setEditedLinkUrl}
                 className="w-64"
               >
-                <Input placeholder="Paste a link" className="h-8 py-0 sm:py-0" />
+                <Input
+                  placeholder="Paste a link"
+                  className="h-8 py-0 sm:py-0"
+                />
               </TextField>
               <TooltipTrigger>
                 <Button
@@ -271,7 +292,12 @@ export function LinkEditorPlugin() {
                 <Tooltip>Cancel</Tooltip>
               </TooltipTrigger>
               <TooltipTrigger>
-                <Button {...iconButtonProps} intent="primary" type="submit" aria-label="Save link">
+                <Button
+                  {...iconButtonProps}
+                  intent="primary"
+                  type="submit"
+                  aria-label="Save link"
+                >
                   <CheckIcon />
                 </Button>
                 <Tooltip>Save link</Tooltip>
@@ -305,7 +331,9 @@ export function LinkEditorPlugin() {
                 <Button
                   {...iconButtonProps}
                   aria-label="Remove link"
-                  onPress={() => editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)}
+                  onPress={() =>
+                    editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)
+                  }
                 >
                   <TrashIcon />
                 </Button>

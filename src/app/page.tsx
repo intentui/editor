@@ -1,9 +1,9 @@
-import { Footer } from "@/components/docs/footer"
-import { HeroActions } from "@/components/docs/hero-actions"
-import { DemoEditor } from "@/components/editor/editor"
-import { PageContainer } from "@/components/page-container"
-import { SiteHeader } from "@/components/site-header"
-import { app } from "@/config/app"
+import { Footer } from "@/components/docs/footer";
+import { HeroActions } from "@/components/docs/hero-actions";
+import { DemoEditor } from "@/components/editor/editor";
+import { PageContainer } from "@/components/page-container";
+import { SiteHeader } from "@/components/site-header";
+import { app } from "@/config/app";
 
 export default function Page() {
   return (
@@ -29,5 +29,5 @@ export default function Page() {
         </div>
       </PageContainer>
     </div>
-  )
+  );
 }

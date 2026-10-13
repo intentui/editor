@@ -1,20 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { $createHeadingNode, RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { $createHeadingNode, RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { ComponentPicker } from "@/components/editor/plugins/component-picker/component-picker-plugin";
 import { HeadingPickerPlugin } from "@/components/editor/plugins/component-picker/heading-picker-plugin";
@@ -40,12 +37,18 @@ export function DraggableBlockEditor() {
           $getRoot().append(
             $createHeadingNode("h2").append($createTextNode("Drag me")),
             $createParagraphNode().append(
-              $createTextNode("Hover a block to reveal the handle in the left margin."),
+              $createTextNode(
+                "Hover a block to reveal the handle in the left margin.",
+              ),
             ),
             $createParagraphNode().append(
-              $createTextNode("Drag the grip to move a block, or click the plus to insert one."),
+              $createTextNode(
+                "Drag the grip to move a block, or click the plus to insert one.",
+              ),
             ),
-            $createParagraphNode().append($createTextNode("Drop a block between two others.")),
+            $createParagraphNode().append(
+              $createTextNode("Drop a block between two others."),
+            ),
           );
         },
         theme: editorTheme,

@@ -1,11 +1,10 @@
+import { CodeBracketIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
-import { CodeBracketIcon } from "@heroicons/react/16/solid";
-
 import { insertCodeBlock } from "@/components/editor/extensions/code";
 import { Button } from "@/components/ui/button";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function InsertCodeBlockPlugin() {
   const [editor] = useLexicalComposerContext();

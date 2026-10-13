@@ -1,29 +1,29 @@
-import { ChevronUpDownIcon } from "@heroicons/react/20/solid"
-import { Button } from "react-aria-components/Button"
-import { ListBox, type ListBoxProps } from "react-aria-components/ListBox"
-import type { PopoverProps } from "react-aria-components/Popover"
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { twJoin } from "cn";
+import { Button } from "react-aria-components/Button";
+import { ListBox, type ListBoxProps } from "react-aria-components/ListBox";
+import type { PopoverProps } from "react-aria-components/Popover";
 import {
   Select as SelectPrimitive,
   type SelectProps as SelectPrimitiveProps,
   SelectValue,
-} from "react-aria-components/Select"
-import { twJoin } from "cn"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/Select";
+import { cx } from "@/lib/primitive";
 import {
   DropdownDescription,
   DropdownItem,
   DropdownLabel,
   DropdownSection,
   DropdownSeparator,
-} from "./dropdown"
-import { fieldStyles } from "./field"
-import { Popover } from "./popover"
+} from "./dropdown";
+import { fieldStyles } from "./field";
+import { Popover } from "./popover";
 
 interface SelectProps<
   T extends object,
   M extends "single" | "multiple" = "single",
 > extends SelectPrimitiveProps<T, M> {
-  items?: Iterable<T, M>
+  items?: Iterable<T, M>;
 }
 
 const Select = <T extends object, M extends "single" | "multiple" = "single">({
@@ -36,15 +36,13 @@ const Select = <T extends object, M extends "single" | "multiple" = "single">({
       className={cx(fieldStyles({ className: "group/select" }), className)}
       {...props}
     />
-  )
-}
+  );
+};
 
-interface SelectListProps<T extends object> extends Omit<
-  ListBoxProps<T>,
-  "layout" | "orientation"
-> {
-  items?: Iterable<T>
-  popover?: Omit<PopoverProps, "children">
+interface SelectListProps<T extends object>
+  extends Omit<ListBoxProps<T>, "layout" | "orientation"> {
+  items?: Iterable<T>;
+  popover?: Omit<PopoverProps, "children">;
 }
 
 const SelectContent = <T extends object>({
@@ -58,7 +56,7 @@ const SelectContent = <T extends object>({
       placement={popover?.placement ?? "bottom"}
       className={cx(
         "min-w-(--trigger-width) overflow-hidden *:data-[slot=popover-inner]:overflow-hidden",
-        popover?.className
+        popover?.className,
       )}
       {...popover}
     >
@@ -67,21 +65,25 @@ const SelectContent = <T extends object>({
         orientation="vertical"
         className={cx(
           "grid max-h-[inherit] w-full grid-cols-[auto_1fr] flex-col gap-y-1 overflow-y-auto p-1 outline-hidden *:[[role='group']+[role=group]]:mt-4 *:[[role='group']+[role=separator]]:mt-1",
-          className
+          className,
         )}
         items={items}
         {...props}
       />
     </Popover>
-  )
-}
+  );
+};
 
 interface SelectTriggerProps extends React.ComponentProps<typeof Button> {
-  prefix?: React.ReactNode
-  className?: string
+  prefix?: React.ReactNode;
+  className?: string;
 }
 
-const SelectTrigger = ({ children, className, ...props }: SelectTriggerProps) => {
+const SelectTrigger = ({
+  children,
+  className,
+  ...props
+}: SelectTriggerProps) => {
   return (
     <span data-slot="control" className="relative block w-full">
       <Button
@@ -97,12 +99,14 @@ const SelectTrigger = ({ children, className, ...props }: SelectTriggerProps) =>
           "group-disabled/select:bg-muted group-disabled/select:opacity-50 forced-colors:group-disabled/select:border-[GrayText] forced-colors:group-disabled/select:text-[GrayText]",
           "in-disabled:bg-muted in-disabled:opacity-50 forced-colors:in-disabled:border-[GrayText] forced-colors:in-disabled:text-[GrayText]",
           "dark:scheme-dark",
-          className
+          className,
         )}
       >
         {(values) => (
           <>
-            {props.prefix && <span className="text-muted-foreground">{props.prefix}</span>}
+            {props.prefix && (
+              <span className="text-muted-foreground">{props.prefix}</span>
+            )}
             {typeof children === "function" ? children(values) : children}
 
             {!children && (
@@ -127,16 +131,16 @@ const SelectTrigger = ({ children, className, ...props }: SelectTriggerProps) =>
         )}
       </Button>
     </span>
-  )
-}
+  );
+};
 
-const SelectSection = DropdownSection
-const SelectSeparator = DropdownSeparator
-const SelectLabel = DropdownLabel
-const SelectDescription = DropdownDescription
-const SelectItem = DropdownItem
+const SelectSection = DropdownSection;
+const SelectSeparator = DropdownSeparator;
+const SelectLabel = DropdownLabel;
+const SelectDescription = DropdownDescription;
+const SelectItem = DropdownItem;
 
-export type { SelectProps, SelectTriggerProps }
+export type { SelectProps, SelectTriggerProps };
 export {
   Select,
   SelectContent,
@@ -146,4 +150,4 @@ export {
   SelectSection,
   SelectSeparator,
   SelectTrigger,
-}
+};

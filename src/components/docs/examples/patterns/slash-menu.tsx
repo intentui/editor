@@ -1,12 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { defineExtension } from "lexical";
-
 import { CheckListExtension, ListExtension } from "@lexical/list";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
+import { defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { BulletedListPickerPlugin } from "@/components/editor/plugins/component-picker/bulleted-list-picker-plugin";
 import { CheckListPickerPlugin } from "@/components/editor/plugins/component-picker/check-list-picker-plugin";

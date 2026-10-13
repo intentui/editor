@@ -1,38 +1,45 @@
-"use client"
+"use client";
 
-import { Bars2Icon } from "@heroicons/react/20/solid"
-import { LayoutGroup, motion } from "motion/react"
-import { createContext, use, useCallback, useId, useMemo, useState } from "react"
-import { twJoin, cn } from "cn"
-import { Link, type LinkProps } from "@/components/ui/link"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { cx } from "@/lib/primitive"
-import { Button, type ButtonProps } from "./button"
-import { Separator } from "./separator"
-import { Sheet, SheetBody, SheetTrigger } from "./sheet"
+import { Bars2Icon } from "@heroicons/react/20/solid";
+import { cn, twJoin } from "cn";
+import { LayoutGroup, motion } from "motion/react";
+import {
+  createContext,
+  use,
+  useCallback,
+  useId,
+  useMemo,
+  useState,
+} from "react";
+import { Link, type LinkProps } from "@/components/ui/link";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cx } from "@/lib/primitive";
+import { Button, type ButtonProps } from "./button";
+import { Separator } from "./separator";
+import { Sheet, SheetBody, SheetTrigger } from "./sheet";
 
 interface NavbarContextProps {
-  open: boolean
-  setOpen: (open: boolean) => void
-  isMobile: boolean
-  toggleNavbar: () => void
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  isMobile: boolean;
+  toggleNavbar: () => void;
 }
 
-const NavbarContext = createContext<NavbarContextProps | null>(null)
+const NavbarContext = createContext<NavbarContextProps | null>(null);
 
 const useNavbar = () => {
-  const context = use(NavbarContext)
+  const context = use(NavbarContext);
   if (!context) {
-    throw new Error("useNavbar must be used within a NavbarProvider.")
+    throw new Error("useNavbar must be used within a NavbarProvider.");
   }
 
-  return context
-}
+  return context;
+};
 
 interface NavbarProviderProps extends React.ComponentProps<"div"> {
-  defaultOpen?: boolean
-  isOpen?: boolean
-  onOpenChange?: (open: boolean) => void
+  defaultOpen?: boolean;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 const NavbarProvider = ({
@@ -42,25 +49,25 @@ const NavbarProvider = ({
   className,
   ...props
 }: NavbarProviderProps) => {
-  const [openInternal, setOpenInternal] = useState(defaultOpen)
-  const open = openProp ?? openInternal
+  const [openInternal, setOpenInternal] = useState(defaultOpen);
+  const open = openProp ?? openInternal;
 
   const setOpen = useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
       if (setOpenProp) {
-        return setOpenProp?.(typeof value === "function" ? value(open) : value)
+        return setOpenProp?.(typeof value === "function" ? value(open) : value);
       }
 
-      setOpenInternal(value)
+      setOpenInternal(value);
     },
-    [setOpenProp, open]
-  )
+    [setOpenProp, open],
+  );
 
   const toggleNavbar = useCallback(() => {
-    setOpen((open) => !open)
-  }, [setOpen])
+    setOpen((open) => !open);
+  }, [setOpen]);
 
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   const contextValue = useMemo<NavbarContextProps>(
     () => ({
@@ -69,11 +76,11 @@ const NavbarProvider = ({
       isMobile: isMobile ?? false,
       toggleNavbar,
     }),
-    [open, setOpen, isMobile, toggleNavbar]
-  )
+    [open, setOpen, isMobile, toggleNavbar],
+  );
 
   if (isMobile === undefined) {
-    return null
+    return null;
   }
 
   return (
@@ -82,33 +89,33 @@ const NavbarProvider = ({
         className={cn(
           "peer/navbar group/navbar relative isolate z-10 flex w-full flex-col",
           "has-data-navbar-inset:min-h-svh has-data-navbar-inset:bg-navbar dark:has-data-navbar-inset:bg-background",
-          className
+          className,
         )}
         {...props}
       />
     </NavbarContext>
-  )
-}
+  );
+};
 
-type Intent = "default" | "float" | "inset"
-type Placement = "top" | "bottom"
-type Side = "left" | "right"
+type Intent = "default" | "float" | "inset";
+type Placement = "top" | "bottom";
+type Side = "left" | "right";
 
 interface StickyWithPlacement extends React.ComponentProps<"div"> {
-  isSticky: true
-  placement?: Placement
-  side?: Side
-  intent?: Intent
+  isSticky: true;
+  placement?: Placement;
+  side?: Side;
+  intent?: Intent;
 }
 
 interface NonStickyWithoutPlacement extends React.ComponentProps<"div"> {
-  isSticky?: false
-  placement?: never
-  side?: Side
-  intent?: Intent
+  isSticky?: false;
+  placement?: never;
+  side?: Side;
+  intent?: Intent;
 }
 
-type NavbarProps = StickyWithPlacement | NonStickyWithoutPlacement
+type NavbarProps = StickyWithPlacement | NonStickyWithoutPlacement;
 
 const Navbar = ({
   children,
@@ -120,7 +127,7 @@ const Navbar = ({
   ref,
   ...props
 }: NavbarProps) => {
-  const { isMobile, open, setOpen } = useNavbar()
+  const { isMobile, open, setOpen } = useNavbar();
   if (isMobile) {
     return (
       <>
@@ -143,7 +150,7 @@ const Navbar = ({
           </Sheet>
         </SheetTrigger>
       </>
-    )
+    );
   }
 
   return (
@@ -157,7 +164,8 @@ const Navbar = ({
         isSticky && "sticky top-0 z-40",
         placement === "top" && intent === "float" && "md:pt-8",
         placement === "bottom" && intent === "float" && "bottom-0 md:pb-8",
-        intent === "float" && "mx-auto w-full max-w-7xl px-4 xl:max-w-(--breakpoint-xl)",
+        intent === "float" &&
+          "mx-auto w-full max-w-7xl px-4 xl:max-w-(--breakpoint-xl)",
       ])}
       {...props}
     >
@@ -168,7 +176,7 @@ const Navbar = ({
             "rounded-xl bg-background py-0 *:data-[navbar=content]:max-w-7xl *:data-[navbar=content]:rounded-xl *:data-[navbar=content]:border *:data-[navbar=content]:bg-navbar *:data-[navbar=content]:px-4 *:data-[navbar=content]:py-(--navbar-gutter) *:data-[navbar=content]:shadow-xs",
           ["default", "inset"].includes(intent) && "px-4",
           intent === "default" && "border-b bg-navbar",
-          className
+          className,
         )}
       >
         <div
@@ -179,29 +187,32 @@ const Navbar = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const NavbarSection = ({ className, ...props }: React.ComponentProps<"div">) => {
-  const id = useId()
+const NavbarSection = ({
+  className,
+  ...props
+}: React.ComponentProps<"div">) => {
+  const id = useId();
   return (
     <LayoutGroup id={id}>
       <div
         data-slot="navbar-section"
         className={cn(
           "col-span-full grid grid-cols-[auto_1fr] flex-col gap-3 gap-y-0.5 md:flex md:flex-none md:grid-cols-none md:flex-row md:items-center md:gap-2.5",
-          className
+          className,
         )}
         {...props}
       >
         {props.children}
       </div>
     </LayoutGroup>
-  )
-}
+  );
+};
 
 interface NavbarItemProps extends LinkProps {
-  isCurrent?: boolean
+  isCurrent?: boolean;
 }
 
 const NavbarItem = ({ className, isCurrent, ...props }: NavbarItemProps) => {
@@ -224,13 +235,15 @@ const NavbarItem = ({ className, isCurrent, ...props }: NavbarItemProps) => {
           "outline-hidden focus-visible:inset-ring focus-visible:inset-ring-ring focus-visible:ring-2 focus-visible:ring-ring/20",
           "text-start disabled:cursor-default disabled:opacity-50",
         ],
-        className
+        className,
       )}
       {...props}
     >
       {(values) => (
         <>
-          {typeof props.children === "function" ? props.children(values) : props.children}
+          {typeof props.children === "function"
+            ? props.children(values)
+            : props.children}
 
           {(isCurrent || values.isCurrent) && (
             <motion.span
@@ -240,33 +253,64 @@ const NavbarItem = ({ className, isCurrent, ...props }: NavbarItemProps) => {
               className={twJoin(
                 "absolute rounded-full bg-foreground [--gutter:--spacing(0.5)]",
                 "inset-y-[calc(var(--navbar-gutter)---spacing(0.5))] -start-4 w-(--gutter) md:inset-y-auto md:w-auto",
-                "md:inset-x-2 md:-bottom-[calc(var(--navbar-gutter)+1px)] md:h-(--gutter)"
+                "md:inset-x-2 md:-bottom-[calc(var(--navbar-gutter)+1px)] md:h-(--gutter)",
               )}
             />
           )}
         </>
       )}
     </Link>
-  )
-}
+  );
+};
 
-const NavbarSpacer = ({ className, ref, ...props }: React.ComponentProps<"div">) => {
-  return <div ref={ref} className={cn("-ms-4 flex-1", className)} {...props} />
-}
+const NavbarSpacer = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) => {
+  return <div ref={ref} className={cn("-ms-4 flex-1", className)} {...props} />;
+};
 
-const NavbarStart = ({ className, ref, ...props }: React.ComponentProps<"div">) => {
-  return <div ref={ref} className={cn("relative p-2 py-4 md:p-0.5", className)} {...props} />
-}
+const NavbarStart = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) => {
+  return (
+    <div
+      ref={ref}
+      className={cn("relative p-2 py-4 md:p-0.5", className)}
+      {...props}
+    />
+  );
+};
 
-const NavbarGap = ({ className, ref, ...props }: React.ComponentProps<"div">) => {
-  return <div ref={ref} className={cn("mx-2", className)} {...props} />
-}
+const NavbarGap = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) => {
+  return <div ref={ref} className={cn("mx-2", className)} {...props} />;
+};
 
-const NavbarSeparator = ({ className, ...props }: React.ComponentProps<typeof Separator>) => {
-  return <Separator orientation="vertical" className={cn("h-5", className)} {...props} />
-}
+const NavbarSeparator = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof Separator>) => {
+  return (
+    <Separator
+      orientation="vertical"
+      className={cn("h-5", className)}
+      {...props}
+    />
+  );
+};
 
-const NavbarMobile = ({ className, ref, ...props }: React.ComponentProps<"div">) => {
+const NavbarMobile = ({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<"div">) => {
   return (
     <div
       ref={ref}
@@ -278,34 +322,47 @@ const NavbarMobile = ({ className, ref, ...props }: React.ComponentProps<"div">)
         "group-has-data-navbar-sticky/navbar:group-has-placement-top/navbar:top-0 group-has-data-navbar-sticky/navbar:group-has-placement-top/navbar:border-b",
         // bottom
         "group-has-data-navbar-sticky/navbar:group-has-placement-bottom/navbar:bottom-0 group-has-data-navbar-sticky/navbar:group-has-placement-bottom/navbar:border-t",
-        className
+        className,
       )}
       {...props}
     />
-  )
-}
+  );
+};
 
-const NavbarInset = ({ className, ref, children, ...props }: React.ComponentProps<"div">) => {
+const NavbarInset = ({
+  className,
+  ref,
+  children,
+  ...props
+}: React.ComponentProps<"div">) => {
   return (
     <div
       ref={ref}
       data-navbar-inset={true}
-      className={cn("flex flex-1 flex-col bg-navbar pb-2 md:px-2 dark:bg-background", className)}
+      className={cn(
+        "flex flex-1 flex-col bg-navbar pb-2 md:px-2 dark:bg-background",
+        className,
+      )}
       {...props}
     >
       <div className="grow bg-background p-6 md:rounded-lg md:p-16 md:shadow-xs md:ring-1 md:ring-foreground/15 md:dark:bg-navbar md:dark:ring-border md:dark:group-has-data-navbar-inset/navbar:bg-muted">
         <div className="mx-auto max-w-7xl">{children}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 interface NavbarTriggerProps extends ButtonProps {
-  ref?: React.RefObject<HTMLButtonElement>
+  ref?: React.RefObject<HTMLButtonElement>;
 }
 
-const NavbarTrigger = ({ className, onPress, ref, ...props }: NavbarTriggerProps) => {
-  const { toggleNavbar } = useNavbar()
+const NavbarTrigger = ({
+  className,
+  onPress,
+  ref,
+  ...props
+}: NavbarTriggerProps) => {
+  const { toggleNavbar } = useNavbar();
   return (
     <Button
       ref={ref}
@@ -315,16 +372,16 @@ const NavbarTrigger = ({ className, onPress, ref, ...props }: NavbarTriggerProps
       size="sq-sm"
       className={cx("-ms-2 lg:hidden", className)}
       onPress={(event) => {
-        onPress?.(event)
-        toggleNavbar()
+        onPress?.(event);
+        toggleNavbar();
       }}
       {...props}
     >
       <Bars2Icon />
       <span className="sr-only">Toggle Navbar</span>
     </Button>
-  )
-}
+  );
+};
 
 const NavbarLabel = ({ className, ...props }: React.ComponentProps<"span">) => {
   return (
@@ -333,10 +390,15 @@ const NavbarLabel = ({ className, ...props }: React.ComponentProps<"span">) => {
       className={twJoin("col-start-2 row-start-1 truncate", className)}
       {...props}
     />
-  )
-}
+  );
+};
 
-export type { NavbarItemProps, NavbarProps, NavbarProviderProps, NavbarTriggerProps }
+export type {
+  NavbarItemProps,
+  NavbarProps,
+  NavbarProviderProps,
+  NavbarTriggerProps,
+};
 export {
   Navbar,
   NavbarGap,
@@ -351,4 +413,4 @@ export {
   NavbarStart,
   NavbarTrigger,
   useNavbar,
-}
+};

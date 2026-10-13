@@ -1,16 +1,16 @@
-import type { MDXComponents } from "mdx/types"
-import { cn } from "cn"
+import { cn } from "cn";
+import type { MDXComponents } from "mdx/types";
 import {
   ApiDescription,
   ApiParameter,
   ApiParameters,
   ApiReference,
-} from "@/components/docs/api-parameters"
-import { ComponentPreview } from "@/components/docs/component-preview"
-import { DocNote } from "@/components/docs/doc-note"
-import { Heading } from "@/components/docs/heading"
-import { PackageCommand } from "@/components/docs/package-command"
-import { PlainCode, Pre } from "@/components/docs/plain-code"
+} from "@/components/docs/api-parameters";
+import { ComponentPreview } from "@/components/docs/component-preview";
+import { DocNote } from "@/components/docs/doc-note";
+import { Heading } from "@/components/docs/heading";
+import { PackageCommand } from "@/components/docs/package-command";
+import { PlainCode, Pre } from "@/components/docs/plain-code";
 
 export const mdxComponents: MDXComponents = {
   pre: (props: React.ComponentProps<typeof PlainCode>) => (
@@ -27,7 +27,10 @@ export const mdxComponents: MDXComponents = {
     <thead className="border-border border-b-2" {...props} />
   ),
   th: (props: React.ComponentProps<"th">) => (
-    <th className="px-6 py-2.5 text-left font-medium text-foreground text-sm/6 first:px-0" {...props} />
+    <th
+      className="px-6 py-2.5 text-left font-medium text-foreground text-sm/6 first:px-0"
+      {...props}
+    />
   ),
   td: (props: React.ComponentProps<"td">) => (
     <td
@@ -52,4 +55,4 @@ export const mdxComponents: MDXComponents = {
   ApiDescription,
   ApiParameter,
   ApiReference,
-}
+};

@@ -22,5 +22,5 @@ export function DuplicateIcon(props: React.SVGProps<SVGSVGElement>) {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }

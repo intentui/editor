@@ -2,13 +2,13 @@ import {
   $getSelection,
   $isRangeSelection,
   COMMAND_PRIORITY_EDITOR,
-  type LexicalCommand,
-  type LexicalEditor,
-  REDO_COMMAND,
-  type RangeSelection,
-  UNDO_COMMAND,
   createCommand,
   defineExtension,
+  type LexicalCommand,
+  type LexicalEditor,
+  type RangeSelection,
+  REDO_COMMAND,
+  UNDO_COMMAND,
 } from "lexical";
 
 type SpeechRecognitionResultEventLike = {
@@ -39,8 +39,9 @@ type WindowWithSpeechRecognition = Window & {
   webkitSpeechRecognition?: new () => SpeechRecognitionLike;
 };
 
-export const SPEECH_TO_TEXT_COMMAND: LexicalCommand<boolean> =
-  createCommand("SPEECH_TO_TEXT_COMMAND");
+export const SPEECH_TO_TEXT_COMMAND: LexicalCommand<boolean> = createCommand(
+  "SPEECH_TO_TEXT_COMMAND",
+);
 
 export const SUPPORT_SPEECH_RECOGNITION: boolean =
   typeof window !== "undefined" &&
@@ -53,7 +54,10 @@ const RECOGNITION_LANGUAGE: Record<string, string> = {
 };
 
 const VOICE_COMMANDS: Readonly<
-  Record<string, (arg: { editor: LexicalEditor; selection: RangeSelection }) => void>
+  Record<
+    string,
+    (arg: { editor: LexicalEditor; selection: RangeSelection }) => void
+  >
 > = {
   "\n": ({ selection }) => {
     selection.insertParagraph();
@@ -79,8 +83,10 @@ export const SpeechToTextExtension = defineExtension({
     };
 
     const startRecognition = () => {
-      const { SpeechRecognition, webkitSpeechRecognition } = window as WindowWithSpeechRecognition;
-      const SpeechRecognitionImpl = SpeechRecognition ?? webkitSpeechRecognition;
+      const { SpeechRecognition, webkitSpeechRecognition } =
+        window as WindowWithSpeechRecognition;
+      const SpeechRecognitionImpl =
+        SpeechRecognition ?? webkitSpeechRecognition;
       if (!SpeechRecognitionImpl) {
         return;
       }
@@ -90,8 +96,11 @@ export const SpeechToTextExtension = defineExtension({
       recognition = instance;
       instance.continuous = true;
       instance.interimResults = true;
-      const lang = editor.getRootElement()?.closest<HTMLElement>("[lang]")?.lang;
-      instance.lang = (lang && RECOGNITION_LANGUAGE[lang]) || RECOGNITION_LANGUAGE.en;
+      const lang = editor
+        .getRootElement()
+        ?.closest<HTMLElement>("[lang]")?.lang;
+      instance.lang =
+        (lang && RECOGNITION_LANGUAGE[lang]) || RECOGNITION_LANGUAGE.en;
 
       instance.addEventListener("result", (event) => {
         const resultItem = event.results.item(event.resultIndex);

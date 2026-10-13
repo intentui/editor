@@ -1,10 +1,3 @@
-import { Fragment } from "react";
-
-import { FORMAT_TEXT_COMMAND, type TextFormatType } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-
 import {
   BoldIcon,
   CodeBracketIcon,
@@ -13,10 +6,18 @@ import {
   StrikethroughIcon,
   UnderlineIcon,
 } from "@heroicons/react/16/solid";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { FORMAT_TEXT_COMMAND, type TextFormatType } from "lexical";
+import { Fragment } from "react";
 
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
-import { ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@/components/ui/toolbar";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import {
+  ToolbarGroup,
+  ToolbarItem,
+  ToolbarSeparator,
+} from "@/components/ui/toolbar";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 type IconComponent = React.ComponentType<{ className?: string }>;
 
@@ -84,7 +85,11 @@ const FORMAT_GROUPS: {
     { format: "bold", label: "Bold", icon: BoldIcon },
     { format: "italic", label: "Italic", icon: ItalicIcon },
     { format: "underline", label: "Underline", icon: UnderlineIcon },
-    { format: "strikethrough", label: "Strikethrough", icon: StrikethroughIcon },
+    {
+      format: "strikethrough",
+      label: "Strikethrough",
+      icon: StrikethroughIcon,
+    },
   ],
   [
     { format: "highlight", label: "Highlight", icon: PaintBrushIcon },
@@ -101,7 +106,11 @@ const FORMAT_GROUPS: {
   ],
 ];
 
-function FormatToggleGroup({ items }: { items: (typeof FORMAT_GROUPS)[number] }) {
+function FormatToggleGroup({
+  items,
+}: {
+  items: (typeof FORMAT_GROUPS)[number];
+}) {
   const [editor] = useLexicalComposerContext();
   const formats = useFormatStateValue("formats");
   const isEditable = useLexicalEditable();
@@ -125,8 +134,15 @@ function FormatToggleGroup({ items }: { items: (typeof FORMAT_GROUPS)[number] })
 }
 
 // The formats Markdown can write: **bold**, *italic*, ~~strikethrough~~ and `code`.
-const MARKDOWN_FORMATS: TextFormatType[] = ["bold", "italic", "strikethrough", "code"];
-const MARKDOWN_GROUP = FORMAT_GROUPS.flat().filter(({ format }) => MARKDOWN_FORMATS.includes(format));
+const MARKDOWN_FORMATS: TextFormatType[] = [
+  "bold",
+  "italic",
+  "strikethrough",
+  "code",
+];
+const MARKDOWN_GROUP = FORMAT_GROUPS.flat().filter(({ format }) =>
+  MARKDOWN_FORMATS.includes(format),
+);
 
 export function TextFormatToolbarPlugin({
   formats = "all",
@@ -142,7 +158,7 @@ export function TextFormatToolbarPlugin({
   return (
     <>
       {groups.map((items, groupIndex) => (
-        <Fragment key={groupIndex}>
+        <Fragment key={items.map((item) => item.format).join("-")}>
           {groupIndex > 0 && <ToolbarSeparator />}
           <FormatToggleGroup items={items} />
         </Fragment>

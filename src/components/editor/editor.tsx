@@ -1,9 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { configExtension, defineExtension } from "lexical";
-
 import { ClipboardDOMImportExtension } from "@lexical/clipboard";
 import {
   AutoFocusExtension,
@@ -18,14 +14,16 @@ import {
   CHECK_LIST,
   ELEMENT_TRANSFORMERS,
   MULTILINE_ELEMENT_TRANSFORMERS,
+  registerMarkdownShortcuts,
   TEXT_FORMAT_TRANSFORMERS,
   TEXT_MATCH_TRANSFORMERS,
   type Transformer,
-  registerMarkdownShortcuts,
 } from "@lexical/markdown";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 import { TableExtension } from "@lexical/table";
+import { configExtension, defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
 import { AutocompleteExtension } from "@/components/editor/extensions/autocomplete";
@@ -85,13 +83,13 @@ import { ImportExportToolbarPlugin } from "@/components/editor/plugins/toolbar/i
 import { IndentToolbarPlugin } from "@/components/editor/plugins/toolbar/indent-toolbar-plugin";
 import { LinkToolbarPlugin } from "@/components/editor/plugins/toolbar/link-toolbar-plugin";
 import { TextFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/text-format-toolbar-plugin";
-import { ToolbarSeparator } from "@/components/ui/toolbar";
 import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";
 import { editorTheme } from "@/components/editor/theme";
 import { EMOJI } from "@/components/editor/transformers/emoji-transformer";
 import { HR } from "@/components/editor/transformers/horizontal-rule-transformer";
 import { IMAGE } from "@/components/editor/transformers/image-transformer";
 import { TABLE } from "@/components/editor/transformers/table-transformer";
+import { ToolbarSeparator } from "@/components/ui/toolbar";
 
 const EDITOR_TRANSFORMERS: Transformer[] = [
   TABLE,

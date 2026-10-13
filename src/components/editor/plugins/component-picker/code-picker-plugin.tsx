@@ -1,8 +1,7 @@
-import { useMemo } from "react";
+import { CodeBracketIcon } from "@heroicons/react/16/solid";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
-import { CodeBracketIcon } from "@heroicons/react/16/solid";
+import { useMemo } from "react";
 
 import { insertCodeBlock } from "@/components/editor/extensions/code";
 import {

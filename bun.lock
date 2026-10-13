@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "primitive-starter-kit",
+      "name": "intentui-editor",
       "dependencies": {
         "@heroicons/react": "^2.2.0",
         "@internationalized/date": "^3.12.4",

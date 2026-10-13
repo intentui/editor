@@ -1,10 +1,11 @@
-import { useMemo } from "react";
-
-import { $getRoot, $getSelection } from "lexical";
-
+import {
+  RectangleGroupIcon,
+  StopIcon,
+  ViewColumnsIcon,
+} from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
-import { RectangleGroupIcon, StopIcon, ViewColumnsIcon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection } from "lexical";
+import { useMemo } from "react";
 
 import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout";
 import {
@@ -47,22 +48,24 @@ export function ColumnsPickerPlugin() {
 
   const items = useMemo<ComponentPickerItem[]>(
     () =>
-      COLUMN_ITEMS.map(({ value, label, description, icon: Icon, templateColumns }) => ({
-        value,
-        label: label,
-        group: "Advanced",
-        description,
-        icon: <Icon className="text-muted-foreground" />,
-        keywords: ["columns", "layout", "grid"],
-        onSelect: () => {
-          editor.update(() => {
-            if (!$getSelection()) {
-              $getRoot().selectEnd();
-            }
-          });
-          editor.dispatchCommand(INSERT_LAYOUT_COMMAND, templateColumns);
-        },
-      })),
+      COLUMN_ITEMS.map(
+        ({ value, label, description, icon: Icon, templateColumns }) => ({
+          value,
+          label: label,
+          group: "Advanced",
+          description,
+          icon: <Icon className="text-muted-foreground" />,
+          keywords: ["columns", "layout", "grid"],
+          onSelect: () => {
+            editor.update(() => {
+              if (!$getSelection()) {
+                $getRoot().selectEnd();
+              }
+            });
+            editor.dispatchCommand(INSERT_LAYOUT_COMMAND, templateColumns);
+          },
+        }),
+      ),
     [editor],
   );
 

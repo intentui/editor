@@ -1,21 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
-
 import { cn } from "cn";
-
-import { cx } from "@/lib/primitive";
-
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Toolbar as ToolbarPrimitive, type ToolbarProps } from "@/components/ui/toolbar";
+import {
+  Toolbar as ToolbarPrimitive,
+  type ToolbarProps,
+} from "@/components/ui/toolbar";
+import { cx } from "@/lib/primitive";
 
 const SCROLL_STEP = 0.75;
 
 export function Toolbar({ className, ...props }: ToolbarProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const getScroller = () => wrapperRef.current?.querySelector<HTMLElement>("[role=toolbar]") ?? null;
+  const getScroller = () =>
+    wrapperRef.current?.querySelector<HTMLElement>("[role=toolbar]") ?? null;
   const [overflow, setOverflow] = useState({ start: false, end: false });
 
   const update = useCallback(() => {
@@ -75,7 +75,11 @@ export function Toolbar({ className, ...props }: ToolbarProps) {
           className,
         )}
       />
-      <ScrollEdge side="start" visible={overflow.start} onPress={() => scroll(-1)} />
+      <ScrollEdge
+        side="start"
+        visible={overflow.start}
+        onPress={() => scroll(-1)}
+      />
       <ScrollEdge side="end" visible={overflow.end} onPress={() => scroll(1)} />
     </div>
   );
@@ -112,7 +116,10 @@ function ScrollEdge({
         isDisabled={!visible}
         aria-label={isStart ? "Scroll toolbar left" : "Scroll toolbar right"}
         onPress={onPress}
-        className={cn("[--btn-bg:var(--color-background)]", visible && "pointer-events-auto")}
+        className={cn(
+          "[--btn-bg:var(--color-background)]",
+          visible && "pointer-events-auto",
+        )}
       >
         <Icon className="rtl:rotate-180" />
       </Button>

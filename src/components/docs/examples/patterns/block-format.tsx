@@ -1,21 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { CheckListExtension, ListExtension } from "@lexical/list";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { $createHeadingNode, RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { CheckListExtension, ListExtension } from "@lexical/list";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { $createHeadingNode, RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
@@ -42,7 +39,9 @@ export function BlockFormatEditor() {
           $getRoot().append(
             $createHeadingNode("h2").append($createTextNode("Block format")),
             $createParagraphNode().append(
-              $createTextNode("Place the cursor in this paragraph and pick a block type."),
+              $createTextNode(
+                "Place the cursor in this paragraph and pick a block type.",
+              ),
             ),
             $createParagraphNode().append(
               $createTextNode("Try a list, a quote or a heading on this one."),

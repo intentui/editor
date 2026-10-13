@@ -1,20 +1,25 @@
-"use client"
+"use client";
 
-import { CameraIcon, FolderIcon, PaperClipIcon } from "@heroicons/react/24/outline"
+import {
+  CameraIcon,
+  FolderIcon,
+  PaperClipIcon,
+} from "@heroicons/react/24/outline";
 import {
   FileTrigger as FileTriggerPrimitive,
   type FileTriggerProps as FileTriggerPrimitiveProps,
-} from "react-aria-components/FileTrigger"
-import type { VariantProps } from "tailwind-variants"
-import { Button, type buttonStyles } from "./button"
-import { Loader } from "./loader"
+} from "react-aria-components/FileTrigger";
+import type { VariantProps } from "tailwind-variants";
+import { Button, type buttonStyles } from "./button";
+import { Loader } from "./loader";
 
 export interface FileTriggerProps
-  extends FileTriggerPrimitiveProps, VariantProps<typeof buttonStyles> {
-  isDisabled?: boolean
-  isPending?: boolean
-  ref?: React.RefObject<HTMLInputElement>
-  className?: string
+  extends FileTriggerPrimitiveProps,
+    VariantProps<typeof buttonStyles> {
+  isDisabled?: boolean;
+  isPending?: boolean;
+  ref?: React.RefObject<HTMLInputElement>;
+  className?: string;
 }
 
 export function FileTrigger({
@@ -59,5 +64,5 @@ export function FileTrigger({
         )}
       </Button>
     </FileTriggerPrimitive>
-  )
+  );
 }

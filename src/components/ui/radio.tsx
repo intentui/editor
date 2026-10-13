@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import { cn } from "cn";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import {
   RadioButton,
   type RadioButtonProps,
@@ -8,10 +9,9 @@ import {
   type RadioFieldProps,
   RadioGroup as RadioGroupPrimitive,
   type RadioGroupProps,
-} from "react-aria-components/RadioGroup"
-import { cn } from "cn"
-import { cx } from "@/lib/primitive"
-import { Label } from "@/components/ui/field"
+} from "react-aria-components/RadioGroup";
+import { Label } from "@/components/ui/field";
+import { cx } from "@/lib/primitive";
 
 export function RadioGroup({ className, ...props }: RadioGroupProps) {
   return (
@@ -20,10 +20,10 @@ export function RadioGroup({ className, ...props }: RadioGroupProps) {
       data-slot="control"
       className={cx(
         "space-y-3 has-[[slot=description]]:not-has-[[slot=errorMessage]]:space-y-6 *:data-[slot=label]:font-medium",
-        className
+        className,
       )}
     />
-  )
+  );
 }
 
 export function RadioField({ className, ...props }: RadioFieldProps) {
@@ -36,18 +36,21 @@ export function RadioField({ className, ...props }: RadioFieldProps) {
         "**:data-[slot=control-label]:col-start-2 **:data-[slot=control-label]:row-start-1",
         "*:[[slot=description]]:col-start-2 *:[[slot=description]]:row-start-2",
         "has-[[slot=description]]:**:data-[slot=control-label]:font-medium",
-        className
+        className,
       )}
       data-slot="control"
     />
-  )
+  );
 }
 
 export function Radio({ className, children, ...props }: RadioButtonProps) {
   return (
     <RadioButton
       data-slot="control"
-      className={cx("group gap-x-3 inline-flex col-span-full focus:outline-hidden ", className)}
+      className={cx(
+        "group gap-x-3 inline-flex col-span-full focus:outline-hidden ",
+        className,
+      )}
       {...props}
     >
       {composeRenderProps(children, (children, { isSelected, isInvalid }) => {
@@ -70,8 +73,8 @@ export function Radio({ className, children, ...props }: RadioButtonProps) {
               {children}
             </Label>
           </>
-        )
+        );
       })}
     </RadioButton>
-  )
+  );
 }

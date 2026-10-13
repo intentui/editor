@@ -1,11 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { defineExtension } from "lexical";
-
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
+import { defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin";
 import { CountPlugin } from "@/components/editor/plugins/activitybar/count-plugin";

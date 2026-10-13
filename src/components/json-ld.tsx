@@ -1,5 +1,5 @@
 interface JsonLdProps {
-  data: Record<string, unknown>
+  data: Record<string, unknown>;
 }
 
 export function JsonLd({ data }: JsonLdProps) {
@@ -7,7 +7,10 @@ export function JsonLd({ data }: JsonLdProps) {
     <template
       data-json-ld=""
       suppressHydrationWarning
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: serialize JSON with HTML delimiters escaped before inserting into the template.
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
+      }}
     />
-  )
+  );
 }

@@ -1,18 +1,15 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
-
-import { COMMAND_PRIORITY_LOW } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
 import { MicrophoneIcon } from "@heroicons/react/16/solid";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { twJoin } from "cn";
+import { COMMAND_PRIORITY_LOW } from "lexical";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 import {
   SPEECH_TO_TEXT_COMMAND,
   SUPPORT_SPEECH_RECOGNITION,
 } from "@/components/editor/extensions/speech-to-text";
 import { Button } from "@/components/ui/button";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 const LABEL = "Speech to text";
 
@@ -39,7 +36,9 @@ function SpeechToTextButton() {
         aria-label={LABEL}
         aria-pressed={isListening}
         className={twJoin(isListening && "text-danger hover:text-danger")}
-        onPress={() => editor.dispatchCommand(SPEECH_TO_TEXT_COMMAND, !isListening)}
+        onPress={() =>
+          editor.dispatchCommand(SPEECH_TO_TEXT_COMMAND, !isListening)
+        }
       >
         <MicrophoneIcon />
       </Button>

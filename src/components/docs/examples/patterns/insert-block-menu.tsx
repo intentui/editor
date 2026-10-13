@@ -1,13 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { defineExtension } from "lexical";
-
 import { HorizontalRuleExtension } from "@lexical/extension";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 import { TableExtension } from "@lexical/table";
+import { defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { CodeExtension } from "@/components/editor/extensions/code";
 import { ImageExtension } from "@/components/editor/extensions/image";

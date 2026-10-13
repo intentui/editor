@@ -9,7 +9,11 @@ export function BrandIntentuiIcon(props: React.SVGProps<SVGSVGElement>) {
       aria-hidden="true"
     >
       <rect width={20} height={20} x="2.5" y={2} fill="#0D6DFD" rx="3.75" />
-      <g fill="#fff" filter="url(#icon-brand-intentui_svg__a)" shapeRendering="crispEdges">
+      <g
+        fill="#fff"
+        filter="url(#icon-brand-intentui_svg__a)"
+        shapeRendering="crispEdges"
+      >
         <path d="M5.86 6.311c0-.525.426-.952.951-.952h1.904c.526 0 .952.427.952.952v1.904a.95.95 0 0 1-.952.952H6.811a.95.95 0 0 1-.952-.952V6.311Z" />
         <path
           fillOpacity="0.5"
@@ -41,10 +45,17 @@ export function BrandIntentuiIcon(props: React.SVGProps<SVGSVGElement>) {
           <feGaussianBlur stdDeviation="0.032" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0" />
-          <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_11777_624" />
-          <feBlend in="SourceGraphic" in2="effect1_dropShadow_11777_624" result="shape" />
+          <feBlend
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_11777_624"
+          />
+          <feBlend
+            in="SourceGraphic"
+            in2="effect1_dropShadow_11777_624"
+            result="shape"
+          />
         </filter>
       </defs>
     </svg>
-  )
+  );
 }

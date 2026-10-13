@@ -1,8 +1,7 @@
-import { $getRoot, $getSelection } from "lexical";
-
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { $patchStyleText } from "@lexical/selection";
+import { $getRoot, $getSelection } from "lexical";
 
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
 import {
@@ -47,11 +46,17 @@ export function FontFamilyToolbarPlugin() {
     >
       <ComboBoxInput className="h-7 py-0 sm:py-0 sm:text-xs" />
       <ComboBoxContent
-        renderEmptyState={() => <span className="block p-2 text-sm text-muted-foreground">No matches</span>}
+        renderEmptyState={() => (
+          <span className="block p-2 text-sm text-muted-foreground">
+            No matches
+          </span>
+        )}
       >
         {(family: { id: string }) => (
           <ComboBoxItem id={family.id} textValue={family.id}>
-            <ComboBoxLabel style={{ fontFamily: family.id }}>{family.id}</ComboBoxLabel>
+            <ComboBoxLabel style={{ fontFamily: family.id }}>
+              {family.id}
+            </ComboBoxLabel>
           </ComboBoxItem>
         )}
       </ComboBoxContent>

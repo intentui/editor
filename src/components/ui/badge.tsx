@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants"
+import { tv } from "tailwind-variants";
 
 export const badgeStyles = tv({
   base: [
@@ -21,7 +21,8 @@ export const badgeStyles = tv({
         "[--badge-bg:var(--color-warning-subtle)] [--badge-foreground:var(--color-warning-subtle-foreground)] [--badge-overlay:var(--color-warning)]/20",
       danger:
         "[--badge-bg:var(--color-danger-subtle)] [--badge-foreground:var(--color-danger-subtle-foreground)] [--badge-overlay:var(--color-danger)]/20",
-      outline: "[--badge-border:var(--color-border)] [--badge-overlay:var(--color-secondary)]/20",
+      outline:
+        "[--badge-border:var(--color-border)] [--badge-overlay:var(--color-secondary)]/20",
     },
     isCircle: {
       true: "rounded-full px-[calc(--spacing(2)-1px)]",
@@ -32,13 +33,22 @@ export const badgeStyles = tv({
     intent: "primary",
     isCircle: true,
   },
-})
+});
 
 export interface BadgeProps extends React.ComponentProps<"span"> {
-  intent?: "primary" | "secondary" | "success" | "info" | "warning" | "danger" | "outline"
-  isCircle?: boolean
+  intent?:
+    | "primary"
+    | "secondary"
+    | "success"
+    | "info"
+    | "warning"
+    | "danger"
+    | "outline";
+  isCircle?: boolean;
 }
 
 export function Badge({ intent, isCircle, className, ...props }: BadgeProps) {
-  return <span {...props} className={badgeStyles({ intent, isCircle, className })} />
+  return (
+    <span {...props} className={badgeStyles({ intent, isCircle, className })} />
+  );
 }

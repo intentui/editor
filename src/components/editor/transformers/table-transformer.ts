@@ -1,16 +1,14 @@
-import { $isParagraphNode, $isTextNode, type LexicalNode } from "lexical";
-
 import {
   $convertFromMarkdownString,
   $convertToMarkdownString,
   CHECK_LIST,
   ELEMENT_TRANSFORMERS,
   type ElementTransformer,
+  isTableRowDivider,
   MULTILINE_ELEMENT_TRANSFORMERS,
   TEXT_FORMAT_TRANSFORMERS,
   TEXT_MATCH_TRANSFORMERS,
   type Transformer,
-  isTableRowDivider,
 } from "@lexical/markdown";
 import {
   $createTableCellNode,
@@ -24,6 +22,7 @@ import {
   TableNode,
   TableRowNode,
 } from "@lexical/table";
+import { $isParagraphNode, $isTextNode, type LexicalNode } from "lexical";
 
 import { EMOJI } from "@/components/editor/transformers/emoji-transformer";
 import { IMAGE } from "@/components/editor/transformers/image-transformer";
@@ -54,7 +53,7 @@ function $createTableCell(textContent: string): TableCellNode {
 
 function mapToTableCells(textContent: string): TableCellNode[] | null {
   const match = textContent.match(TABLE_ROW_REG_EXP);
-  if (!match || !match[1]) {
+  if (!match?.[1]) {
     return null;
   }
   return match[1].split("|").map((text) => $createTableCell(text));
@@ -79,7 +78,12 @@ export const TABLE: ElementTransformer = {
 
       for (const cell of row.getChildren()) {
         if ($isTableCellNode(cell)) {
-          rowOutput.push($convertToMarkdownString(CELL_TRANSFORMERS, cell).replace(/\n/g, "\\n"));
+          rowOutput.push(
+            $convertToMarkdownString(CELL_TRANSFORMERS, cell).replace(
+              /\n/g,
+              "\\n",
+            ),
+          );
           if (cell.hasHeaderState(TableCellHeaderStates.ROW)) {
             isHeaderRow = true;
           }
@@ -110,7 +114,10 @@ export const TABLE: ElementTransformer = {
 
       for (const cell of lastRow.getChildren()) {
         if ($isTableCellNode(cell)) {
-          cell.setHeaderStyles(TableCellHeaderStates.ROW, TableCellHeaderStates.ROW);
+          cell.setHeaderStyles(
+            TableCellHeaderStates.ROW,
+            TableCellHeaderStates.ROW,
+          );
         }
       }
 
@@ -160,7 +167,10 @@ export const TABLE: ElementTransformer = {
     }
 
     const previousSibling = parentNode.getPreviousSibling();
-    if ($isTableNode(previousSibling) && getTableColumnsSize(previousSibling) === maxCells) {
+    if (
+      $isTableNode(previousSibling) &&
+      getTableColumnsSize(previousSibling) === maxCells
+    ) {
       previousSibling.append(...table.getChildren());
       parentNode.remove();
     } else {

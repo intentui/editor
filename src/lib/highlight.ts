@@ -1,4 +1,4 @@
-import { codeToHtml } from "shiki"
+import { codeToHtml } from "shiki";
 
 /**
  * Highlights code with the same dual (light/dark) CSS-variable output that the
@@ -9,5 +9,5 @@ export async function highlight(code: string, lang = "tsx") {
     lang,
     themes: { light: "github-light", dark: "github-dark" },
     defaultColor: false,
-  })
+  });
 }

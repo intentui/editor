@@ -1,19 +1,20 @@
 "use client";
 
-import { useMemo } from "react";
-
+import {
+  ClearEditorExtension,
+  InitialStateExtension,
+} from "@lexical/extension";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { ClearEditorExtension, InitialStateExtension } from "@lexical/extension";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
@@ -42,7 +43,9 @@ export function ClearEditor() {
               $createTextNode("bold").toggleFormat("bold"),
               $createTextNode(" and "),
               $createTextNode("italic").toggleFormat("italic"),
-              $createTextNode(" text and clear its formatting, or clear the whole editor."),
+              $createTextNode(
+                " text and clear its formatting, or clear the whole editor.",
+              ),
             ),
           );
         },

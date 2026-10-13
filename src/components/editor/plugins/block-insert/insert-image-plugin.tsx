@@ -1,15 +1,12 @@
-import { useCallback, useRef } from "react";
-
-import { $getRoot, $getSelection } from "lexical";
-
+import { PhotoIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-
-import { PhotoIcon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection } from "lexical";
+import { useCallback, useRef } from "react";
 
 import { INSERT_IMAGE_COMMAND } from "@/components/editor/nodes/image-node";
 import { Button } from "@/components/ui/button";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 function readFileAsDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -51,7 +48,13 @@ export function useImageFilePicker() {
   );
 
   const input = (
-    <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={onChange} />
+    <input
+      ref={inputRef}
+      type="file"
+      accept="image/*"
+      className="hidden"
+      onChange={onChange}
+    />
   );
 
   return { pick, input };

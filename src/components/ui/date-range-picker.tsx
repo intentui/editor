@@ -1,27 +1,26 @@
-"use client"
+"use client";
 
-import { CalendarDateRangeIcon } from "@heroicons/react/24/outline"
-import type { DateDuration } from "@internationalized/date"
-import { Button } from "react-aria-components/Button"
-import type { DateValue } from "react-aria-components/DateField"
+import { CalendarDateRangeIcon } from "@heroicons/react/24/outline";
+import type { DateDuration } from "@internationalized/date";
+import { twJoin } from "cn";
+import { Button } from "react-aria-components/Button";
+import type { DateValue } from "react-aria-components/DateField";
 import {
   DateRangePicker as DateRangePickerPrimitive,
   type DateRangePickerProps as DateRangePickerPrimitiveProps,
-} from "react-aria-components/DateRangePicker"
-import type { PopoverProps } from "react-aria-components/Popover"
-import { twJoin } from "cn"
-import { cx } from "@/lib/primitive"
-import { DateInput as PrimitiveDateInput } from "./date-field"
-import { DatePickerOverlay } from "./date-picker"
-import { fieldStyles } from "./field"
-import { InputGroup } from "./input"
+} from "react-aria-components/DateRangePicker";
+import type { PopoverProps } from "react-aria-components/Popover";
+import { cx } from "@/lib/primitive";
+import { DateInput as PrimitiveDateInput } from "./date-field";
+import { DatePickerOverlay } from "./date-picker";
+import { fieldStyles } from "./field";
+import { InputGroup } from "./input";
 
-export interface DateRangePickerProps<
-  T extends DateValue,
-> extends DateRangePickerPrimitiveProps<T> {
-  visibleDuration?: DateDuration
-  pageBehavior?: "visible" | "single"
-  popover?: Omit<PopoverProps, "children">
+export interface DateRangePickerProps<T extends DateValue>
+  extends DateRangePickerPrimitiveProps<T> {
+  visibleDuration?: DateDuration;
+  pageBehavior?: "visible" | "single";
+  popover?: Omit<PopoverProps, "children">;
 }
 
 export function DateRangePicker<T extends DateValue>({
@@ -34,17 +33,24 @@ export function DateRangePicker<T extends DateValue>({
   return (
     <DateRangePickerPrimitive
       data-slot="control"
-      className={cx(fieldStyles({ className: "group/date-range-picker" }), className)}
+      className={cx(
+        fieldStyles({ className: "group/date-range-picker" }),
+        className,
+      )}
       {...props}
     >
       {(values) => (
         <>
           {typeof children === "function" ? children(values) : children}
-          <DatePickerOverlay {...popover} visibleDuration={visibleDuration} range />
+          <DatePickerOverlay
+            {...popover}
+            visibleDuration={visibleDuration}
+            range
+          />
         </>
       )}
     </DateRangePickerPrimitive>
-  )
+  );
 }
 
 export function DateRangePickerTrigger({
@@ -60,7 +66,7 @@ export function DateRangePickerTrigger({
         "focus-within:border-ring/70 focus-within:bg-primary-subtle/5 focus-within:outline-hidden focus-within:ring-3 focus-within:ring-ring/20 focus-within:enabled:hover:border-ring/80",
         "invalid:border-danger-subtle-foreground/70 invalid:bg-danger-subtle/5 focus-within:invalid:border-danger-subtle-foreground/70 focus-within:invalid:bg-danger-subtle/5 focus-within:invalid:ring-danger-subtle-foreground/20 invalid:hover:border-danger-subtle-foreground/80 focus-within:invalid:hover:border-danger-subtle-foreground/80",
         "disabled:bg-muted",
-        className
+        className,
       )}
       {...props}
     >
@@ -76,20 +82,23 @@ export function DateRangePickerTrigger({
           "touch-target grid place-content-center outline-hidden focus-visible:text-foreground",
           "pressed:text-foreground text-muted-foreground hover:text-foreground focus-visible:text-foreground",
           "px-[calc(--spacing(3.5)-1px)] py-[calc(--spacing(2.5)-1px)] sm:px-[calc(--spacing(3)-1px)] sm:py-[calc(--spacing(1.5)-1px)]",
-          "*:-me-px *:-mt-0.5 *:size-5 sm:*:size-4"
+          "*:-me-px *:-mt-0.5 *:size-5 sm:*:size-4",
         )}
       >
         <CalendarDateRangeIcon />
       </Button>
     </InputGroup>
-  )
+  );
 }
 
-function DateInput({ className, ...props }: React.ComponentProps<typeof PrimitiveDateInput>) {
+function DateInput({
+  className,
+  ...props
+}: React.ComponentProps<typeof PrimitiveDateInput>) {
   return (
     <PrimitiveDateInput
       className={cx("rounded-none border-none focus-within:ring-0", className)}
       {...props}
     />
-  )
+  );
 }

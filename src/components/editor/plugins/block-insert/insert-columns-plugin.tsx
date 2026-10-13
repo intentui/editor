@@ -1,14 +1,13 @@
-import { $getRoot, $getSelection, type LexicalEditor } from "lexical";
+import { ViewColumnsIcon } from "@heroicons/react/16/solid";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-
-import { ViewColumnsIcon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection, type LexicalEditor } from "lexical";
 
 import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout";
 import { Button } from "@/components/ui/button";
 import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 type ColumnOption = {
   value: string;
@@ -42,14 +41,23 @@ export function InsertColumnsPlugin() {
   return (
     <MenuTrigger>
       <TooltipTrigger>
-        <Button intent="outline" size="sq-xs" aria-label="Columns" isDisabled={!isEditable}>
+        <Button
+          intent="outline"
+          size="sq-xs"
+          aria-label="Columns"
+          isDisabled={!isEditable}
+        >
           <ViewColumnsIcon />
         </Button>
         <Tooltip>Columns</Tooltip>
       </TooltipTrigger>
       <Menu items={COLUMN_OPTIONS}>
         {({ value, label }) => (
-          <MenuItem id={value} textValue={label} onAction={() => insertColumns(editor, value)}>
+          <MenuItem
+            id={value}
+            textValue={label}
+            onAction={() => insertColumns(editor, value)}
+          >
             {label}
           </MenuItem>
         )}

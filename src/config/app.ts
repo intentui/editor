@@ -27,9 +27,9 @@ export const app = {
     light: "github-light",
     dark: "github-dark",
   },
-} as const
+} as const;
 
 export const META_THEME_COLORS = {
   light: "#ffffff",
   dark: "oklch(0.141 0.005 285.823)",
-}
+};

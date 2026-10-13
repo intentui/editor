@@ -1,26 +1,36 @@
-"use client"
+"use client";
 
-import type { DateFieldProps, DateInputProps, DateValue } from "react-aria-components/DateField"
+import { twJoin } from "cn";
+import type {
+  DateFieldProps,
+  DateInputProps,
+  DateValue,
+} from "react-aria-components/DateField";
 import {
   DateField as DateFieldPrimitive,
   DateInput as DateInputPrimitive,
   DateSegment,
-} from "react-aria-components/DateField"
-import { twJoin } from "cn"
-import { cx } from "@/lib/primitive"
-import { fieldStyles } from "./field"
+} from "react-aria-components/DateField";
+import { cx } from "@/lib/primitive";
+import { fieldStyles } from "./field";
 
-export function DateField<T extends DateValue>({ className, ...props }: DateFieldProps<T>) {
+export function DateField<T extends DateValue>({
+  className,
+  ...props
+}: DateFieldProps<T>) {
   return (
     <DateFieldPrimitive
       {...props}
       data-slot="control"
       className={cx(fieldStyles({ className: "w-fit" }), className)}
     />
-  )
+  );
 }
 
-export function DateInput({ className, ...props }: Omit<DateInputProps, "children">) {
+export function DateInput({
+  className,
+  ...props
+}: Omit<DateInputProps, "children">) {
   return (
     <span data-slot="control" className="relative block">
       <DateInputPrimitive
@@ -34,7 +44,7 @@ export function DateInput({ className, ...props }: Omit<DateInputProps, "childre
           "invalid:border-danger-subtle-foreground/70 invalid:bg-danger-subtle/5 focus-within:invalid:border-danger-subtle-foreground/70 focus-within:invalid:bg-danger-subtle/5 focus-within:invalid:ring-danger-subtle-foreground/20 focus-within:invalid:hover:border-danger-subtle-foreground/80 invalid:enabled:hover:border-danger-subtle-foreground/80",
           "in-disabled:bg-muted disabled:bg-muted forced-colors:in-disabled:text-[GrayText] forced-colors:disabled:text-[GrayText]",
           "dark:scheme-dark",
-          className
+          className,
         )}
         {...props}
       >
@@ -45,11 +55,11 @@ export function DateInput({ className, ...props }: Omit<DateInputProps, "childre
               "inline shrink-0 rounded px-1 type-literal:px-0 py-0.5 text-foreground tracking-wider caret-transparent outline-0 data-placeholder:not-data-focused:text-muted-foreground sm:text-sm",
               "focus:bg-primary-subtle focus:text-primary-subtle-foreground focus:data-invalid:bg-danger-subtle focus:data-invalid:text-danger-subtle-foreground forced-colors:focus:bg-[Highlight] forced-colors:focus:text-[HighlightText]",
               "forced-color-adjust-none forced-colors:text-[ButtonText]",
-              "in-disabled:bg-muted disabled:bg-muted forced-colors:disabled:text-[GrayText]"
+              "in-disabled:bg-muted disabled:bg-muted forced-colors:disabled:text-[GrayText]",
             )}
           />
         )}
       </DateInputPrimitive>
     </span>
-  )
+  );
 }

@@ -1,17 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
-
 import {
-  $createParagraphNode,
-  $createTextNode,
-  $getRoot,
-  HISTORY_MERGE_TAG,
-  configExtension,
-  defineExtension,
-} from "lexical";
-
-import { HorizontalRuleExtension, InitialStateExtension } from "@lexical/extension";
+  HorizontalRuleExtension,
+  InitialStateExtension,
+} from "@lexical/extension";
 import { CheckListExtension, ListExtension } from "@lexical/list";
 import {
   CHECK_LIST,
@@ -24,6 +16,15 @@ import {
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { $createHeadingNode, RichTextExtension } from "@lexical/rich-text";
 import { TableExtension } from "@lexical/table";
+import {
+  $createParagraphNode,
+  $createTextNode,
+  $getRoot,
+  configExtension,
+  defineExtension,
+  HISTORY_MERGE_TAG,
+} from "lexical";
+import { useMemo } from "react";
 
 import { CodeExtension } from "@/components/editor/extensions/code";
 import { EmojiExtension } from "@/components/editor/extensions/emoji";

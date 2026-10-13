@@ -1,11 +1,8 @@
-import { useMemo } from "react";
-
-import { $getRoot, $getSelection } from "lexical";
-
+import { MinusIcon } from "@heroicons/react/16/solid";
 import { INSERT_HORIZONTAL_RULE_COMMAND } from "@lexical/extension";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
-import { MinusIcon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection } from "lexical";
+import { useMemo } from "react";
 
 import {
   type ComponentPickerItem,

@@ -1,28 +1,7 @@
 import {
-  $createParagraphNode,
-  $getSelection,
-  $isElementNode,
-  $isRangeSelection,
-  COMMAND_PRIORITY_EDITOR,
-  CONTROL_OR_META,
-  type ElementNode,
-  FORMAT_ELEMENT_COMMAND,
-  FORMAT_TEXT_COMMAND,
-  INDENT_CONTENT_COMMAND,
-  IS_APPLE,
-  type KeyboardShortcutMatch,
-  type LexicalCommand,
-  type LexicalEditor,
-  OUTDENT_CONTENT_COMMAND,
-  configExtension,
-  createCommand,
-  defineExtension,
-} from "lexical";
-
-import {
+  formatKeyboardShortcut,
   KeyboardShortcutsExtension,
   type NamedKeyboardShortcuts,
-  formatKeyboardShortcut,
 } from "@lexical/extension";
 import {
   $isListNode,
@@ -39,9 +18,32 @@ import {
 } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
 import { $findMatchingParent, mergeRegister } from "@lexical/utils";
+import {
+  $createParagraphNode,
+  $getSelection,
+  $isElementNode,
+  $isRangeSelection,
+  COMMAND_PRIORITY_EDITOR,
+  CONTROL_OR_META,
+  configExtension,
+  createCommand,
+  defineExtension,
+  type ElementNode,
+  FORMAT_ELEMENT_COMMAND,
+  FORMAT_TEXT_COMMAND,
+  INDENT_CONTENT_COMMAND,
+  IS_APPLE,
+  type KeyboardShortcutMatch,
+  type LexicalCommand,
+  type LexicalEditor,
+  OUTDENT_CONTENT_COMMAND,
+} from "lexical";
 
 import { insertCodeBlock } from "@/components/editor/extensions/code";
-import { $getSelectedNode, clearFormatting } from "@/components/editor/extensions/format-state";
+import {
+  $getSelectedNode,
+  clearFormatting,
+} from "@/components/editor/extensions/format-state";
 
 const CONTROL_OR_META_ALT = { ...CONTROL_OR_META, altKey: true };
 const CONTROL_OR_META_SHIFT = { ...CONTROL_OR_META, shiftKey: true };
@@ -99,7 +101,9 @@ export const SHORTCUT_COMMANDS: Record<
   ]),
 ) as Record<ShortcutName, LexicalCommand<KeyboardEvent>>;
 
-export function formatShortcut(name: ShortcutName | BuiltinShortcutName): string[] {
+export function formatShortcut(
+  name: ShortcutName | BuiltinShortcutName,
+): string[] {
   const binding =
     name in SHORTCUT_BINDINGS
       ? SHORTCUT_BINDINGS[name as ShortcutName]
@@ -116,7 +120,13 @@ function buildShortcuts(): NamedKeyboardShortcuts {
   );
 }
 
-type BlockType = "paragraph" | HeadingTagType | "number" | "bullet" | "check" | "quote";
+type BlockType =
+  | "paragraph"
+  | HeadingTagType
+  | "number"
+  | "bullet"
+  | "check"
+  | "quote";
 
 function $getBlockType(): BlockType | null {
   const selection = $getSelection();
@@ -130,7 +140,8 @@ function $getBlockType(): BlockType | null {
   }
   const element = $findMatchingParent(
     node,
-    (parent): parent is ElementNode => $isElementNode(parent) && !parent.isInline(),
+    (parent): parent is ElementNode =>
+      $isElementNode(parent) && !parent.isInline(),
   );
   if ($isHeadingNode(element)) {
     return element.getTag();
@@ -185,7 +196,10 @@ export const ShortcutsExtension = defineExtension({
     }),
   ],
   register(editor) {
-    const listen = (name: ShortcutName, $onShortcut: (fromEditor: LexicalEditor) => void) =>
+    const listen = (
+      name: ShortcutName,
+      $onShortcut: (fromEditor: LexicalEditor) => void,
+    ) =>
       editor.registerCommand(
         SHORTCUT_COMMANDS[name],
         (event, fromEditor) => {
@@ -200,24 +214,56 @@ export const ShortcutsExtension = defineExtension({
       listen("HEADING1", () => $formatHeading("h1")),
       listen("HEADING2", () => $formatHeading("h2")),
       listen("HEADING3", () => $formatHeading("h3")),
-      listen("NUMBERED_LIST", (e) => $formatList(e, "number", INSERT_ORDERED_LIST_COMMAND)),
-      listen("BULLET_LIST", (e) => $formatList(e, "bullet", INSERT_UNORDERED_LIST_COMMAND)),
-      listen("CHECK_LIST", (e) => $formatList(e, "check", INSERT_CHECK_LIST_COMMAND)),
+      listen("NUMBERED_LIST", (e) =>
+        $formatList(e, "number", INSERT_ORDERED_LIST_COMMAND),
+      ),
+      listen("BULLET_LIST", (e) =>
+        $formatList(e, "bullet", INSERT_UNORDERED_LIST_COMMAND),
+      ),
+      listen("CHECK_LIST", (e) =>
+        $formatList(e, "check", INSERT_CHECK_LIST_COMMAND),
+      ),
       listen("CODE_BLOCK", (e) => insertCodeBlock(e)),
       listen("QUOTE", () => $formatQuote()),
-      listen("INSERT_CODE_BLOCK", (e) => e.dispatchCommand(FORMAT_TEXT_COMMAND, "code")),
-      listen("STRIKETHROUGH", (e) => e.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")),
-      listen("LOWERCASE", (e) => e.dispatchCommand(FORMAT_TEXT_COMMAND, "lowercase")),
-      listen("UPPERCASE", (e) => e.dispatchCommand(FORMAT_TEXT_COMMAND, "uppercase")),
-      listen("CAPITALIZE", (e) => e.dispatchCommand(FORMAT_TEXT_COMMAND, "capitalize")),
-      listen("CENTER_ALIGN", (e) => e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center")),
-      listen("JUSTIFY_ALIGN", (e) => e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify")),
-      listen("LEFT_ALIGN", (e) => e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left")),
-      listen("RIGHT_ALIGN", (e) => e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right")),
-      listen("SUBSCRIPT", (e) => e.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")),
-      listen("SUPERSCRIPT", (e) => e.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")),
-      listen("INDENT", (e) => e.dispatchCommand(INDENT_CONTENT_COMMAND, undefined)),
-      listen("OUTDENT", (e) => e.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined)),
+      listen("INSERT_CODE_BLOCK", (e) =>
+        e.dispatchCommand(FORMAT_TEXT_COMMAND, "code"),
+      ),
+      listen("STRIKETHROUGH", (e) =>
+        e.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough"),
+      ),
+      listen("LOWERCASE", (e) =>
+        e.dispatchCommand(FORMAT_TEXT_COMMAND, "lowercase"),
+      ),
+      listen("UPPERCASE", (e) =>
+        e.dispatchCommand(FORMAT_TEXT_COMMAND, "uppercase"),
+      ),
+      listen("CAPITALIZE", (e) =>
+        e.dispatchCommand(FORMAT_TEXT_COMMAND, "capitalize"),
+      ),
+      listen("CENTER_ALIGN", (e) =>
+        e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center"),
+      ),
+      listen("JUSTIFY_ALIGN", (e) =>
+        e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify"),
+      ),
+      listen("LEFT_ALIGN", (e) =>
+        e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left"),
+      ),
+      listen("RIGHT_ALIGN", (e) =>
+        e.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right"),
+      ),
+      listen("SUBSCRIPT", (e) =>
+        e.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript"),
+      ),
+      listen("SUPERSCRIPT", (e) =>
+        e.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript"),
+      ),
+      listen("INDENT", (e) =>
+        e.dispatchCommand(INDENT_CONTENT_COMMAND, undefined),
+      ),
+      listen("OUTDENT", (e) =>
+        e.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined),
+      ),
       listen("CLEAR_FORMATTING", (e) => clearFormatting(e)),
     );
   },

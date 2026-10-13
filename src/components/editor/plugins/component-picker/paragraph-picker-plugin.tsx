@@ -1,11 +1,8 @@
-import { useMemo } from "react";
-
-import { $createParagraphNode, $getRoot, $getSelection } from "lexical";
-
+import { Bars3BottomLeftIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $setBlocksType } from "@lexical/selection";
-
-import { Bars3BottomLeftIcon } from "@heroicons/react/16/solid";
+import { $createParagraphNode, $getRoot, $getSelection } from "lexical";
+import { useMemo } from "react";
 
 import {
   type ComponentPickerItem,

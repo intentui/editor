@@ -1,11 +1,10 @@
-import { configExtension, defineExtension } from "lexical";
-
 import { $isCodeNode } from "@lexical/code-core";
 import {
-  AutoLinkExtension as LexicalAutoLinkExtension,
   autoLinkEmailMatcher,
   autoLinkUrlMatcher,
+  AutoLinkExtension as LexicalAutoLinkExtension,
 } from "@lexical/link";
+import { configExtension, defineExtension } from "lexical";
 
 export const AutoLinkExtension = defineExtension({
   name: "@intentui-editor/editor/AutoLink",

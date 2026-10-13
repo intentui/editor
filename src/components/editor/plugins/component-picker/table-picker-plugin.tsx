@@ -1,8 +1,7 @@
-import { useMemo } from "react";
+import { TableCellsIcon } from "@heroicons/react/16/solid";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
-import { TableCellsIcon } from "@heroicons/react/16/solid";
+import { useMemo } from "react";
 
 import { insertTable } from "@/components/editor/plugins/block-insert/insert-table-plugin";
 import {

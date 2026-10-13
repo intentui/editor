@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { ProgressBar } from "react-aria-components/ProgressBar"
-import { cn } from "cn"
+import { cn } from "cn";
+import { ProgressBar } from "react-aria-components/ProgressBar";
 
 const Ring = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -25,7 +25,7 @@ const Ring = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
       d="M4.636 11.91a7.273 7.273 0 0 1 7.273-7.274V1C5.885 1 1 5.885 1 11.91zm1.819 4.81a7.24 7.24 0 0 1-1.819-4.81H1c0 2.764 1.032 5.294 2.727 7.215z"
     />
   </svg>
-)
+);
 
 const Spin = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
   <svg className={cn("size-4", className)} viewBox="0 0 2400 2400" {...props}>
@@ -55,30 +55,32 @@ const Spin = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
       />
     </g>
   </svg>
-)
+);
 
 const LOADERS = {
   ring: Ring,
   spin: Spin,
-}
+};
 
-const DEFAULT_SPINNER = "spin"
+const DEFAULT_SPINNER = "spin";
 
-export interface LoaderProps extends Omit<
-  React.ComponentPropsWithoutRef<"svg">,
-  "display" | "opacity" | "intent"
-> {
-  variant?: keyof typeof LOADERS
-  percentage?: number
-  isIndeterminate?: boolean
-  formatOptions?: Intl.NumberFormatOptions
-  ref?: React.RefObject<SVGSVGElement>
-  "data-slot"?: string
+export interface LoaderProps
+  extends Omit<
+    React.ComponentPropsWithoutRef<"svg">,
+    "display" | "opacity" | "intent"
+  > {
+  variant?: keyof typeof LOADERS;
+  percentage?: number;
+  isIndeterminate?: boolean;
+  formatOptions?: Intl.NumberFormatOptions;
+  ref?: React.RefObject<SVGSVGElement>;
+  "data-slot"?: string;
 }
 
 export function Loader({ isIndeterminate = true, ref, ...props }: LoaderProps) {
-  const { className, variant = DEFAULT_SPINNER, ...spinnerProps } = props
-  const LoaderPrimitive = LOADERS[variant in LOADERS ? variant : DEFAULT_SPINNER]
+  const { className, variant = DEFAULT_SPINNER, ...spinnerProps } = props;
+  const LoaderPrimitive =
+    LOADERS[variant in LOADERS ? variant : DEFAULT_SPINNER];
 
   return (
     <ProgressBar
@@ -93,11 +95,11 @@ export function Loader({ isIndeterminate = true, ref, ...props }: LoaderProps) {
           "size-4",
           ["ring"].includes(variant) && "animate-spin",
           variant === "spin" && "stroke-current",
-          className
+          className,
         )}
         ref={ref}
         {...spinnerProps}
       />
     </ProgressBar>
-  )
+  );
 }

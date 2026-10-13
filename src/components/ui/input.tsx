@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { Group, type GroupProps } from "react-aria-components/Group"
+import { Group, type GroupProps } from "react-aria-components/Group";
 import {
   Input as InputPrimitive,
   type InputProps as InputPrimitiveProps,
-} from "react-aria-components/Input"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/Input";
+import { cx } from "@/lib/primitive";
 
 interface InputProps extends InputPrimitiveProps {
-  ref?: React.RefObject<HTMLInputElement | null>
+  ref?: React.RefObject<HTMLInputElement | null>;
 }
 export function Input({ className, ref, ...props }: InputProps) {
   return (
@@ -24,13 +24,13 @@ export function Input({ className, ref, ...props }: InputProps) {
           "disabled:bg-muted forced-colors:in-disabled:text-[GrayText]",
           "in-disabled:bg-muted forced-colors:in-disabled:text-[GrayText]",
           "dark:scheme-dark",
-          className
+          className,
         )}
         ref={ref}
         {...props}
       />
     </span>
-  )
+  );
 }
 
 export function InputGroup({ className, ...props }: GroupProps) {
@@ -66,9 +66,9 @@ export function InputGroup({ className, ...props }: GroupProps) {
         "[&>button:first-child]:start-0 [&>button:last-child]:end-0",
 
         "[&>[data-slot='icon']:not([class*='text-'])]:text-muted-foreground [&>[data-slot='loader']:not([class*='text-'])]:text-muted-foreground [&>[data-slot='text']:not([class*='text-'])]:text-muted-foreground",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }

@@ -1,25 +1,34 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Group } from "react-aria-components/Group"
-import { ToggleButton } from "react-aria-components/ToggleButton"
-import { Toolbar } from "react-aria-components/Toolbar"
-import { cn, twJoin } from "cn"
-import { CopyButton } from "@/components/docs/copy-button"
+import { cn, twJoin } from "cn";
+import { useState } from "react";
+import { Group } from "react-aria-components/Group";
+import { ToggleButton } from "react-aria-components/ToggleButton";
+import { Toolbar } from "react-aria-components/Toolbar";
+import { CopyButton } from "@/components/docs/copy-button";
 
 interface PreviewTabsProps {
-  preview: React.ReactNode
-  html: string
-  source: string
+  preview: React.ReactNode;
+  html: string;
+  source: string;
   /** File shown above the code, e.g. `text-format-editor.tsx`. */
-  filename: string
-  className?: string
+  filename: string;
+  className?: string;
   /** Remove the padding around the live preview. */
-  bleed?: boolean
+  bleed?: boolean;
 }
 
-export function PreviewTabs({ preview, html, source, filename, className, bleed }: PreviewTabsProps) {
-  const [currentTab, setCurrentTab] = useState<"tab_preview" | "tab_code">("tab_preview")
+export function PreviewTabs({
+  preview,
+  html,
+  source,
+  filename,
+  className,
+  bleed,
+}: PreviewTabsProps) {
+  const [currentTab, setCurrentTab] = useState<"tab_preview" | "tab_code">(
+    "tab_preview",
+  );
 
   return (
     <div className="not-typeset mt-3">
@@ -28,7 +37,9 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
           <ToggleButton
             className={twJoin(
               "p-2 font-medium text-sm/6 outline-hidden focus-visible:text-blue-500 dark:focus-visible:text-blue-300",
-              currentTab === "tab_preview" ? "text-foreground focus:text-foreground" : "text-muted-foreground hover:text-foreground"
+              currentTab === "tab_preview"
+                ? "text-foreground focus:text-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
             onPress={() => setCurrentTab("tab_preview")}
           >
@@ -37,7 +48,9 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
           <ToggleButton
             className={twJoin(
               "p-2 font-medium text-sm/6 outline-hidden focus:text-foreground",
-              currentTab === "tab_code" ? "text-foreground focus:text-foreground" : "text-muted-foreground hover:text-foreground"
+              currentTab === "tab_code"
+                ? "text-foreground focus:text-foreground"
+                : "text-muted-foreground hover:text-foreground",
             )}
             onPress={() => setCurrentTab("tab_code")}
           >
@@ -45,7 +58,10 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
           </ToggleButton>
         </Group>
         <Group>
-          <CopyButton className="grid size-10 place-content-center" text={source} />
+          <CopyButton
+            className="grid size-10 place-content-center"
+            text={source}
+          />
         </Group>
       </Toolbar>
 
@@ -54,7 +70,9 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
           <div
             className={cn(
               "w-full overflow-y-auto",
-              !bleed ? "relative gap-4 rounded-lg border px-4 py-8 *:w-full sm:p-8 dark:bg-muted/30" : ""
+              !bleed
+                ? "relative gap-4 rounded-lg border px-4 py-8 *:w-full sm:p-8 dark:bg-muted/30"
+                : "",
             )}
           >
             <div className={cn("not-typeset", className)}>{preview}</div>
@@ -73,5 +91,5 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -8,8 +8,8 @@ import {
 
 import {
   $createImageNode,
-  INSERT_IMAGE_COMMAND,
   ImageNode,
+  INSERT_IMAGE_COMMAND,
 } from "@/components/editor/nodes/image-node";
 
 export const ImageExtension = defineExtension({

@@ -1,13 +1,12 @@
-import { $getRoot, $getSelection } from "lexical";
+import { MinusIcon } from "@heroicons/react/16/solid";
 
 import { INSERT_HORIZONTAL_RULE_COMMAND } from "@lexical/extension";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-
-import { MinusIcon } from "@heroicons/react/16/solid";
+import { $getRoot, $getSelection } from "lexical";
 
 import { Button } from "@/components/ui/button";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function InsertHorizontalRulePlugin() {
   const [editor] = useLexicalComposerContext();

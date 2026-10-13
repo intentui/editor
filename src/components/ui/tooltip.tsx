@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import type { TooltipProps as TooltipPrimitiveProps } from "react-aria-components/Tooltip"
+import { twJoin } from "cn";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import type { TooltipProps as TooltipPrimitiveProps } from "react-aria-components/Tooltip";
 import {
   OverlayArrow,
   Tooltip as TooltipPrimitive,
   TooltipTrigger as TooltipTriggerPrimitive,
-} from "react-aria-components/Tooltip"
-import { twJoin } from "cn"
-import type { VariantProps } from "tailwind-variants"
-import { tv } from "tailwind-variants"
+} from "react-aria-components/Tooltip";
+import type { VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 
 const tooltipStyles = tv({
   base: [
@@ -39,17 +39,24 @@ const tooltipStyles = tv({
   defaultVariants: {
     inverse: false,
   },
-})
+});
 
-const TooltipTrigger = TooltipTriggerPrimitive
+const TooltipTrigger = TooltipTriggerPrimitive;
 
 interface TooltipProps
-  extends Omit<TooltipPrimitiveProps, "children">, VariantProps<typeof tooltipStyles> {
-  arrow?: boolean
-  children?: React.ReactNode
+  extends Omit<TooltipPrimitiveProps, "children">,
+    VariantProps<typeof tooltipStyles> {
+  arrow?: boolean;
+  children?: React.ReactNode;
 }
 
-const Tooltip = ({ offset = 10, arrow = true, inverse, children, ...props }: TooltipProps) => {
+const Tooltip = ({
+  offset = 10,
+  arrow = true,
+  inverse,
+  children,
+  ...props
+}: TooltipProps) => {
   return (
     <TooltipPrimitive
       {...props}
@@ -59,7 +66,7 @@ const Tooltip = ({ offset = 10, arrow = true, inverse, children, ...props }: Too
           ...renderProps,
           inverse,
           className,
-        })
+        }),
       )}
     >
       {arrow && (
@@ -72,7 +79,7 @@ const Tooltip = ({ offset = 10, arrow = true, inverse, children, ...props }: Too
               "block group-placement-bottom:rotate-180 group-placement-left:-rotate-90 group-placement-right:rotate-90 forced-colors:fill-[Canvas] forced-colors:stroke-[ButtonBorder]",
               inverse
                 ? "fill-foreground stroke-transparent"
-                : "fill-overlay stroke-(--tooltip-border)"
+                : "fill-overlay stroke-(--tooltip-border)",
             )}
           >
             <path d="M0 0 L6 6 L12 0" />
@@ -81,8 +88,8 @@ const Tooltip = ({ offset = 10, arrow = true, inverse, children, ...props }: Too
       )}
       {children}
     </TooltipPrimitive>
-  )
-}
+  );
+};
 
-export type { TooltipProps }
-export { TooltipTrigger, Tooltip }
+export type { TooltipProps };
+export { Tooltip, TooltipTrigger };

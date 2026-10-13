@@ -1,12 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { defineExtension } from "lexical";
-
 import { HistoryExtension } from "@lexical/history";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
+import { defineExtension } from "lexical";
+import { useMemo } from "react";
 
 import { SpeechToTextExtension } from "@/components/editor/extensions/speech-to-text";
 import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin";
@@ -20,7 +18,11 @@ export function SpeechToTextEditor() {
       defineExtension({
         name: "@intentui-editor/speech-to-text",
         namespace: "intentui-editor",
-        dependencies: [RichTextExtension, HistoryExtension, SpeechToTextExtension],
+        dependencies: [
+          RichTextExtension,
+          HistoryExtension,
+          SpeechToTextExtension,
+        ],
         theme: editorTheme,
       }),
     [],

@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import {
   TextArea,
   type TextAreaProps as TextAreaPrimitiveProps,
-} from "react-aria-components/TextArea"
-import { cx } from "@/lib/primitive"
+} from "react-aria-components/TextArea";
+import { cx } from "@/lib/primitive";
 
 interface TextAreaProps extends TextAreaPrimitiveProps {
-  ref?: React.Ref<HTMLTextAreaElement>
+  ref?: React.Ref<HTMLTextAreaElement>;
 }
 export function Textarea({ className, ref, ...props }: TextAreaProps) {
   return (
@@ -24,9 +24,9 @@ export function Textarea({ className, ref, ...props }: TextAreaProps) {
           "disabled:bg-muted forced-colors:in-disabled:text-[GrayText]",
           "in-disabled:bg-muted forced-colors:in-disabled:text-[GrayText]",
           "dark:scheme-dark",
-          className
+          className,
         )}
       />
     </span>
-  )
+  );
 }

@@ -1,21 +1,22 @@
 "use client";
 
-import { useMemo } from "react";
-
 import {
-  $createParagraphNode,
-  $createTextNode,
-  $getRoot,
-  HISTORY_MERGE_TAG,
-  configExtension,
-  defineExtension,
-} from "lexical";
-
-import { InitialStateExtension, TabIndentationExtension } from "@lexical/extension";
+  InitialStateExtension,
+  TabIndentationExtension,
+} from "@lexical/extension";
 import { HistoryExtension } from "@lexical/history";
 import { CheckListExtension, ListExtension } from "@lexical/list";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
+import {
+  $createParagraphNode,
+  $createTextNode,
+  $getRoot,
+  configExtension,
+  defineExtension,
+  HISTORY_MERGE_TAG,
+} from "lexical";
+import { useMemo } from "react";
 
 import { FormatStateExtension } from "@/components/editor/extensions/format-state";
 import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";

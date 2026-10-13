@@ -1,12 +1,22 @@
-import { type LexicalCommand, configExtension, createCommand, defineExtension } from "lexical";
-
 import { LinkExtension as LexicalLinkExtension } from "@lexical/link";
+import {
+  configExtension,
+  createCommand,
+  defineExtension,
+  type LexicalCommand,
+} from "lexical";
 
 export const OPEN_LINK_EDITOR_COMMAND: LexicalCommand<void> = createCommand(
   "OPEN_LINK_EDITOR_COMMAND",
 );
 
-const SUPPORTED_URL_PROTOCOLS = new Set(["http:", "https:", "mailto:", "sms:", "tel:"]);
+const SUPPORTED_URL_PROTOCOLS = new Set([
+  "http:",
+  "https:",
+  "mailto:",
+  "sms:",
+  "tel:",
+]);
 
 function parseUrl(url: string): URL | null {
   try {

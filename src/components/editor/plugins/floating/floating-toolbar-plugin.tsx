@@ -1,24 +1,22 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
   $isParagraphNode,
   $isRangeSelection,
   $isTextNode,
   COMMAND_PRIORITY_LOW,
-  type LexicalEditor,
-  SELECTION_CHANGE_COMMAND,
   getDOMSelection,
   getDOMSelectionPoints,
   isDOMDocumentNode,
   isDOMShadowRoot,
+  type LexicalEditor,
   registerEventListener,
   registerEventListeners,
+  SELECTION_CHANGE_COMMAND,
 } from "lexical";
-
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-import { mergeRegister } from "@lexical/utils";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { $getSelectedNode } from "@/components/editor/extensions/format-state";
 import {
@@ -92,10 +90,15 @@ function FloatingToolbar({
     const rootElement = editor.getRootElement();
     let targetRect: DOMRect | null = null;
 
-    if ($isRangeSelection(selection) && nativeSelection !== null && rootElement !== null) {
+    if (
+      $isRangeSelection(selection) &&
+      nativeSelection !== null &&
+      rootElement !== null
+    ) {
       const points = getDOMSelectionPoints(nativeSelection, rootElement);
       const pointsCollapsed =
-        points.anchorNode === points.focusNode && points.anchorOffset === points.focusOffset;
+        points.anchorNode === points.focusNode &&
+        points.anchorOffset === points.focusOffset;
       if (!pointsCollapsed && rootElement.contains(points.anchorNode)) {
         targetRect = getDOMRangeRect(nativeSelection, rootElement);
       }
@@ -187,7 +190,9 @@ function useIsTextSelected(editor: LexicalEditor): boolean {
         nativeSelection !== null &&
         (!$isRangeSelection(selection) ||
           rootElement === null ||
-          !rootElement.contains(getDOMSelectionPoints(nativeSelection, rootElement).anchorNode))
+          !rootElement.contains(
+            getDOMSelectionPoints(nativeSelection, rootElement).anchorNode,
+          ))
       ) {
         setIsText(false);
         return;
@@ -228,7 +233,11 @@ function useIsTextSelected(editor: LexicalEditor): boolean {
   return isText;
 }
 
-export function FloatingToolbarPlugin({ children }: { children?: React.ReactNode }) {
+export function FloatingToolbarPlugin({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const isText = useIsTextSelected(editor);

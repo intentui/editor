@@ -1,8 +1,4 @@
-import { createPortal } from "react-dom";
-import { useCallback, useEffect, useMemo, useState } from "react";
-
-import type { TextNode } from "lexical";
-
+import { UserIcon } from "@heroicons/react/16/solid";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   LexicalTypeaheadMenuPlugin,
@@ -10,21 +6,23 @@ import {
   type MenuTextMatch,
   useBasicTypeaheadTriggerMatch,
 } from "@lexical/react/LexicalTypeaheadMenuPlugin";
-
-import { UserIcon } from "@heroicons/react/16/solid";
 import { twJoin } from "cn";
+import type { TextNode } from "lexical";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { $createMentionNode } from "@/components/editor/nodes/mention-node";
 
 const MAX_SUGGESTIONS = 5;
 
-const PUNCTUATION = "\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%'\"~=<>_:;";
+const PUNCTUATION =
+  "\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%'\"~=<>_:;";
 
 const TRIGGERS = ["@"].join("");
 
-const VALID_CHARS = "[^" + TRIGGERS + PUNCTUATION + "\\s]";
+const VALID_CHARS = `[^${TRIGGERS}${PUNCTUATION}\\s]`;
 
-const VALID_JOINS = "(?:" + "\\.[ |$]|" + " |" + "[" + PUNCTUATION + "]|" + ")";
+const VALID_JOINS = `(?:\\.[ |$]| |[${PUNCTUATION}]|)`;
 
 const LENGTH_LIMIT = 75;
 
@@ -158,7 +156,10 @@ function useMentionLookupService(mentionString: string | null) {
   return results;
 }
 
-function checkForAtSignMentions(text: string, minMatchLength: number): MenuTextMatch | null {
+function checkForAtSignMentions(
+  text: string,
+  minMatchLength: number,
+): MenuTextMatch | null {
   let match = AtSignMentionsRegex.exec(text);
 
   if (match === null) {
@@ -194,12 +195,19 @@ export function MentionPlugin() {
   const results = useMentionLookupService(queryString);
 
   const options = useMemo(
-    () => results.slice(0, MAX_SUGGESTIONS).map((result) => new MentionTypeaheadOption(result)),
+    () =>
+      results
+        .slice(0, MAX_SUGGESTIONS)
+        .map((result) => new MentionTypeaheadOption(result)),
     [results],
   );
 
   const onSelectOption = useCallback(
-    (option: MentionTypeaheadOption, nodeToReplace: TextNode | null, closeMenu: () => void) => {
+    (
+      option: MentionTypeaheadOption,
+      nodeToReplace: TextNode | null,
+      closeMenu: () => void,
+    ) => {
       editor.update(() => {
         const mentionNode = $createMentionNode(option.name);
         if (nodeToReplace) {
@@ -253,9 +261,16 @@ export function MentionPlugin() {
                       onMouseEnter={() => setHighlightedIndex(index)}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => selectOptionAndCleanUp(option)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          selectOptionAndCleanUp(option);
+                        }
+                      }}
                       className={twJoin(
                         "flex cursor-default select-none items-center gap-x-2 rounded-md px-3 py-2 text-base/6 text-foreground outline-0 sm:px-2.5 sm:py-1.5 sm:text-sm/6",
-                        selectedIndex === index && "bg-accent text-accent-foreground",
+                        selectedIndex === index &&
+                          "bg-accent text-accent-foreground",
                       )}
                     >
                       <UserIcon className="size-4 shrink-0 text-muted-foreground" />

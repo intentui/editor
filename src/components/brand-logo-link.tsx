@@ -1,6 +1,6 @@
-import { cn } from "cn"
-import { BrandIntentuiIcon } from "@/components/icons/brand-intentui-icon"
-import { Link } from "@/components/ui/link"
+import { cn } from "cn";
+import { BrandIntentuiIcon } from "@/components/icons/brand-intentui-icon";
+import { Link } from "@/components/ui/link";
 
 export function BrandLogoLink({ className }: { className?: string }) {
   return (
@@ -11,8 +11,9 @@ export function BrandLogoLink({ className }: { className?: string }) {
     >
       <BrandIntentuiIcon className="size-6 shrink-0" />
       <span className="hidden min-w-0 sm:inline">
-        <span>Intent</span> <span className="text-muted-foreground">Editor</span>
+        <span>Intent UI</span>{" "}
+        <span className="text-muted-foreground">Editor</span>
       </span>
     </Link>
-  )
+  );
 }

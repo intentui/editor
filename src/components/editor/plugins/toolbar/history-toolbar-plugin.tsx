@@ -1,16 +1,18 @@
-import { REDO_COMMAND, UNDO_COMMAND } from "lexical";
+import {
+  ArrowUturnLeftIcon,
+  ArrowUturnRightIcon,
+} from "@heroicons/react/16/solid";
 
 import { HistoryExtension } from "@lexical/history";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useExtensionDependency } from "@lexical/react/useExtensionComponent";
 import { useSignalValue } from "@lexical/react/useExtensionSignalValue";
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
-
-import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from "@heroicons/react/16/solid";
+import { REDO_COMMAND, UNDO_COMMAND } from "lexical";
 
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
-import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function HistoryToolbarPlugin() {
   const [editor] = useLexicalComposerContext();

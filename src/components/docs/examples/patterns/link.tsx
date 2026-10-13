@@ -1,29 +1,26 @@
 "use client";
 
-import { useMemo } from "react";
-
+import { InitialStateExtension } from "@lexical/extension";
+import { $createLinkNode } from "@lexical/link";
+import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
+import { RichTextExtension } from "@lexical/rich-text";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
-  HISTORY_MERGE_TAG,
   configExtension,
   defineExtension,
+  HISTORY_MERGE_TAG,
 } from "lexical";
-
-import { InitialStateExtension } from "@lexical/extension";
-
-import { $createLinkNode } from "@lexical/link";
-import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
-import { RichTextExtension } from "@lexical/rich-text";
+import { useMemo } from "react";
 
 import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
 import { FormatStateExtension } from "@/components/editor/extensions/format-state";
 import { LinkExtension } from "@/components/editor/extensions/link";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { LinkEditorPlugin } from "@/components/editor/plugins/floating/link-editor-plugin";
-import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";
 import { LinkToolbarPlugin } from "@/components/editor/plugins/toolbar/link-toolbar-plugin";
+import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";
 import { editorTheme } from "@/components/editor/theme";
 
 export function LinkEditor() {
@@ -44,12 +41,18 @@ export function LinkEditor() {
         $initialEditorState: () => {
           $getRoot().append(
             $createParagraphNode().append(
-              $createTextNode("Select text and press the link button, or click an existing "),
-              $createLinkNode("https://intentui.com").append($createTextNode("link")),
+              $createTextNode(
+                "Select text and press the link button, or click an existing ",
+              ),
+              $createLinkNode("https://intentui.com").append(
+                $createTextNode("link"),
+              ),
               $createTextNode(" to edit it."),
             ),
             $createParagraphNode().append(
-              $createTextNode("Type or paste a URL at the end of this line and it becomes a link: "),
+              $createTextNode(
+                "Type or paste a URL at the end of this line and it becomes a link: ",
+              ),
             ),
           );
         },

@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
-import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid"
-import { createContext, use } from "react"
-import { Button } from "react-aria-components/Button"
-import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import { Group } from "react-aria-components/Group"
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { cn, twJoin } from "cn";
+import { createContext, use } from "react";
+import { Button } from "react-aria-components/Button";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import { Group } from "react-aria-components/Group";
 import type {
   CellProps,
   ColumnProps,
@@ -14,7 +15,7 @@ import type {
   TableBodyProps,
   TableFooterProps,
   TableProps as TablePrimitiveProps,
-} from "react-aria-components/Table"
+} from "react-aria-components/Table";
 import {
   Cell,
   Collection,
@@ -27,26 +28,25 @@ import {
   TableHeader as TableHeaderPrimitive,
   Table as TablePrimitive,
   useTableOptions,
-} from "react-aria-components/Table"
-import { twJoin, cn } from "cn"
-import { CardDescription, CardTitle } from "@/components/ui/card"
-import { cx } from "@/lib/primitive"
-import { Checkbox, CheckboxField } from "./checkbox"
+} from "react-aria-components/Table";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+import { cx } from "@/lib/primitive";
+import { Checkbox, CheckboxField } from "./checkbox";
 
 interface TableProps extends Omit<TablePrimitiveProps, "className"> {
-  allowResize?: boolean
-  className?: string
-  bleed?: boolean
-  grid?: boolean
-  striped?: boolean
-  ref?: React.Ref<HTMLTableElement>
+  allowResize?: boolean;
+  className?: string;
+  bleed?: boolean;
+  grid?: boolean;
+  striped?: boolean;
+  ref?: React.Ref<HTMLTableElement>;
 }
 
 const TableContext = createContext<TableProps>({
   allowResize: false,
-})
+});
 
-const useTableContext = () => use(TableContext)
+const useTableContext = () => use(TableContext);
 
 const Root = (props: TableProps) => {
   return (
@@ -54,8 +54,8 @@ const Root = (props: TableProps) => {
       className="w-full min-w-full caption-bottom text-sm/6 outline-hidden [--table-selected-bg:var(--color-secondary)]/50"
       {...props}
     />
-  )
-}
+  );
+};
 
 const Table = ({
   allowResize,
@@ -72,11 +72,14 @@ const Table = ({
         <div
           className={cn(
             "relative -mx-(--gutter) overflow-x-auto whitespace-nowrap [--gutter-y:--spacing(2)] has-data-[slot=table-resizable-container]:overflow-auto",
-            className
+            className,
           )}
         >
           <div
-            className={twJoin("inline-block min-w-full align-middle", !bleed && "sm:px-(--gutter)")}
+            className={twJoin(
+              "inline-block min-w-full align-middle",
+              !bleed && "sm:px-(--gutter)",
+            )}
           >
             {allowResize ? (
               <ResizableTableContainer data-slot="table-resizable-container">
@@ -89,22 +92,25 @@ const Table = ({
         </div>
       </div>
     </TableContext.Provider>
-  )
-}
+  );
+};
 
 const ColumnResizer = ({ className, ...props }: ColumnResizerProps) => (
   <ColumnResizerPrimitive
     {...props}
     className={cx(
       "absolute end-0 top-0 bottom-0 grid w-px &[data-resizable-direction=left]:cursor-e-resize &[data-resizable-direction=right]:cursor-w-resize resizable-both:cursor-ew-resize touch-none place-content-center px-1 [&[data-resizing]>div]:bg-primary",
-      className
+      className,
     )}
   >
     <div className="h-full w-px bg-border py-(--gutter-y)" />
   </ColumnResizerPrimitive>
-)
+);
 
-const TableBody = <T extends object>({ renderEmptyState, ...props }: TableBodyProps<T>) => (
+const TableBody = <T extends object>({
+  renderEmptyState,
+  ...props
+}: TableBodyProps<T>) => (
   <TableBodyPrimitive
     data-slot="table-body"
     renderEmptyState={(state) => (
@@ -112,7 +118,10 @@ const TableBody = <T extends object>({ renderEmptyState, ...props }: TableBodyPr
         {renderEmptyState ? (
           renderEmptyState(state)
         ) : (
-          <div aria-hidden className="relative flex h-72 items-center justify-center md:h-100">
+          <div
+            aria-hidden
+            className="relative flex h-72 items-center justify-center md:h-100"
+          >
             <div
               aria-hidden
               className="absolute top-1/2 m-auto grid size-15 -translate-y-1/2 place-content-center rounded-full border border-border/50 md:size-20"
@@ -272,7 +281,9 @@ const TableBody = <T extends object>({ renderEmptyState, ...props }: TableBodyPr
             />
 
             <div className="absolute top-[65%] space-y-0.5 px-2 text-center">
-              <CardTitle className="font-semibold text-lg">No data found</CardTitle>
+              <CardTitle className="font-semibold text-lg">
+                No data found
+              </CardTitle>
               <CardDescription>
                 No information is currently available in this section.
               </CardDescription>
@@ -283,14 +294,18 @@ const TableBody = <T extends object>({ renderEmptyState, ...props }: TableBodyPr
     )}
     {...props}
   />
-)
+);
 
 interface TableColumnProps extends ColumnProps {
-  isResizable?: boolean
+  isResizable?: boolean;
 }
 
-const TableColumn = ({ isResizable = false, className, ...props }: TableColumnProps) => {
-  const { bleed, grid } = useTableContext()
+const TableColumn = ({
+  isResizable = false,
+  className,
+  ...props
+}: TableColumnProps) => {
+  const { bleed, grid } = useTableContext();
   return (
     <Column
       data-slot="table-column"
@@ -305,7 +320,7 @@ const TableColumn = ({ isResizable = false, className, ...props }: TableColumnPr
           grid && "border-l first:border-l-0",
           isResizable && "overflow-hidden truncate",
         ],
-        className
+        className,
       )}
     >
       {(values) => (
@@ -314,16 +329,20 @@ const TableColumn = ({ isResizable = false, className, ...props }: TableColumnPr
           tabIndex={-1}
           className="inline-flex items-center gap-2 **:[svg]:shrink-0"
         >
-          {typeof props.children === "function" ? props.children(values) : props.children}
+          {typeof props.children === "function"
+            ? props.children(values)
+            : props.children}
           {values.allowsSorting && (
             <span
               className={twJoin(
                 "touch-target grid size-[1.15rem] flex-none shrink-0 place-content-center rounded bg-secondary text-foreground *:[svg]:size-3.5 *:[svg]:shrink-0 *:[svg]:transition-transform *:[svg]:duration-200",
-                values.isHovered ? "bg-secondary-foreground/10" : ""
+                values.isHovered ? "bg-secondary-foreground/10" : "",
               )}
             >
               <ChevronDownIcon
-                className={values.sortDirection === "ascending" ? "rotate-180" : ""}
+                className={
+                  values.sortDirection === "ascending" ? "rotate-180" : ""
+                }
               />
             </span>
           )}
@@ -331,11 +350,11 @@ const TableColumn = ({ isResizable = false, className, ...props }: TableColumnPr
         </Group>
       )}
     </Column>
-  )
-}
+  );
+};
 
 interface TableHeaderProps<T extends object> extends HeaderProps<T> {
-  ref?: React.Ref<HTMLTableSectionElement>
+  ref?: React.Ref<HTMLTableSectionElement>;
 }
 
 const TableHeader = <T extends object>({
@@ -345,8 +364,9 @@ const TableHeader = <T extends object>({
   className,
   ...props
 }: TableHeaderProps<T>) => {
-  const { bleed } = useTableContext()
-  const { selectionBehavior, selectionMode, allowsDragging } = useTableOptions()
+  const { bleed } = useTableContext();
+  const { selectionBehavior, selectionMode, allowsDragging } =
+    useTableOptions();
   return (
     <TableHeaderPrimitive
       ref={ref}
@@ -357,7 +377,10 @@ const TableHeader = <T extends object>({
       {allowsDragging && (
         <Column
           data-slot="table-column"
-          className={cn("first:ps-(--gutter,--spacing(2))", !bleed && "sm:last:pe-1 sm:first:ps-1")}
+          className={cn(
+            "first:ps-(--gutter,--spacing(2))",
+            !bleed && "sm:last:pe-1 sm:first:ps-1",
+          )}
         />
       )}
       {selectionBehavior === "toggle" && (
@@ -366,7 +389,10 @@ const TableHeader = <T extends object>({
           width={32}
           minWidth={32}
           style={{ width: 32 }}
-          className={cn("first:ps-(--gutter,--spacing(2))", !bleed && "sm:last:pe-1 sm:first:ps-1")}
+          className={cn(
+            "first:ps-(--gutter,--spacing(2))",
+            !bleed && "sm:last:pe-1 sm:first:ps-1",
+          )}
         >
           {selectionMode === "multiple" && (
             <CheckboxField className="gap-x-0" slot="selection">
@@ -377,11 +403,11 @@ const TableHeader = <T extends object>({
       )}
       <Collection items={columns}>{children}</Collection>
     </TableHeaderPrimitive>
-  )
-}
+  );
+};
 
 interface TableRowProps<T extends object> extends RowProps<T> {
-  ref?: React.Ref<HTMLTableRowElement>
+  ref?: React.Ref<HTMLTableRowElement>;
 }
 
 const TableRow = <T extends object>({
@@ -392,8 +418,8 @@ const TableRow = <T extends object>({
   ref,
   ...props
 }: TableRowProps<T>) => {
-  const { selectionBehavior, allowsDragging } = useTableOptions()
-  const { striped } = useTableContext()
+  const { selectionBehavior, allowsDragging } = useTableOptions();
+  const { striped } = useTableContext();
   return (
     <Row
       ref={ref}
@@ -411,13 +437,14 @@ const TableRow = <T extends object>({
             isDragging,
             isDisabled,
             isFocusVisible,
-          }
+          },
         ) =>
           cn(
             "group relative cursor-default outline outline-transparent",
             isFocusVisible &&
               "bg-primary/5 outline-primary ring-3 ring-ring/20 hover:bg-primary/10",
-            isDragging && "cursor-grabbing bg-primary/10 text-foreground outline-primary",
+            isDragging &&
+              "cursor-grabbing bg-primary/10 text-foreground outline-primary",
             isSelected &&
               "bg-(--table-selected-bg) text-foreground hover:bg-(--table-selected-bg)/50",
             striped && "even:bg-muted",
@@ -427,8 +454,8 @@ const TableRow = <T extends object>({
               isFocusVisibleWithin &&
               "bg-(--table-selected-bg)/50 selected:bg-(--table-selected-bg)/50 text-foreground",
             isDisabled && "opacity-50",
-            className
-          )
+            className,
+          ),
       )}
     >
       {allowsDragging && (
@@ -468,14 +495,14 @@ const TableRow = <T extends object>({
       )}
       <Collection items={columns}>{children}</Collection>
     </Row>
-  )
-}
+  );
+};
 
 interface TableCellProps extends CellProps {
-  ref?: React.Ref<HTMLTableCellElement>
+  ref?: React.Ref<HTMLTableCellElement>;
 }
 const TableCell = ({ className, ref, ...props }: TableCellProps) => {
-  const { allowResize, bleed, grid, striped } = useTableContext()
+  const { allowResize, bleed, grid, striped } = useTableContext();
   return (
     <Cell
       ref={ref}
@@ -487,9 +514,9 @@ const TableCell = ({ className, ref, ...props }: TableCellProps) => {
           !striped && "border-b",
           grid && "border-l first:border-l-0",
           !bleed && "sm:last:pe-1 sm:first:ps-1",
-          allowResize && "overflow-hidden truncate"
+          allowResize && "overflow-hidden truncate",
         ),
-        className
+        className,
       )}
       style={({ hasChildItems, isTreeColumn, level }) => ({
         paddingInlineStart: isTreeColumn
@@ -506,13 +533,13 @@ const TableCell = ({ className, ref, ...props }: TableCellProps) => {
                 slot="chevron"
                 className={twJoin(
                   isDisabled && "opacity-50",
-                  "mr-2 grid size-[1.15rem] flex-none shrink-0 place-content-center rounded text-foreground hover:bg-secondary"
+                  "mr-2 grid size-[1.15rem] flex-none shrink-0 place-content-center rounded text-foreground hover:bg-secondary",
                 )}
               >
                 <ChevronRightIcon
                   className={twJoin(
                     "size-4 transition-transform duration-200",
-                    isExpanded && "rotate-90"
+                    isExpanded && "rotate-90",
                   )}
                 />
               </Button>
@@ -520,15 +547,31 @@ const TableCell = ({ className, ref, ...props }: TableCellProps) => {
 
             {children}
           </div>
-        )
+        ),
       )}
     </Cell>
-  )
-}
+  );
+};
 
-const TableFooter = <T extends object>({ className, ...props }: TableFooterProps<T>) => {
-  return <TableFooterPrimitive className={cn("**:font-semibold", className)} {...props} />
-}
+const TableFooter = <T extends object>({
+  className,
+  ...props
+}: TableFooterProps<T>) => {
+  return (
+    <TableFooterPrimitive
+      className={cn("**:font-semibold", className)}
+      {...props}
+    />
+  );
+};
 
-export type { TableColumnProps, TableProps, TableRowProps }
-export { Table, TableBody, TableCell, TableColumn, TableFooter, TableHeader, TableRow }
+export type { TableColumnProps, TableProps, TableRowProps };
+export {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableFooter,
+  TableHeader,
+  TableRow,
+};

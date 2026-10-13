@@ -4,7 +4,7 @@ import {
 } from "@lexical/react/LexicalContentEditable";
 
 import { twMerge } from "cn";
-import { type VariantProps, tv } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 
 const contentEditableVariants = tv({
   base: "min-h-full w-full bg-transparent text-sm outline-none",
@@ -52,7 +52,12 @@ export function ContentEditable({
       className={twMerge(contentEditableVariants({ variant }), className)}
       aria-placeholder={placeholder}
       placeholder={
-        <div className={twMerge(placeholderVariants({ variant }), placeholderClassName)}>
+        <div
+          className={twMerge(
+            placeholderVariants({ variant }),
+            placeholderClassName,
+          )}
+        >
           {placeholder}
         </div>
       }
