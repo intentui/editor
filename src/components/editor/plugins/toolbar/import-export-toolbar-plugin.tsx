@@ -9,7 +9,7 @@ import { DocumentArrowDownIcon, DocumentArrowUpIcon } from "@heroicons/react/16/
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
 import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 function toSafeFileName(value: string) {
   return value
@@ -60,7 +60,7 @@ export function ImportExportToolbarPlugin({
 
   return (
     <ToolbarGroup aria-label="Import and export">
-      <Tooltip>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -72,15 +72,15 @@ export function ImportExportToolbarPlugin({
         >
           <DocumentArrowUpIcon />
         </Button>
-        <TooltipContent>Import file</TooltipContent>
-      </Tooltip>
+        <Tooltip>Import file</Tooltip>
+      </TooltipTrigger>
       <MenuTrigger>
-        <Tooltip>
+        <TooltipTrigger>
           <Button intent="outline" size="sq-xs" aria-label="Export as">
             <DocumentArrowDownIcon />
           </Button>
-          <TooltipContent>Export as</TooltipContent>
-        </Tooltip>
+          <Tooltip>Export as</Tooltip>
+        </TooltipTrigger>
         <Menu placement="bottom end">
           <MenuItem onAction={exportLexical}>Lexical JSON</MenuItem>
           <MenuItem onAction={exportMarkdown}>Markdown</MenuItem>

@@ -36,7 +36,7 @@ import { Link } from "@/components/ui/link";
 import { Popover } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { TextField } from "@/components/ui/text-field";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 export function LinkEditorPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -260,7 +260,7 @@ export function LinkEditorPlugin() {
               >
                 <Input placeholder="Paste a link" className="h-8 py-0 sm:py-0" />
               </TextField>
-              <Tooltip>
+              <TooltipTrigger>
                 <Button
                   {...iconButtonProps}
                   aria-label="Cancel"
@@ -268,14 +268,14 @@ export function LinkEditorPlugin() {
                 >
                   <XMarkIcon />
                 </Button>
-                <TooltipContent>Cancel</TooltipContent>
-              </Tooltip>
-              <Tooltip>
+                <Tooltip>Cancel</Tooltip>
+              </TooltipTrigger>
+              <TooltipTrigger>
                 <Button {...iconButtonProps} intent="primary" type="submit" aria-label="Save link">
                   <CheckIcon />
                 </Button>
-                <TooltipContent>Save link</TooltipContent>
-              </Tooltip>
+                <Tooltip>Save link</Tooltip>
+              </TooltipTrigger>
             </form>
           ) : (
             <>
@@ -288,7 +288,7 @@ export function LinkEditorPlugin() {
                 {linkUrl}
               </Link>
               <Separator orientation="vertical" className="mx-0.5 h-5" />
-              <Tooltip>
+              <TooltipTrigger>
                 <Button
                   {...iconButtonProps}
                   aria-label="Edit link"
@@ -299,9 +299,9 @@ export function LinkEditorPlugin() {
                 >
                   <PencilIcon />
                 </Button>
-                <TooltipContent>Edit link</TooltipContent>
-              </Tooltip>
-              <Tooltip>
+                <Tooltip>Edit link</Tooltip>
+              </TooltipTrigger>
+              <TooltipTrigger>
                 <Button
                   {...iconButtonProps}
                   aria-label="Remove link"
@@ -309,8 +309,8 @@ export function LinkEditorPlugin() {
                 >
                   <TrashIcon />
                 </Button>
-                <TooltipContent>Remove link</TooltipContent>
-              </Tooltip>
+                <Tooltip>Remove link</Tooltip>
+              </TooltipTrigger>
             </>
           )}
         </div>

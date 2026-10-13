@@ -5,7 +5,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/16/solid";
 
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 export function ReadOnlyTogglePlugin() {
   const [editor] = useLexicalComposerContext();
@@ -18,7 +18,7 @@ export function ReadOnlyTogglePlugin() {
   const label = isEditable ? "Switch to read-only" : "Switch to edit mode";
 
   return (
-    <Tooltip>
+    <TooltipTrigger>
       <Button
         intent="plain"
         size="sq-xs"
@@ -27,7 +27,7 @@ export function ReadOnlyTogglePlugin() {
       >
         {isEditable ? <LockOpenIcon /> : <LockClosedIcon />}
       </Button>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
+      <Tooltip>{label}</Tooltip>
+    </TooltipTrigger>
   );
 }

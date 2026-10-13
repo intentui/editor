@@ -10,7 +10,7 @@ import { ArrowUturnLeftIcon, ArrowUturnRightIcon } from "@heroicons/react/16/sol
 
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 export function HistoryToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -21,7 +21,7 @@ export function HistoryToolbarPlugin() {
 
   return (
     <ToolbarGroup aria-label="History">
-      <Tooltip>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -33,9 +33,9 @@ export function HistoryToolbarPlugin() {
         >
           <ArrowUturnLeftIcon className="rtl:-scale-x-100" />
         </Button>
-        <TooltipContent>Undo</TooltipContent>
-      </Tooltip>
-      <Tooltip>
+        <Tooltip>Undo</Tooltip>
+      </TooltipTrigger>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -47,8 +47,8 @@ export function HistoryToolbarPlugin() {
         >
           <ArrowUturnRightIcon className="rtl:-scale-x-100" />
         </Button>
-        <TooltipContent>Redo</TooltipContent>
-      </Tooltip>
+        <Tooltip>Redo</Tooltip>
+      </TooltipTrigger>
     </ToolbarGroup>
   );
 }

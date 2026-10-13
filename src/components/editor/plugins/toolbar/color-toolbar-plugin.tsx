@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { Popover, PopoverBody } from "@/components/ui/popover";
 import { ToolbarGroup } from "@/components/ui/toolbar";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 function toColor(value: string, fallback: string): Color {
   try {
@@ -59,15 +59,15 @@ function EditorColorPicker({
       }}
     >
       <DialogTrigger>
-        <Tooltip>
+        <TooltipTrigger>
           <Button intent="outline" size="sq-xs" aria-label={label} isDisabled={!isEditable}>
             <span className="flex flex-col items-center gap-0.5 *:[svg]:text-(--btn-icon)">
               <Icon />
               <ColorSwatch className="h-0.5 w-3.5 rounded-full" />
             </span>
           </Button>
-          <TooltipContent>{label}</TooltipContent>
-        </Tooltip>
+          <Tooltip>{label}</Tooltip>
+        </TooltipTrigger>
         <Popover className="[--gutter:--spacing(1)]" placement="bottom start">
           <PopoverBody>
             <div className="space-y-(--gutter)">

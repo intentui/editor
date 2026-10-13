@@ -9,7 +9,7 @@ import { PhotoIcon } from "@heroicons/react/16/solid";
 
 import { INSERT_IMAGE_COMMAND } from "@/components/editor/nodes/image-node";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 function readFileAsDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ export function InsertImagePlugin() {
 
   return (
     <>
-      <Tooltip>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -73,8 +73,8 @@ export function InsertImagePlugin() {
         >
           <PhotoIcon />
         </Button>
-        <TooltipContent>Insert image</TooltipContent>
-      </Tooltip>
+        <Tooltip>Insert image</Tooltip>
+      </TooltipTrigger>
       {input}
     </>
   );

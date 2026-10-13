@@ -24,7 +24,7 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import { createPortal } from "react-dom";
 
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 type ActionsPosition = { x: number; y: number; canDelete: boolean };
 
@@ -216,7 +216,7 @@ export function TableHoverActionsPlugin() {
           className="fixed z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-0.5"
           style={{ left: columnPosition.x, top: columnPosition.y }}
         >
-          <Tooltip>
+          <TooltipTrigger>
             <Button
               intent="outline"
               size="sq-xs"
@@ -227,10 +227,10 @@ export function TableHoverActionsPlugin() {
             >
               <PlusIcon />
             </Button>
-            <TooltipContent>Add column</TooltipContent>
-          </Tooltip>
+            <Tooltip>Add column</Tooltip>
+          </TooltipTrigger>
           {columnPosition.canDelete ? (
-            <Tooltip>
+            <TooltipTrigger>
               <Button
                 intent="outline"
                 size="sq-xs"
@@ -241,8 +241,8 @@ export function TableHoverActionsPlugin() {
               >
                 <TrashIcon />
               </Button>
-              <TooltipContent>Delete column</TooltipContent>
-            </Tooltip>
+              <Tooltip>Delete column</Tooltip>
+            </TooltipTrigger>
           ) : null}
         </div>
       ) : null}
@@ -252,7 +252,7 @@ export function TableHoverActionsPlugin() {
           className="fixed z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-0.5"
           style={{ left: rowPosition.x, top: rowPosition.y }}
         >
-          <Tooltip>
+          <TooltipTrigger>
             <Button
               intent="outline"
               size="sq-xs"
@@ -263,10 +263,10 @@ export function TableHoverActionsPlugin() {
             >
               <PlusIcon />
             </Button>
-            <TooltipContent>Add row</TooltipContent>
-          </Tooltip>
+            <Tooltip>Add row</Tooltip>
+          </TooltipTrigger>
           {rowPosition.canDelete ? (
-            <Tooltip>
+            <TooltipTrigger>
               <Button
                 intent="outline"
                 size="sq-xs"
@@ -277,8 +277,8 @@ export function TableHoverActionsPlugin() {
               >
                 <TrashIcon />
               </Button>
-              <TooltipContent>Delete row</TooltipContent>
-            </Tooltip>
+              <Tooltip>Delete row</Tooltip>
+            </TooltipTrigger>
           ) : null}
         </div>
       ) : null}

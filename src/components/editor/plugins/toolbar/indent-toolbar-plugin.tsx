@@ -11,7 +11,7 @@ import {
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 export function IndentToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -20,7 +20,7 @@ export function IndentToolbarPlugin() {
 
   return (
     <ToolbarGroup aria-label="Indentation">
-      <Tooltip>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -32,9 +32,9 @@ export function IndentToolbarPlugin() {
         >
           <ArrowLeftStartOnRectangleIcon className="rtl:-scale-x-100" />
         </Button>
-        <TooltipContent>Outdent</TooltipContent>
-      </Tooltip>
-      <Tooltip>
+        <Tooltip>Outdent</Tooltip>
+      </TooltipTrigger>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -46,8 +46,8 @@ export function IndentToolbarPlugin() {
         >
           <ArrowRightEndOnRectangleIcon className="rtl:-scale-x-100" />
         </Button>
-        <TooltipContent>Indent</TooltipContent>
-      </Tooltip>
+        <Tooltip>Indent</Tooltip>
+      </TooltipTrigger>
     </ToolbarGroup>
   );
 }

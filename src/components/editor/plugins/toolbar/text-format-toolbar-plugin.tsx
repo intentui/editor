@@ -16,7 +16,7 @@ import {
 
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
 import { ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@/components/ui/toolbar";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 type IconComponent = React.ComponentType<{ className?: string }>;
 
@@ -108,7 +108,7 @@ function FormatToggleGroup({ items }: { items: (typeof FORMAT_GROUPS)[number] })
   return (
     <ToolbarGroup aria-label="Text formatting" isDisabled={!isEditable}>
       {items.map(({ format, label, icon: Icon }) => (
-        <Tooltip key={format}>
+        <TooltipTrigger key={format}>
           <ToolbarItem
             size="sq-xs"
             aria-label={label}
@@ -117,8 +117,8 @@ function FormatToggleGroup({ items }: { items: (typeof FORMAT_GROUPS)[number] })
           >
             <Icon />
           </ToolbarItem>
-          <TooltipContent>{label}</TooltipContent>
-        </Tooltip>
+          <Tooltip>{label}</Tooltip>
+        </TooltipTrigger>
       ))}
     </ToolbarGroup>
   );

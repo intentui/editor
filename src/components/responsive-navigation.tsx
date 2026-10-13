@@ -86,9 +86,10 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
             </span>
           </Button>
           <Sheet
+            isFloat
             position="right"
             aria-label="Navigation"
-            className="w-[min(22rem,90vw)] sm:max-w-88 **:data-[slot=dialog]:h-full **:data-[slot=dialog]:max-h-full [--visual-viewport-vertical-padding:0px]"
+            className="w-[min(22rem,90vw)] sm:max-w-88 **:data-[slot=sheet-content]:h-full **:data-[slot=sheet-content]:max-h-full [--visual-viewport-vertical-padding:0px]"
           >
             <SheetHeader>
               <SheetTitle className="flex items-center gap-x-3">
@@ -120,7 +121,7 @@ export function ResponsiveNavigation({ className, sections }: ResponsiveNavigati
               ))}
             </Aside>
             <SheetFooter className="p-2 border-t bg-background/60">
-              <ul className="rounded-lg mt-2 p-2 bg-overlay border">
+              <ul className="rounded-sm p-2 bg-overlay border">
                 <AsideLink href={app.links.twitter} target="_blank" onPress={() => setOpen(false)}>
                   <BrandXIcon /> Twitter
                 </AsideLink>

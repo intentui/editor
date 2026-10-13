@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Keyboard } from "@/components/ui/keyboard";
 import { Dialog, DialogBody, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 type ShortcutRow = {
   name: ShortcutName | BuiltinShortcutName;
@@ -71,12 +71,12 @@ const LABEL = "Keyboard shortcuts";
 export function ShortcutPlugin() {
   return (
     <DialogTrigger>
-      <Tooltip>
+      <TooltipTrigger>
         <Button intent="plain" size="sq-xs" aria-label={LABEL}>
           <CommandLineIcon />
         </Button>
-        <TooltipContent>{LABEL}</TooltipContent>
-      </Tooltip>
+        <Tooltip>{LABEL}</Tooltip>
+      </TooltipTrigger>
       <Dialog>
         <DialogHeader>
           <DialogTitle>{LABEL}</DialogTitle>

@@ -12,7 +12,7 @@ import {
   SUPPORT_SPEECH_RECOGNITION,
 } from "@/components/editor/extensions/speech-to-text";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 const LABEL = "Speech to text";
 
@@ -32,7 +32,7 @@ function SpeechToTextButton() {
   }, [editor]);
 
   return (
-    <Tooltip>
+    <TooltipTrigger>
       <Button
         intent="plain"
         size="sq-xs"
@@ -43,8 +43,8 @@ function SpeechToTextButton() {
       >
         <MicrophoneIcon />
       </Button>
-      <TooltipContent>{LABEL}</TooltipContent>
-    </Tooltip>
+      <Tooltip>{LABEL}</Tooltip>
+    </TooltipTrigger>
   );
 }
 

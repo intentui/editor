@@ -10,7 +10,7 @@ import { BackspaceIcon, TrashIcon } from "@heroicons/react/16/solid";
 import { clearFormatting } from "@/components/editor/extensions/format-state";
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 function $isEditorEmpty() {
   const children = $getRoot().getChildren();
@@ -38,7 +38,7 @@ export function ClearToolbarPlugin() {
 
   return (
     <ToolbarGroup aria-label="Clear">
-      <Tooltip>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -50,9 +50,9 @@ export function ClearToolbarPlugin() {
         >
           <BackspaceIcon />
         </Button>
-        <TooltipContent>Clear formatting</TooltipContent>
-      </Tooltip>
-      <Tooltip>
+        <Tooltip>Clear formatting</Tooltip>
+      </TooltipTrigger>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -65,8 +65,8 @@ export function ClearToolbarPlugin() {
         >
           <TrashIcon />
         </Button>
-        <TooltipContent>Clear editor</TooltipContent>
-      </Tooltip>
+        <Tooltip>Clear editor</Tooltip>
+      </TooltipTrigger>
     </ToolbarGroup>
   );
 }

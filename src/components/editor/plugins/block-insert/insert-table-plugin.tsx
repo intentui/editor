@@ -18,7 +18,7 @@ import { TableCellsIcon } from "@heroicons/react/16/solid";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { Popover } from "@/components/ui/popover";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 const MAX_ROWS = 8;
 const MAX_COLUMNS = 10;
@@ -108,12 +108,12 @@ export function InsertTablePlugin() {
 
   return (
     <DialogTrigger isOpen={open} onOpenChange={setOpen}>
-      <Tooltip>
+      <TooltipTrigger>
         <Button intent="outline" size="sq-xs" aria-label="Insert table" isDisabled={!isEditable}>
           <TableCellsIcon />
         </Button>
-        <TooltipContent>Insert table</TooltipContent>
-      </Tooltip>
+        <Tooltip>Insert table</Tooltip>
+      </TooltipTrigger>
       <Popover placement="bottom start" className="w-auto max-w-none p-3">
         <TableGridPicker onSelect={onSelect} />
       </Popover>

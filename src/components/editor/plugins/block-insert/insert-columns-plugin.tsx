@@ -8,7 +8,7 @@ import { ViewColumnsIcon } from "@heroicons/react/16/solid";
 import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout";
 import { Button } from "@/components/ui/button";
 import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 type ColumnOption = {
   value: string;
@@ -41,12 +41,12 @@ export function InsertColumnsPlugin() {
 
   return (
     <MenuTrigger>
-      <Tooltip>
+      <TooltipTrigger>
         <Button intent="outline" size="sq-xs" aria-label="Columns" isDisabled={!isEditable}>
           <ViewColumnsIcon />
         </Button>
-        <TooltipContent>Columns</TooltipContent>
-      </Tooltip>
+        <Tooltip>Columns</Tooltip>
+      </TooltipTrigger>
       <Menu items={COLUMN_OPTIONS}>
         {({ value, label }) => (
           <MenuItem id={value} textValue={label} onAction={() => insertColumns(editor, value)}>
