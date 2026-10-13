@@ -41,6 +41,7 @@
     "lexical": "^0.52.0",
     "motion": "^14.0.0",
     "next": "^16.2.6",
+    "onedollarstats": "^0.0.23",
     "react": "^19.2.6",
     "react-aria-components": "^1.22.0",
     "react-dom": "^19.2.6",
