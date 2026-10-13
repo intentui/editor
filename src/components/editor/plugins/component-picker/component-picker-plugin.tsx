@@ -159,7 +159,7 @@ export function ComponentPicker({
             ? createPortal(
                 <div
                   className={twJoin(
-                    "absolute start-0 top-full z-50 -mt-4 overflow-hidden rounded-lg bg-overlay text-overlay-fg shadow-xs ring ring-muted-fg/20 drop-shadow-xl dark:ring-border",
+                    "absolute start-0 top-full z-50 -mt-4 overflow-hidden rounded-lg bg-overlay text-overlay-foreground shadow-xs ring ring-muted-foreground/20 drop-shadow-xl dark:ring-border",
                     variant === "detailed" ? "w-72" : "w-56",
                   )}
                 >
@@ -177,7 +177,7 @@ export function ComponentPicker({
                             {showGroup && (
                               <div
                                 role="presentation"
-                                className="px-2 pt-2 pb-1 font-medium text-muted-fg text-xs"
+                                className="px-2 pt-2 pb-1 font-medium text-muted-foreground text-xs"
                               >
                                 {group}
                               </div>
@@ -192,16 +192,16 @@ export function ComponentPicker({
                               onClick={() => selectOptionAndCleanUp(option)}
                               className={twJoin(
                                 "flex cursor-default items-center gap-x-3 rounded-[calc(var(--radius-lg)-(--spacing(1)))] px-2 py-1.5 outline-hidden",
-                                selectedIndex === index ? "bg-accent text-accent-fg" : "text-fg",
+                                selectedIndex === index ? "bg-accent text-accent-foreground" : "text-foreground",
                               )}
                             >
-                              <span className="grid size-9 shrink-0 place-content-center rounded-md border bg-bg [&_svg]:size-5">
+                              <span className="grid size-9 shrink-0 place-content-center rounded-md border bg-background [&_svg]:size-5">
                                 {icon}
                               </span>
                               <span className="grid min-w-0">
                                 <span className="truncate font-medium">{label}</span>
                                 {description && (
-                                  <span className="truncate text-muted-fg text-xs">
+                                  <span className="truncate text-muted-foreground text-xs">
                                     {description}
                                   </span>
                                 )}
@@ -231,8 +231,8 @@ export function ComponentPicker({
                             "col-span-full grid cursor-default grid-cols-subgrid items-center gap-x-2 rounded-[calc(var(--radius-lg)-(--spacing(1)))] px-2.5 py-2 outline-hidden sm:px-2 sm:py-1.5",
                             "[&_svg]:size-4 [&_svg]:shrink-0",
                             selectedIndex === index
-                              ? "bg-accent text-accent-fg [&_svg]:text-accent-fg"
-                              : "text-fg",
+                              ? "bg-accent text-accent-foreground [&_svg]:text-accent-foreground"
+                              : "text-foreground",
                           )}
                         >
                           {option.item.icon ?? <span />}

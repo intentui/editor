@@ -6,10 +6,10 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
 import { DocumentArrowDownIcon, DocumentArrowUpIcon } from "@heroicons/react/16/solid";
 
-import { Button, buttonStyles } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
-import { Menu, MenuContent, MenuItem, MenuTrigger } from "@/components/ui/menu";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 function toSafeFileName(value: string) {
   return value
@@ -60,7 +60,7 @@ export function ImportExportToolbarPlugin({
 
   return (
     <ToolbarGroup aria-label="Import and export">
-      <Tooltip>
+      <TooltipTrigger>
         <Button
           intent="outline"
           size="sq-xs"
@@ -72,24 +72,21 @@ export function ImportExportToolbarPlugin({
         >
           <DocumentArrowUpIcon />
         </Button>
-        <TooltipContent>Import file</TooltipContent>
-      </Tooltip>
-      <Menu>
-        <Tooltip>
-          <MenuTrigger
-            aria-label="Export as"
-            className={buttonStyles({ intent: "outline", size: "sq-xs" })}
-          >
+        <Tooltip>Import file</Tooltip>
+      </TooltipTrigger>
+      <MenuTrigger>
+        <TooltipTrigger>
+          <Button intent="outline" size="sq-xs" aria-label="Export as">
             <DocumentArrowDownIcon />
-          </MenuTrigger>
-          <TooltipContent>Export as</TooltipContent>
-        </Tooltip>
-        <MenuContent placement="bottom end">
+          </Button>
+          <Tooltip>Export as</Tooltip>
+        </TooltipTrigger>
+        <Menu placement="bottom end">
           <MenuItem onAction={exportLexical}>Lexical JSON</MenuItem>
           <MenuItem onAction={exportMarkdown}>Markdown</MenuItem>
           <MenuItem onAction={exportHtml}>HTML</MenuItem>
-        </MenuContent>
-      </Menu>
+        </Menu>
+      </MenuTrigger>
     </ToolbarGroup>
   );
 }

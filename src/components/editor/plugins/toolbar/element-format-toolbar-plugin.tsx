@@ -16,7 +16,7 @@ import {
 
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
 import { ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@/components/ui/toolbar";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 type AlignItem = {
   value: Exclude<ElementFormatType, "">;
@@ -31,7 +31,7 @@ function AlignToggleGroup({ items }: { items: AlignItem[] }) {
   return (
     <ToolbarGroup aria-label="Alignment" isDisabled={!isEditable}>
       {items.map(({ value, label, icon: Icon }) => (
-        <Tooltip key={value}>
+        <TooltipTrigger key={value}>
           <ToolbarItem
             size="sq-xs"
             aria-label={label}
@@ -40,8 +40,8 @@ function AlignToggleGroup({ items }: { items: AlignItem[] }) {
           >
             <Icon />
           </ToolbarItem>
-          <TooltipContent>{label}</TooltipContent>
-        </Tooltip>
+          <Tooltip>{label}</Tooltip>
+        </TooltipTrigger>
       ))}
     </ToolbarGroup>
   );

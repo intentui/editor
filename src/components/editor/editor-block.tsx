@@ -97,7 +97,7 @@ export function DemoBlockEditor() {
 
   return (
     <LexicalExtensionComposer extension={app} contentEditable={null}>
-      <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-lg border border-border bg-bg">
+      <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-lg border border-border bg-background">
         <div className="relative flex min-h-80 min-w-0 flex-1 flex-col overflow-y-auto">
           <ContentEditable
             variant="draggable"

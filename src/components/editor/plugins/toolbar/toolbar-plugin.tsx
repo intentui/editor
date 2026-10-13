@@ -71,7 +71,7 @@ export function Toolbar({ className, ...props }: ToolbarProps) {
         aria-label="Formatting"
         {...props}
         className={cx(
-          "w-full flex-nowrap gap-1 overflow-x-auto overscroll-x-contain scroll-px-14 rounded-none border-b border-border bg-bg p-1.5 inset-ring-0 *:shrink-0",
+          "w-full flex-nowrap gap-1 overflow-x-auto overscroll-x-contain scroll-px-14 rounded-none border-b border-border bg-background p-1.5 inset-ring-0 *:shrink-0",
           className,
         )}
       />
@@ -98,7 +98,7 @@ function ScrollEdge({
     <div
       aria-hidden
       className={cn(
-        "pointer-events-none absolute top-0 bottom-px z-10 flex w-14 items-center from-bg via-bg via-72% to-transparent transition-opacity duration-150",
+        "pointer-events-none absolute top-0 bottom-px z-10 flex w-14 items-center from-background via-background via-72% to-transparent transition-opacity duration-150",
         isStart
           ? "inset-s-0 justify-start ps-1.5 bg-linear-to-r rtl:bg-linear-to-l"
           : "inset-e-0 justify-end pe-1.5 bg-linear-to-l rtl:bg-linear-to-r",
@@ -112,7 +112,7 @@ function ScrollEdge({
         isDisabled={!visible}
         aria-label={isStart ? "Scroll toolbar left" : "Scroll toolbar right"}
         onPress={onPress}
-        className={cn("[--btn-bg:var(--color-bg)]", visible && "pointer-events-auto")}
+        className={cn("[--btn-bg:var(--color-background)]", visible && "pointer-events-auto")}
       >
         <Icon className="rtl:rotate-180" />
       </Button>

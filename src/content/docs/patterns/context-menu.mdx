@@ -39,20 +39,20 @@ This pattern is built from files in `@intentui/editor`. Install the editor, then
 
 ## Customize
 
-The items are plain JSX in `plugins/context-menu-plugin.tsx`. Add, remove or reorder `ContextMenuItem` elements to change the menu.
+The items are plain JSX in `plugins/context-menu-plugin.tsx`. Add, remove or reorder `MenuItem` elements to change the menu.
 
 ```tsx
-<ContextMenuItem onAction={() => editor.dispatchCommand(COPY_COMMAND, null)}>
+<MenuItem onAction={() => editor.dispatchCommand(COPY_COMMAND, null)}>
   <DocumentDuplicateIcon />
   Copy
-</ContextMenuItem>
+</MenuItem>
 ```
 
 To remove the pattern, delete `ContextMenuPlugin`. The browser's menu returns.
 
 ## Styling
 
-The menu comes from `@/components/ui/context-menu`, with `w-52` set by the plugin. The Delete item uses `intent="danger"`.
+The menu is the `Menu` from `@/components/ui/menu`, opened by a `MenuTrigger` with `trigger="contextMenu"`, and the plugin sets `w-52`. The Delete item uses `intent="danger"`.
 
 ## Related patterns
 

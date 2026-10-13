@@ -16,7 +16,8 @@ function describe(url: string): { title: string; icon?: Icon } {
     return { title: "Lexical", icon: BookOpenIcon }
   }
   if (url.includes("react-spectrum") || url.includes("react-aria")) {
-    return { title: "RAC", icon: BrandReactAriaIcon }
+    const page = new URL(url).pathname.split("/").filter(Boolean).pop()?.replace(/\.html$/, "")
+    return { title: page || "React Aria", icon: BrandReactAriaIcon }
   }
   if (hostname.includes("github")) return { title: "GitHub", icon: BrandGithubIcon }
   if (hostname.includes("shadcn")) return { title: "shadcn" }

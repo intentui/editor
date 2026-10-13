@@ -33,7 +33,7 @@ async function load(name: string): Promise<{ Example: AnyComponent; file: string
     const mod = (await import("@/components/editor/editor")) as Record<string, unknown>
     return {
       Example: pickComponent(mod, "DemoEditor"),
-      file: path.join(process.cwd(), "src/components/editor/editor.tsx"),
+      file: path.join(/*turbopackIgnore: true*/ process.cwd(), "src/components/editor/editor.tsx"),
       filename: "components/editor/editor.tsx",
     }
   }
@@ -42,7 +42,7 @@ async function load(name: string): Promise<{ Example: AnyComponent; file: string
     const mod = (await import("@/components/editor/editor-md")) as Record<string, unknown>
     return {
       Example: pickComponent(mod, "DemoMarkdownEditor"),
-      file: path.join(process.cwd(), "src/components/editor/editor-md.tsx"),
+      file: path.join(/*turbopackIgnore: true*/ process.cwd(), "src/components/editor/editor-md.tsx"),
       filename: "components/editor/editor-md.tsx",
     }
   }
@@ -51,7 +51,7 @@ async function load(name: string): Promise<{ Example: AnyComponent; file: string
     const mod = (await import("@/components/editor/editor-block")) as Record<string, unknown>
     return {
       Example: pickComponent(mod, "DemoBlockEditor"),
-      file: path.join(process.cwd(), "src/components/editor/editor-block.tsx"),
+      file: path.join(/*turbopackIgnore: true*/ process.cwd(), "src/components/editor/editor-block.tsx"),
       filename: "components/editor/editor-block.tsx",
     }
   }
@@ -60,7 +60,7 @@ async function load(name: string): Promise<{ Example: AnyComponent; file: string
   const mod = (await import(`./examples/patterns/${name}.tsx`)) as Record<string, unknown>
   return {
     Example: pickComponent(mod),
-    file: path.join(process.cwd(), "src/components/docs/examples/patterns", `${name}.tsx`),
+    file: path.join(/*turbopackIgnore: true*/ process.cwd(), "src/components/docs/examples/patterns", `${name}.tsx`),
     filename: `${name}-editor.tsx`,
   }
 }
@@ -69,7 +69,7 @@ export async function ComponentPreview({ name, className, bleed }: ComponentPrev
   const { Example, file, filename } = await load(name)
 
   // The code tab shows the file exactly as users would write it, with nothing stripped.
-  const source = await readFile(file, "utf8")
+  const source = await readFile(/*turbopackIgnore: true*/ file, "utf8")
   const html = await highlight(source)
 
   return (

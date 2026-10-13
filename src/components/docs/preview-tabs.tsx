@@ -28,7 +28,7 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
           <ToggleButton
             className={twJoin(
               "p-2 font-medium text-sm/6 outline-hidden focus-visible:text-blue-500 dark:focus-visible:text-blue-300",
-              currentTab === "tab_preview" ? "text-fg focus:text-fg" : "text-muted-fg hover:text-fg"
+              currentTab === "tab_preview" ? "text-foreground focus:text-foreground" : "text-muted-foreground hover:text-foreground"
             )}
             onPress={() => setCurrentTab("tab_preview")}
           >
@@ -36,8 +36,8 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
           </ToggleButton>
           <ToggleButton
             className={twJoin(
-              "p-2 font-medium text-sm/6 outline-hidden focus:text-fg",
-              currentTab === "tab_code" ? "text-fg focus:text-fg" : "text-muted-fg hover:text-fg"
+              "p-2 font-medium text-sm/6 outline-hidden focus:text-foreground",
+              currentTab === "tab_code" ? "text-foreground focus:text-foreground" : "text-muted-foreground hover:text-foreground"
             )}
             onPress={() => setCurrentTab("tab_code")}
           >
@@ -60,8 +60,8 @@ export function PreviewTabs({ preview, html, source, filename, className, bleed 
             <div className={cn("not-typeset", className)}>{preview}</div>
           </div>
         ) : (
-          <div className="group relative rounded-lg bg-shiki-bg border">
-            <div className="flex items-center border-b px-4 py-1.5 text-muted-fg text-sm/6">
+          <div className="group relative rounded-lg bg-shiki-background border">
+            <div className="flex items-center border-b px-4 py-1.5 text-muted-foreground text-sm/6">
               {filename}
             </div>
             <div

@@ -150,7 +150,7 @@ export function DemoEditor() {
 
   return (
     <LexicalExtensionComposer extension={app} contentEditable={null}>
-      <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-lg border border-border bg-bg">
+      <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-lg border border-border bg-background">
         <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-lg">
           <Toolbar>
             <HistoryToolbarPlugin />

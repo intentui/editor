@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation"
 
-import { ThemeProvider } from "next-themes"
 import { RouterProvider } from "react-aria-components"
 import { I18nProvider } from "react-aria-components/I18nProvider"
+import { ThemeProvider } from "@/components/theme-provider"
 
 declare module "react-aria-components" {
   interface RouterConfig {
@@ -22,14 +22,7 @@ const Providers = ({ children, lang }: ProvidersProps) => {
   return (
     <RouterProvider navigate={router.push}>
       <I18nProvider locale={lang}>
-        <ThemeProvider
-          storageKey="primitive-theme"
-          enableSystem
-          disableTransitionOnChange
-          attribute="class"
-        >
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </I18nProvider>
     </RouterProvider>
   )

@@ -22,7 +22,7 @@ export function ParagraphPickerPlugin() {
         label: "Paragraph",
         group: "Basic blocks",
         description: "Just start writing with plain text.",
-        icon: <Bars3BottomLeftIcon className="text-muted-fg" />,
+        icon: <Bars3BottomLeftIcon className="text-muted-foreground" />,
         keywords: ["normal", "paragraph", "p", "text"],
         onSelect: () =>
           editor.update(() => {

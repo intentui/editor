@@ -23,7 +23,7 @@ export function QuotePickerPlugin() {
         label: "Quote",
         group: "Basic blocks",
         description: "Capture a quote.",
-        icon: <ChatBubbleBottomCenterTextIcon className="text-muted-fg" />,
+        icon: <ChatBubbleBottomCenterTextIcon className="text-muted-foreground" />,
         keywords: ["quote", "block quote", "blockquote"],
         onSelect: () =>
           editor.update(() => {

@@ -26,12 +26,7 @@ import {
 } from "@heroicons/react/16/solid";
 import { Button } from "react-aria-components/Button";
 
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuSeparator,
-} from "@/components/ui/context-menu";
+import { Menu, MenuItem, MenuSeparator, MenuTrigger } from "@/components/ui/menu";
 
 export function ContextMenuPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -137,7 +132,7 @@ export function ContextMenuPlugin() {
   }, [editor, target]);
 
   return (
-    <ContextMenu>
+    <MenuTrigger trigger="contextMenu">
       <span aria-hidden="true" className="contents">
         <Button
           ref={triggerRef}
@@ -145,38 +140,38 @@ export function ContextMenuPlugin() {
           className="pointer-events-none fixed size-0 opacity-0"
         />
       </span>
-      <ContextMenuContent className="w-52">
+      <Menu className="w-52">
         {target?.isLink && (
           <>
-            <ContextMenuItem onAction={removeLink}>
+            <MenuItem onAction={removeLink}>
               <LinkSlashIcon />
               Remove link
-            </ContextMenuItem>
-            <ContextMenuSeparator />
+            </MenuItem>
+            <MenuSeparator />
           </>
         )}
-        <ContextMenuItem onAction={() => editor.dispatchCommand(CUT_COMMAND, null)}>
+        <MenuItem onAction={() => editor.dispatchCommand(CUT_COMMAND, null)}>
           <ScissorsIcon />
           Cut
-        </ContextMenuItem>
-        <ContextMenuItem onAction={() => editor.dispatchCommand(COPY_COMMAND, null)}>
+        </MenuItem>
+        <MenuItem onAction={() => editor.dispatchCommand(COPY_COMMAND, null)}>
           <DocumentDuplicateIcon />
           Copy
-        </ContextMenuItem>
-        <ContextMenuItem onAction={() => pasteFromClipboard(false)}>
+        </MenuItem>
+        <MenuItem onAction={() => pasteFromClipboard(false)}>
           <ClipboardIcon />
           Paste
-        </ContextMenuItem>
-        <ContextMenuItem onAction={() => pasteFromClipboard(true)}>
+        </MenuItem>
+        <MenuItem onAction={() => pasteFromClipboard(true)}>
           <ClipboardDocumentIcon />
           Paste as plain text
-        </ContextMenuItem>
-        <ContextMenuSeparator />
-        <ContextMenuItem intent="danger" onAction={deleteNode}>
+        </MenuItem>
+        <MenuSeparator />
+        <MenuItem intent="danger" onAction={deleteNode}>
           <TrashIcon />
           Delete
-        </ContextMenuItem>
-      </ContextMenuContent>
-    </ContextMenu>
+        </MenuItem>
+      </Menu>
+    </MenuTrigger>
   );
 }

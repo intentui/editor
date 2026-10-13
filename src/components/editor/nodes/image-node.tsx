@@ -308,7 +308,7 @@ function ImageComponent({
       )}
     >
       {isLoadError ? (
-        <span className="flex aspect-video w-full max-w-sm flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-muted text-muted-fg">
+        <span className="flex aspect-video w-full max-w-sm flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-muted text-muted-foreground">
           <PhotoIcon className="size-6" />
           <span className="text-xs">{altText || "Image failed to load"}</span>
         </span>
@@ -331,7 +331,7 @@ function ImageComponent({
         <span
           role="presentation"
           onPointerDown={onResizePointerDown}
-          className="absolute -end-1.5 -bottom-1.5 size-3.5 cursor-nwse-resize rounded-full border-2 border-bg bg-primary opacity-0 transition-opacity group-hover/image:opacity-100 rtl:cursor-nesw-resize"
+          className="absolute -end-1.5 -bottom-1.5 size-3.5 cursor-nwse-resize rounded-full border-2 border-background bg-primary opacity-0 transition-opacity group-hover/image:opacity-100 rtl:cursor-nesw-resize"
         />
       )}
     </span>

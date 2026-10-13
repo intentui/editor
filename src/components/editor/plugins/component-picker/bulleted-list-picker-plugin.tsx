@@ -22,7 +22,7 @@ export function BulletedListPickerPlugin() {
         label: "Bulleted list",
         group: "Basic blocks",
         description: "Create a simple bulleted list.",
-        icon: <ListBulletIcon className="text-muted-fg" />,
+        icon: <ListBulletIcon className="text-muted-foreground" />,
         keywords: ["bulleted list", "unordered list", "ul"],
         onSelect: () => {
           editor.update(() => {

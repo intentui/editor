@@ -7,14 +7,14 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { MinusIcon } from "@heroicons/react/16/solid";
 
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 export function InsertHorizontalRulePlugin() {
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
 
   return (
-    <Tooltip>
+    <TooltipTrigger>
       <Button
         intent="outline"
         size="sq-xs"
@@ -31,7 +31,7 @@ export function InsertHorizontalRulePlugin() {
       >
         <MinusIcon />
       </Button>
-      <TooltipContent>Insert divider</TooltipContent>
-    </Tooltip>
+      <Tooltip>Insert divider</Tooltip>
+    </TooltipTrigger>
   );
 }

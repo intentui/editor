@@ -6,7 +6,7 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { FaceSmileIcon } from "@heroicons/react/16/solid";
 
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 function insertEmojiTrigger(editor: LexicalEditor) {
   editor.update(() => {
@@ -23,7 +23,7 @@ export function InsertEmojiPlugin() {
   const isEditable = useLexicalEditable();
 
   return (
-    <Tooltip>
+    <TooltipTrigger>
       <Button
         intent="outline"
         size="sq-xs"
@@ -33,7 +33,7 @@ export function InsertEmojiPlugin() {
       >
         <FaceSmileIcon />
       </Button>
-      <TooltipContent>Insert emoji</TooltipContent>
-    </Tooltip>
+      <Tooltip>Insert emoji</Tooltip>
+    </TooltipTrigger>
   );
 }

@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
+import { AppBootstrap } from "@/components/app-bootstrap";
+import { JsonLd } from "@/components/json-ld";
 import { Providers } from "@/components/providers";
-import { app } from "@/config/app";
+import { app, META_THEME_COLORS } from "@/config/app";
 
 const fontSans = localFont({
   src: [
@@ -22,9 +23,14 @@ const fontSans = localFont({
   variable: "--font-inter",
 });
 
-const fontMono = JetBrains_Mono({
-  weight: ["400", "500"],
-  subsets: ["latin"],
+const fontMono = localFont({
+  src: [
+    {
+      path: "../fonts/PaperMono[wght].woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
   variable: "--font-docs-mono",
 });
 
@@ -61,6 +67,27 @@ export default async function RootLayout({
 }>) {
   const acceptLanguage = (await headers()).get("accept-language");
   const lang = acceptLanguage?.split(/[,;]/)[0] || "en-US";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${app.site.url}/#organization`,
+        name: "Intent UI",
+        url: app.site.url,
+        sameAs: [app.links.twitter, app.links.github, app.links.discord],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${app.url}/#website`,
+        url: app.url,
+        name: app.name,
+        description: app.description,
+        publisher: { "@id": `${app.site.url}/#organization` },
+      },
+    ],
+  };
+
   return (
     <html
       dir="ltr"
@@ -68,8 +95,20 @@ export default async function RootLayout({
       className={`${fontSans.variable} ${fontMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <JsonLd data={structuredData} />
+        <meta name="theme-color" content={META_THEME_COLORS.light} />
+        {/* Apply the saved theme before the first paint so dark mode does not flash. */}
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: static, trusted script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("intentui-theme")||"system";var d=t==="dark"||(t==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.add(d?"dark":"light")}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-svh font-sans antialiased">
         <Providers lang={lang}>
+          <AppBootstrap />
           <main>{children}</main>
         </Providers>
       </body>

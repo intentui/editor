@@ -16,7 +16,7 @@ export default function Page() {
               <h1 className="text-balance font-medium text-4xl tracking-tight sm:text-5xl">
                 A rich text editor for your React app
               </h1>
-              <p className="mt-5 text-pretty text-base/7 text-muted-fg sm:text-lg/8">
+              <p className="mt-5 text-pretty text-base/7 text-muted-foreground sm:text-lg/8">
                 {app.description}
               </p>
               <HeroActions />

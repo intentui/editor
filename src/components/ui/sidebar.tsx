@@ -1,21 +1,25 @@
 "use client"
 
+import { DialogCloseIcon } from "./dialog"
+
 import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import { createContext, use, useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { type ButtonProps, Button as ButtonPrimitive } from "react-aria-components/Button"
+import { type ButtonProps, Button as PrimitiveButton } from "react-aria-components/Button"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
-import type { DisclosurePanelProps, DisclosureProps } from "react-aria-components/Disclosure"
-import { Disclosure, DisclosurePanel } from "react-aria-components/Disclosure"
+import {
+  type DisclosurePanelProps,
+  type DisclosureProps,
+  Disclosure,
+  DisclosurePanel,
+} from "react-aria-components/Disclosure"
 import { DisclosureGroup, type DisclosureGroupProps } from "react-aria-components/DisclosureGroup"
 import { Header } from "react-aria-components/Header"
 import { Heading } from "react-aria-components/Heading"
-import type { LinkProps, LinkRenderProps } from "react-aria-components/Link"
-import type {
-  NavigationTreeItemContentProps,
-  NavigationTreeItemProps,
-  NavigationTreeProps,
-} from "react-aria-components/NavigationTree"
+import { type LinkProps, type LinkRenderProps } from "react-aria-components/Link"
 import {
+  type NavigationTreeItemContentProps,
+  type NavigationTreeItemProps,
+  type NavigationTreeProps,
   NavigationTree,
   NavigationTreeItem,
   NavigationTreeItemContent,
@@ -24,14 +28,14 @@ import {
   Separator,
   type SeparatorProps as SidebarSeparatorProps,
 } from "react-aria-components/Separator"
-import { twJoin, cn } from "cn"
-import { SheetContent } from "@/components/ui/sheet"
+import { cn } from "cn"
+import { Sheet } from "@/components/ui/sheet"
 import { TreeIndicator } from "@/components/ui/tree"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cx } from "@/lib/primitive"
 import { Button } from "./button"
 import { Link } from "./link"
-import { Tooltip, TooltipContent } from "./tooltip"
+import { TooltipTrigger, Tooltip } from "./tooltip"
 
 const SIDEBAR_WIDTH = "17rem"
 const SIDEBAR_WIDTH_DOCK = "3.25rem"
@@ -130,7 +134,7 @@ const SidebarProvider = ({
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [toggleSidebar, shortcut])
 
-  const state = open ? "expanded" : "collapsed"
+  const state = isMobile || open ? "expanded" : "collapsed"
 
   const contextValue = useMemo<SidebarContextProps>(
     () => ({
@@ -161,8 +165,8 @@ const SidebarProvider = ({
         }
         className={cn(
           "@container **:[svg]:shrink-0",
-          "flex w-full text-sidebar-fg",
-          "group/sidebar-root peer/sidebar-root has-data-[intent=inset]:bg-sidebar dark:has-data-[intent=inset]:bg-bg",
+          "flex w-full text-sidebar-foreground",
+          "group/sidebar-root peer/sidebar-root has-data-[intent=inset]:bg-sidebar dark:has-data-[intent=inset]:bg-background",
           className
         )}
         ref={ref}
@@ -198,7 +202,7 @@ const Sidebar = ({
         data-collapsible="none"
         data-slot="sidebar"
         className={cn(
-          "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-fg",
+          "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
           className
         )}
         {...props}
@@ -212,18 +216,20 @@ const Sidebar = ({
     return (
       <>
         <span className="sr-only" aria-hidden data-intent={intent} />
-        <SheetContent
+        <Sheet
+          isFloat
           isOpen={isOpenOnMobile}
           onOpenChange={setIsOpenOnMobile}
-          closeButton={closeButton}
+
           aria-label="Sidebar"
           data-slot="sidebar"
           data-intent="default"
-          className="w-(--sidebar-width) entering:blur-in exiting:blur-out [--sidebar-width:18rem] has-data-[slot=calendar]:[--sidebar-width:23rem]"
-          side={side}
+          className="entering:blur-in exiting:blur-out w-(--sidebar-width) [--sidebar-width:18rem] has-data-[slot=calendar]:[--sidebar-width:23rem]"
+          position={side}
         >
           {children}
-        </SheetContent>
+          {closeButton && <DialogCloseIcon isDismissable />}
+        </Sheet>
       </>
     )
   }
@@ -235,7 +241,7 @@ const Sidebar = ({
       data-intent={intent}
       data-side={side}
       data-slot="sidebar"
-      className="group peer hidden text-sidebar-fg md:block"
+      className="group peer text-sidebar-foreground hidden md:block"
       {...props}
     >
       <div
@@ -260,9 +266,9 @@ const Sidebar = ({
           side === "left" && "left-0 group-data-[collapsible=hidden]:-left-(--sidebar-width)",
           side === "right" && "right-0 group-data-[collapsible=hidden]:-right-(--sidebar-width)",
           intent === "float" &&
-            "bg-bg p-2 group-data-[collapsible=dock]:w-[calc(--spacing(4)+2px)]",
+            "bg-background p-2 group-data-[collapsible=dock]:w-[calc(--spacing(4)+2px)]",
           intent === "inset" &&
-            "group-data-[collapsible=dock]:w-[calc(var(--sidebar-width-dock)+(--spacing(2))+2px)] dark:bg-bg",
+            "group-data-[collapsible=dock]:w-[calc(var(--sidebar-width-dock)+(--spacing(2))+2px)] dark:bg-background",
           intent === "default" && [
             "group-data-[collapsible=dock]:w-(--sidebar-width-dock)",
             "border-sidebar-border group-data-[side=left]:border-r group-data-[side=right]:border-l",
@@ -274,10 +280,7 @@ const Sidebar = ({
         <div
           data-sidebar="default"
           data-slot="sidebar-inner"
-          className={twJoin(
-            "flex size-full flex-col text-sidebar-fg",
-            "group-data-[intent=float]:rounded-lg group-data-[intent=float]:border group-data-[intent=float]:border-sidebar-border group-data-[intent=float]:bg-sidebar group-data-[intent=float]:shadow-xs"
-          )}
+          className="text-sidebar-foreground group-data-[intent=float]:border-sidebar-border group-data-[intent=float]:bg-sidebar flex size-full flex-col group-data-[intent=float]:rounded-lg group-data-[intent=float]:border group-data-[intent=float]:shadow-xs"
         >
           {children}
         </div>
@@ -308,7 +311,7 @@ const SidebarFooter = ({ className, ...props }: React.ComponentProps<"div">) => 
     <div
       data-slot="sidebar-footer"
       className={cn([
-        "mt-auto flex shrink-0 items-center justify-center p-4 **:data-[slot=chevron]:text-muted-fg",
+        "mt-auto flex shrink-0 items-center justify-center p-4 **:data-[slot=chevron]:text-muted-foreground",
         "in-data-[intent=inset]:px-6 in-data-[intent=inset]:py-4",
         className,
       ])}
@@ -392,7 +395,7 @@ const SidebarSection = ({ className, ...props }: SidebarSectionProps) => {
       {...props}
     >
       {state !== "collapsed" && "label" in props && (
-        <Header className="mb-1 flex shrink-0 items-center rounded-md px-2 text-sidebar-fg/70 text-xs/6 outline-none ring-sidebar-ring transition-[margin,opa] duration-200 ease-linear group-data-[collapsible=dock]:-mt-8 group-data-[collapsible=dock]:opacity-0 *:[svg]:size-4 *:[svg]:shrink-0">
+        <Header className="text-sidebar-foreground/70 ring-sidebar-ring mb-1 flex shrink-0 items-center rounded-md px-2 text-xs/6 transition-[margin,opa] duration-200 ease-linear outline-none group-data-[collapsible=dock]:-mt-8 group-data-[collapsible=dock]:opacity-0 *:[svg]:size-4 *:[svg]:shrink-0">
           {props.label}
         </Header>
       )}
@@ -413,7 +416,7 @@ interface SidebarItemProps extends Omit<React.ComponentProps<typeof Link>, "chil
     | ((
         values: LinkRenderProps & { defaultChildren: React.ReactNode; isCollapsed: boolean }
       ) => React.ReactNode)
-  tooltip?: string | React.ComponentProps<typeof TooltipContent>
+  tooltip?: string | React.ComponentProps<typeof Tooltip>
 }
 
 const SidebarItem = ({
@@ -435,25 +438,25 @@ const SidebarItem = ({
         className,
         (className, { isFocusVisible, isPressed, isHovered, isDisabled }) =>
           cn(
-            "w-full min-w-0 items-center rounded-lg p-2 text-start font-medium text-base/6 text-sidebar-fg has-[a]:p-0",
+            "w-full min-w-0 items-center rounded-lg p-2 text-start font-medium text-base/6 text-sidebar-foreground has-[a]:p-0",
             "group/sidebar-item relative col-span-full overflow-hidden focus-visible:outline-hidden",
             "grid grid-cols-[auto_1fr_1.5rem_0.5rem_auto] supports-[grid-template-columns:subgrid]:grid-cols-subgrid sm:text-sm/5 **:last:[svg]:ms-auto",
             // icon
-            "[&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-fg **:[svg]:shrink-0",
+            "[&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground **:[svg]:shrink-0",
             "**:last:[svg]:size-5 sm:**:last:[svg]:size-4",
             "[&:has(svg+[data-slot=sidebar-label])_svg:has(+[data-slot=sidebar-label])]:me-2",
 
             // avatar
             "**:data-[slot=avatar]:[--avatar-size:--spacing(5)]",
             "[&:has([data-slot=avatar]+[data-slot=sidebar-label])_[data-slot=avatar]:has(+[data-slot=sidebar-label])]:me-2",
-            "[--sidebar-current-bg:var(--color-sidebar-primary)] [--sidebar-current-fg:var(--color-sidebar-primary-fg)]",
+            "[--sidebar-current-background:var(--color-sidebar-primary)] [--sidebar-current-foreground:var(--color-sidebar-primary-foreground)]",
             isCurrent &&
-              "font-medium text-(--sidebar-current-fg) hover:bg-(--sidebar-current-bg) hover:text-(--sidebar-current-fg) [&_.text-muted-fg]:text-fg/80 [&_svg:not([class*='text-'])]:text-(--sidebar-current-fg) hover:[&_svg:not([class*='text-'])]:text-(--sidebar-current-fg)",
+              "font-medium text-(--sidebar-current-foreground) hover:bg-(--sidebar-current-background) hover:text-(--sidebar-current-foreground) [&_.text-muted-foreground]:text-foreground/80 [&_svg:not([class*='text-'])]:text-(--sidebar-current-foreground) hover:[&_svg:not([class*='text-'])]:text-(--sidebar-current-foreground)",
             isFocusVisible && "inset-ring inset-ring-sidebar-ring outline-hidden",
             isPressed &&
-              "bg-sidebar-accent text-sidebar-accent-fg [&_svg:not([class*='text-'])]:text-sidebar-accent-fg",
+              "bg-sidebar-accent text-sidebar-accent-foreground [&_svg:not([class*='text-'])]:text-sidebar-accent-foreground",
             isHovered &&
-              "bg-sidebar-accent text-sidebar-accent-fg [&_svg:not([class*='text-'])]:text-sidebar-accent-fg",
+              "bg-sidebar-accent text-sidebar-accent-foreground [&_svg:not([class*='text-'])]:text-sidebar-accent-foreground",
             isDisabled && "opacity-50",
             className
           )
@@ -472,9 +475,9 @@ const SidebarItem = ({
   }
 
   return (
-    <Tooltip delay={0}>
+    <TooltipTrigger delay={0}>
       {link}
-      <TooltipContent
+      <Tooltip
         className="**:data-[slot=sidebar-label-mask]:hidden **:[svg]:hidden"
         inverse
         placement="right"
@@ -482,7 +485,7 @@ const SidebarItem = ({
         hidden={!isCollapsed || isMobile || !tooltip}
         {...tooltip}
       />
-    </Tooltip>
+    </TooltipTrigger>
   )
 }
 
@@ -494,7 +497,7 @@ function SidebarBadge({ className, ...props }: React.ComponentProps<"span">) {
       <span
         aria-hidden
         data-slot="sidebar-badge"
-        className="absolute end-1 top-1 size-1.5 rounded-full bg-primary"
+        className="bg-primary absolute end-1 top-1 size-1.5 rounded-full"
       />
     )
   }
@@ -503,7 +506,7 @@ function SidebarBadge({ className, ...props }: React.ComponentProps<"span">) {
     <span
       data-slot="sidebar-badge"
       className={cn(
-        "absolute inset-ring-1 inset-ring-sidebar-border inset-y-1/2 end-1.5 h-5.5 w-auto -translate-y-1/2 rounded-full bg-fg/5 px-2 text-[10px]/5.5 group-hover/sidebar-item:inset-ring-muted-fg/30 group-current:inset-ring-transparent",
+        "absolute inset-ring-1 inset-ring-sidebar-border inset-y-1/2 end-1.5 h-5.5 w-auto -translate-y-1/2 rounded-full bg-foreground/5 px-2 text-[10px]/5.5 group-hover/sidebar-item:inset-ring-muted-foreground/30 group-current:inset-ring-transparent",
         className
       )}
       {...props}
@@ -535,7 +538,7 @@ const SidebarInset = ({ className, ref, ...props }: React.ComponentProps<"main">
       data-slot="sidebar-inset"
       ref={ref}
       className={cn(
-        "relative flex w-full flex-1 flex-col bg-bg lg:min-w-0",
+        "relative flex w-full flex-1 flex-col bg-background lg:min-w-0",
         "md:group-has-data-[intent=inset]/sidebar-root:border group-has-data-[intent=inset]/sidebar-root:border-sidebar-border group-has-data-[intent=inset]/sidebar-root:bg-muted",
         "md:group-has-data-[intent=inset]/sidebar-root:m-2",
         "md:group-has-data-[side=left]:group-has-data-[intent=inset]/sidebar-root:ms-0",
@@ -592,23 +595,23 @@ const SidebarDisclosureTrigger = ({ className, ref, ...props }: SidebarDisclosur
   const { state } = useSidebar()
   return (
     <Heading level={3}>
-      <ButtonPrimitive
+      <PrimitiveButton
         ref={ref}
         slot="trigger"
         className={composeRenderProps(
           className,
           (className, { isPressed, isFocusVisible, isHovered, isDisabled }) =>
             cn(
-              "flex w-full min-w-0 items-center rounded-lg text-start font-medium text-base/6 text-sidebar-fg",
+              "flex w-full min-w-0 items-center rounded-lg text-start font-medium text-base/6 text-sidebar-foreground",
               "group/sidebar-disclosure-trigger relative col-span-full overflow-hidden focus-visible:outline-hidden",
-              "**:[svg]:size-5 **:[svg]:shrink-0 **:[svg]:text-muted-fg sm:**:[svg]:size-4",
+              "**:[svg]:size-5 **:[svg]:shrink-0 **:[svg]:text-muted-foreground sm:**:[svg]:size-4",
               "**:last:[svg]:size-5 sm:**:last:[svg]:size-4",
               "**:data-[slot=avatar]:size-6 sm:**:data-[slot=avatar]:size-5",
-              "col-span-full gap-3 p-2 **:data-[slot=chevron]:text-muted-fg sm:gap-2 sm:text-sm/5 **:last:[svg]:ms-auto",
+              "col-span-full gap-3 p-2 **:data-[slot=chevron]:text-muted-foreground sm:gap-2 sm:text-sm/5 **:last:[svg]:ms-auto",
 
               isFocusVisible && "inset-ring inset-ring-ring/70",
               (isPressed || isHovered) &&
-                "bg-sidebar-accent text-sidebar-accent-fg **:data-[slot=chevron]:text-sidebar-accent-fg **:[svg]:text-sidebar-accent-fg **:last:[svg]:text-sidebar-accent-fg",
+                "bg-sidebar-accent text-sidebar-accent-foreground **:data-[slot=chevron]:text-sidebar-accent-foreground **:[svg]:text-sidebar-accent-foreground **:last:[svg]:text-sidebar-accent-foreground",
               isDisabled && "opacity-50",
               className
             )
@@ -626,7 +629,7 @@ const SidebarDisclosureTrigger = ({ className, ref, ...props }: SidebarDisclosur
             )}
           </>
         )}
-      </ButtonPrimitive>
+      </PrimitiveButton>
     </Heading>
   )
 }
@@ -756,7 +759,7 @@ const SidebarNav = ({ isSticky = false, className, ...props }: SidebarNavProps) 
     <nav
       data-slot="sidebar-nav"
       className={cn(
-        "isolate flex items-center justify-between gap-x-2 px-(--container-padding,--spacing(4)) py-2.5 text-navbar-fg sm:justify-start sm:px-(--gutter,--spacing(4)) md:w-full",
+        "isolate flex items-center justify-between gap-x-2 px-(--container-padding,--spacing(4)) py-2.5 text-navbar-foreground sm:justify-start sm:px-(--gutter,--spacing(4)) md:w-full",
         isSticky && "static top-0 z-40 group-has-data-[intent=default]/sidebar-root:sticky",
         className
       )}
@@ -774,14 +777,14 @@ const SidebarMenuTrigger = ({
   ...props
 }: SidebarMenuTriggerProps) => {
   return (
-    <ButtonPrimitive
+    <PrimitiveButton
       className={cx(
         !alwaysVisible &&
-          "pressed:text-fg text-muted-fg opacity-0 pressed:opacity-100 hover:text-fg",
+          "pressed:text-foreground text-muted-foreground pressed:opacity-100 hover:text-foreground opacity-0",
         "absolute end-0 flex h-full w-[calc(var(--sidebar-width)-90%)] items-center justify-end pe-2.5 outline-hidden",
-        "[&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4 pressed:[&_svg:not([class*='text-'])]:text-fg **:[svg]:shrink-0",
-        "group-hover/sidebar-item:opacity-100 group-focus-visible/sidebar-item:opacity-100 group/sidebar-item:pressed:opacity-100",
-        "group-hover/tree-item:opacity-100 group-focus-visible/tree-item:opacity-100 group/tree-item:pressed:opacity-100",
+        "pressed:[&_svg:not([class*='text-'])]:text-foreground [&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4 **:[svg]:shrink-0",
+        "group/sidebar-item:pressed:opacity-100 group-hover/sidebar-item:opacity-100 group-focus-visible/sidebar-item:opacity-100",
+        "group/tree-item:pressed:opacity-100 group-hover/tree-item:opacity-100 group-focus-visible/tree-item:opacity-100",
         className
       )}
       {...props}
@@ -794,7 +797,7 @@ function SidebarTree<T extends object>({ className, ...props }: SidebarTreeProps
   return (
     <NavigationTree
       className={cx(
-        "col-span-full flex w-full min-w-0 cursor-default flex-col gap-y-0.5 in-data-[state=collapsed]:p-2 p-4 outline-hidden forced-color-adjust-none",
+        "col-span-full flex w-full min-w-0 cursor-default flex-col gap-y-0.5 p-4 outline-hidden forced-color-adjust-none in-data-[state=collapsed]:p-2",
         className
       )}
       {...props}
@@ -806,7 +809,7 @@ function SidebarTreeItem<T extends object>({ className, ...props }: NavigationTr
   return (
     <NavigationTreeItem
       className={cx(
-        "min-w-0 shrink-0 cursor-default select-none outline-hidden",
+        "min-w-0 shrink-0 cursor-default outline-hidden select-none",
         "href" in props && "cursor-pointer",
         className
       )}
@@ -834,17 +837,17 @@ function SidebarTreeContent({ className, isCurrent, children }: SidebarTreeConte
           />
           <div
             className={cn(
-              "group/tree-item flex min-w-0 flex-1 items-center gap-x-2 rounded-lg p-2 font-medium text-base/6 text-sidebar-fg sm:text-sm/5",
-              "[&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-fg **:[svg]:-mx-0.5 **:[svg]:shrink-0",
-              "hover:bg-sidebar-accent hover:text-sidebar-accent-fg hover:[&_svg:not([class*='text-'])]:text-sidebar-accent-fg",
-              "[--sidebar-current-bg:var(--color-sidebar-primary)] [--sidebar-current-fg:var(--color-sidebar-primary-fg)]",
+              "group/tree-item flex min-w-0 flex-1 items-center gap-x-2 rounded-lg p-2 font-medium text-base/6 text-sidebar-foreground sm:text-sm/5",
+              "[&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground **:[svg]:-mx-0.5 **:[svg]:shrink-0",
+              "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:[&_svg:not([class*='text-'])]:text-sidebar-accent-foreground",
+              "[--sidebar-current-background:var(--color-sidebar-primary)] [--sidebar-current-foreground:var(--color-sidebar-primary-foreground)]",
               values.isFocusVisible && "inset-ring inset-ring-sidebar-ring",
               values.isPressed &&
-                "bg-sidebar-accent text-sidebar-accent-fg [&_svg:not([class*='text-'])]:text-sidebar-accent-fg",
+                "bg-sidebar-accent text-sidebar-accent-foreground [&_svg:not([class*='text-'])]:text-sidebar-accent-foreground",
               (values.isCurrent || isCurrent) &&
-                "font-medium text-(--sidebar-current-fg) hover:bg-(--sidebar-current-bg) hover:text-(--sidebar-current-fg) [&_.text-muted-fg]:text-fg/80 [&_svg:not([class*='text-'])]:text-(--sidebar-current-fg) hover:[&_svg:not([class*='text-'])]:text-(--sidebar-current-fg)",
+                "font-medium text-(--sidebar-current-foreground) hover:bg-(--sidebar-current-background) hover:text-(--sidebar-current-foreground) [&_.text-muted-foreground]:text-foreground/80 [&_svg:not([class*='text-'])]:text-(--sidebar-current-foreground) hover:[&_svg:not([class*='text-'])]:text-(--sidebar-current-foreground)",
               values.isCurrentAncestor &&
-                "text-sidebar-accent-fg [&_svg:not([class*='text-'])]:text-sidebar-accent-fg",
+                "text-sidebar-accent-foreground [&_svg:not([class*='text-'])]:text-sidebar-accent-foreground",
               values.isDisabled && "opacity-50",
               className
             )}

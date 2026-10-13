@@ -38,13 +38,13 @@ function Column({
 }) {
   return (
     <div>
-      <div className="font-medium text-base text-fg">{title}</div>
+      <div className="font-medium text-base text-foreground">{title}</div>
       <ul className="mt-3 space-y-3 text-sm/6">
         {items.map((item) => (
           <li key={item.name}>
             <Link
               href={item.href}
-              className="font-normal text-fg/60 hover:text-fg"
+              className="font-normal text-foreground/60 hover:text-foreground"
               {...(item.external === false ? {} : { target: "_blank", rel: "noreferrer" })}
             >
               {item.name}
@@ -58,7 +58,7 @@ function Column({
 
 export function Footer() {
   return (
-    <footer className="border-page border-t bg-bg text-fg">
+    <footer className="border-page border-t bg-background text-foreground">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -73,10 +73,10 @@ export function Footer() {
         </div>
 
         <div className="xl:border-l w-full flex justify-between border-page xl:px-20 py-6">
-          <Link href="/" className="flex items-center font-semibold text-fg text-lg">
+          <Link href="/" className="flex items-center font-semibold text-foreground text-lg">
             <BrandIntentuiIcon className="size-5 shrink-0" />
             <span className="ml-2">
-              Intent <span className="text-muted-fg">Editor</span>
+              Intent <span className="text-muted-foreground">Editor</span>
             </span>
           </Link>
           <Text>&copy; {`${new Date().getFullYear()} · ${app.name} ™`}</Text>

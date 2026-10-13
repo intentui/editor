@@ -15,6 +15,8 @@ interface DocPageProps {
   params: Promise<{ slug: string[] }>
 }
 
+export const revalidate = false
+export const dynamic = "force-static"
 export const dynamicParams = false
 
 export function generateStaticParams() {
@@ -49,7 +51,7 @@ export default async function Page(props: DocPageProps) {
   if (!page) notFound()
 
   const { title, body: MDX, toc, references } = page.data
-  const pageText = await readFile(path.join(process.cwd(), "src/content/docs", page.path), "utf8")
+  const pageText = await readFile(path.join(/*turbopackIgnore: true*/ process.cwd(), "src/content/docs", page.path), "utf8")
 
   return (
     <div className="flex w-full items-start">

@@ -7,7 +7,7 @@ import { LinkIcon } from "@heroicons/react/16/solid";
 import { useFormatStateValue } from "@/components/editor/extensions/format-state";
 import { OPEN_LINK_EDITOR_COMMAND } from "@/components/editor/extensions/link";
 import { ToolbarGroup, ToolbarItem } from "@/components/ui/toolbar";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 export function LinkToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -16,7 +16,7 @@ export function LinkToolbarPlugin() {
 
   return (
     <ToolbarGroup aria-label="Link" isDisabled={!isEditable}>
-      <Tooltip>
+      <TooltipTrigger>
         <ToolbarItem
           size="sq-xs"
           aria-label="Insert link"
@@ -31,8 +31,8 @@ export function LinkToolbarPlugin() {
         >
           <LinkIcon />
         </ToolbarItem>
-        <TooltipContent>Insert link</TooltipContent>
-      </Tooltip>
+        <Tooltip>Insert link</Tooltip>
+      </TooltipTrigger>
     </ToolbarGroup>
   );
 }

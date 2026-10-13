@@ -27,11 +27,11 @@ export const mdxComponents: MDXComponents = {
     <thead className="border-border border-b-2" {...props} />
   ),
   th: (props: React.ComponentProps<"th">) => (
-    <th className="px-6 py-2.5 text-left font-medium text-fg text-sm/6 first:px-0" {...props} />
+    <th className="px-6 py-2.5 text-left font-medium text-foreground text-sm/6 first:px-0" {...props} />
   ),
   td: (props: React.ComponentProps<"td">) => (
     <td
-      className="border-border/70 border-t px-6 py-2.5 text-muted-fg text-sm first:px-0 *:[code]:font-medium *:[code]:text-fg"
+      className="border-border/70 border-t px-6 py-2.5 text-muted-foreground text-sm first:px-0 *:[code]:font-medium *:[code]:text-foreground"
       {...props}
     />
   ),

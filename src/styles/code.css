@@ -24,7 +24,7 @@ html.dark .shiki span {
 }
 
 html.dark .shiki {
-  background-color: var(--color-shiki-bg) !important;
+  background-color: var(--color-shiki-background) !important;
 }
 
 .shiki .highlighted {

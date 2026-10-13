@@ -5,14 +5,14 @@ import { CodeBracketIcon } from "@heroicons/react/16/solid";
 
 import { insertCodeBlock } from "@/components/editor/extensions/code";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 
 export function InsertCodeBlockPlugin() {
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
 
   return (
-    <Tooltip>
+    <TooltipTrigger>
       <Button
         intent="outline"
         size="sq-xs"
@@ -22,7 +22,7 @@ export function InsertCodeBlockPlugin() {
       >
         <CodeBracketIcon />
       </Button>
-      <TooltipContent>Insert code block</TooltipContent>
-    </Tooltip>
+      <Tooltip>Insert code block</Tooltip>
+    </TooltipTrigger>
   );
 }

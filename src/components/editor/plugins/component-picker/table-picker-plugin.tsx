@@ -25,7 +25,7 @@ export function TablePickerPlugin() {
         label: "Insert table",
         group: "Advanced",
         description: "Add a simple table.",
-        icon: <TableCellsIcon className="text-muted-fg" />,
+        icon: <TableCellsIcon className="text-muted-foreground" />,
         keywords: ["table", "grid", "spreadsheet", "rows", "columns"],
         onSelect: () => insertTable(editor, 3, 3),
       },
@@ -50,7 +50,7 @@ export function TablePickerPlugin() {
         label: `${rows}x${columns} Insert table`,
         group: "Advanced",
         description: "Insert a table with this size.",
-        icon: <TableCellsIcon className="text-muted-fg" />,
+        icon: <TableCellsIcon className="text-muted-foreground" />,
         keywords: ["table", `${rows}x${columns}`],
         onSelect: () => insertTable(editor, rows, columns),
       });

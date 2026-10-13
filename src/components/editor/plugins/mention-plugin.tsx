@@ -238,7 +238,7 @@ export function MentionPlugin() {
       ) =>
         anchorElementRef.current && options.length > 0
           ? createPortal(
-              <div className="absolute inset-s-0 top-full z-50 -mt-4 w-56 rounded-lg bg-overlay text-overlay-fg shadow-xs ring ring-muted-fg/20 drop-shadow-xl dark:ring-border">
+              <div className="absolute inset-s-0 top-full z-50 -mt-4 w-56 rounded-lg bg-overlay text-overlay-foreground shadow-xs ring ring-muted-foreground/20 drop-shadow-xl dark:ring-border">
                 <div
                   role="listbox"
                   className="scrollbar-thin flex max-h-64 flex-col gap-y-1 overflow-y-auto overscroll-contain p-1 sm:text-sm"
@@ -254,11 +254,11 @@ export function MentionPlugin() {
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => selectOptionAndCleanUp(option)}
                       className={twJoin(
-                        "flex cursor-default select-none items-center gap-x-2 rounded-md px-3 py-2 text-base/6 text-fg outline-0 sm:px-2.5 sm:py-1.5 sm:text-sm/6",
-                        selectedIndex === index && "bg-accent text-accent-fg",
+                        "flex cursor-default select-none items-center gap-x-2 rounded-md px-3 py-2 text-base/6 text-foreground outline-0 sm:px-2.5 sm:py-1.5 sm:text-sm/6",
+                        selectedIndex === index && "bg-accent text-accent-foreground",
                       )}
                     >
-                      <UserIcon className="size-4 shrink-0 text-muted-fg" />
+                      <UserIcon className="size-4 shrink-0 text-muted-foreground" />
                       <span className="truncate">{option.name}</span>
                     </div>
                   ))}

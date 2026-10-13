@@ -59,7 +59,7 @@ The toolbar stays on one row and scrolls horizontally when it is too narrow. A c
 
 ## Styling
 
-`Toolbar` wraps the Intent UI toolbar in a `relative` container that holds the two scroll buttons and their fades. It adds `aria-label="Formatting"` and these classes on top of `src/components/ui/toolbar.tsx`: `w-full flex-nowrap gap-1 overflow-x-auto overscroll-x-contain scroll-px-14 rounded-none border-b border-border bg-bg p-1.5 *:shrink-0`. It accepts the same props as the underlying toolbar plus `className`, which is merged after the defaults.
+`Toolbar` wraps the Intent UI toolbar in a `relative` container that holds the two scroll buttons and their fades. It adds `aria-label="Formatting"` and these classes on top of `src/components/ui/toolbar.tsx`: `w-full flex-nowrap gap-1 overflow-x-auto overscroll-x-contain scroll-px-14 rounded-none border-b border-border bg-background p-1.5 *:shrink-0`. It accepts the same props as the underlying toolbar plus `className`, which is merged after the defaults.
 
 ```tsx
 <Toolbar className="bg-muted" aria-label="Text tools">
@@ -67,4 +67,4 @@ The toolbar stays on one row and scrolls horizontally when it is too narrow. A c
 </Toolbar>
 ```
 
-Colors come from the `bg`, `border`, `muted` and `primary` tokens, see [Theming](/docs/getting-started/theming).
+Colors come from the `background`, `border`, `muted` and `primary` tokens, see [Theming](/docs/getting-started/theming).

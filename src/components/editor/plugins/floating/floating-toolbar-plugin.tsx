@@ -26,7 +26,7 @@ import {
   hideFloatingAnchor,
   setFloatingAnchorRect,
 } from "@/components/editor/plugins/floating/floating-utils";
-import { PopoverContent } from "@/components/ui/popover";
+import { Popover } from "@/components/ui/popover";
 import { Toolbar } from "@/components/ui/toolbar";
 
 function FloatingToolbar({
@@ -151,7 +151,7 @@ function FloatingToolbar({
         className="pointer-events-none fixed top-0 left-0 opacity-0"
         style={{ transform: "translate(-10000px, -10000px)" }}
       />
-      <PopoverContent
+      <Popover
         ref={setPopupRefs}
         isOpen
         isNonModal
@@ -166,7 +166,7 @@ function FloatingToolbar({
         >
           {children}
         </Toolbar>
-      </PopoverContent>
+      </Popover>
     </>
   );
 }
