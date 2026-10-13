@@ -16,7 +16,7 @@ import { InitialStateExtension } from "@lexical/extension";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { MentionExtension } from "@/components/editor/extensions/mention";
+import { MentionExtension } from "@/components/editor/extensions/mention-extension";
 import { $createMentionNode } from "@/components/editor/nodes/mention-node";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { MentionPlugin } from "@/components/editor/plugins/mention-plugin";

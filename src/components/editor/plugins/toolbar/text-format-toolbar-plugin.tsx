@@ -14,7 +14,7 @@ import {
   UnderlineIcon,
 } from "@heroicons/react/16/solid";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
 import { ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@/components/ui/toolbar";
 import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 

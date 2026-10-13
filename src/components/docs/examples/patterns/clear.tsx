@@ -15,7 +15,7 @@ import { ClearEditorExtension, InitialStateExtension } from "@lexical/extension"
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { ClearToolbarPlugin } from "@/components/editor/plugins/toolbar/clear-toolbar-plugin";
 import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";

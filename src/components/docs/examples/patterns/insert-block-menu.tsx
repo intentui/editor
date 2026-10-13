@@ -9,9 +9,9 @@ import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionCompose
 import { RichTextExtension } from "@lexical/rich-text";
 import { TableExtension } from "@lexical/table";
 
-import { CodeExtension } from "@/components/editor/extensions/code";
-import { ImageExtension } from "@/components/editor/extensions/image";
-import { LayoutExtension } from "@/components/editor/extensions/layout";
+import { CodeExtension } from "@/components/editor/extensions/code-extension";
+import { ImageExtension } from "@/components/editor/extensions/image-extension";
+import { LayoutExtension } from "@/components/editor/extensions/layout-extension";
 import { BlockInsert } from "@/components/editor/plugins/block-insert/block-insert-plugin";
 import { InsertCodeBlockPlugin } from "@/components/editor/plugins/block-insert/insert-code-block-plugin";
 import { InsertColumnsPlugin } from "@/components/editor/plugins/block-insert/insert-columns-plugin";

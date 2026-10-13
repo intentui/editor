@@ -31,12 +31,12 @@ import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionCompose
 import { RichTextExtension } from "@lexical/rich-text";
 import { TableExtension } from "@lexical/table";
 
-import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
-import { CodeExtension } from "@/components/editor/extensions/code";
-import { DragDropPasteExtension } from "@/components/editor/extensions/drag-drop-paste";
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
-import { ImageExtension } from "@/components/editor/extensions/image";
-import { LinkExtension } from "@/components/editor/extensions/link";
+import { AutoLinkExtension } from "@/components/editor/extensions/auto-link-extension";
+import { CodeExtension } from "@/components/editor/extensions/code-extension";
+import { DragDropPasteExtension } from "@/components/editor/extensions/drag-drop-paste-extension";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
+import { ImageExtension } from "@/components/editor/extensions/image-extension";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
 import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin";
 import { CountPlugin } from "@/components/editor/plugins/activitybar/count-plugin";
 import { ReadOnlyTogglePlugin } from "@/components/editor/plugins/activitybar/read-only-toggle-plugin";

@@ -8,7 +8,7 @@ import {
   ArrowRightEndOnRectangleIcon,
 } from "@heroicons/react/16/solid";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
 import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";

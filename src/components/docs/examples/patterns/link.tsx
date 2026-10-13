@@ -17,9 +17,9 @@ import { $createLinkNode } from "@lexical/link";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { AutoLinkExtension } from "@/components/editor/extensions/auto-link";
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
-import { LinkExtension } from "@/components/editor/extensions/link";
+import { AutoLinkExtension } from "@/components/editor/extensions/auto-link-extension";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { LinkEditorPlugin } from "@/components/editor/plugins/floating/link-editor-plugin";
 import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";

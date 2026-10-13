@@ -3,7 +3,7 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
 import { CodeBracketIcon } from "@heroicons/react/16/solid";
 
-import { insertCodeBlock } from "@/components/editor/extensions/code";
+import { insertCodeBlock } from "@/components/editor/extensions/code-extension";
 import { Button } from "@/components/ui/button";
 import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 

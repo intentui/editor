@@ -17,7 +17,7 @@ import { CheckListExtension, ListExtension } from "@lexical/list";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { $createHeadingNode, RichTextExtension } from "@lexical/rich-text";
 
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { BlockFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/block-format-toolbar-plugin";
 import { Toolbar } from "@/components/editor/plugins/toolbar/toolbar-plugin";

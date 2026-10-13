@@ -20,7 +20,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { mergeRegister } from "@lexical/utils";
 
-import { $getSelectedNode } from "@/components/editor/extensions/format-state";
+import { $getSelectedNode } from "@/components/editor/extensions/format-state-extension";
 import {
   getDOMRangeRect,
   hideFloatingAnchor,

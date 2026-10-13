@@ -17,7 +17,7 @@ import { registerMarkdownShortcuts } from "@lexical/markdown";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { EmojiExtension } from "@/components/editor/extensions/emoji";
+import { EmojiExtension } from "@/components/editor/extensions/emoji-extension";
 import { BlockInsert } from "@/components/editor/plugins/block-insert/block-insert-plugin";
 import { InsertEmojiPlugin } from "@/components/editor/plugins/block-insert/insert-emoji-plugin";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";

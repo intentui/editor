@@ -4,7 +4,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 
 import { CodeBracketIcon } from "@heroicons/react/16/solid";
 
-import { insertCodeBlock } from "@/components/editor/extensions/code";
+import { insertCodeBlock } from "@/components/editor/extensions/code-extension";
 import {
   type ComponentPickerItem,
   useComponentPickerItems,

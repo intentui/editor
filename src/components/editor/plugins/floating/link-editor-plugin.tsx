@@ -23,8 +23,8 @@ import { CheckIcon, PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/react/16
 import {
   $getSelectedLinkNode,
   $getSelectedNode,
-} from "@/components/editor/extensions/format-state";
-import { OPEN_LINK_EDITOR_COMMAND, sanitizeUrl } from "@/components/editor/extensions/link";
+} from "@/components/editor/extensions/format-state-extension";
+import { OPEN_LINK_EDITOR_COMMAND, sanitizeUrl } from "@/components/editor/extensions/link-extension";
 import {
   getDOMRangeRect,
   hideFloatingAnchor,

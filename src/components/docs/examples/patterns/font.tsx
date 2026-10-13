@@ -16,7 +16,7 @@ import { InitialStateExtension } from "@lexical/extension";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { FontFamilyToolbarPlugin } from "@/components/editor/plugins/toolbar/font-family-toolbar-plugin";
 import { FontSizeToolbarPlugin } from "@/components/editor/plugins/toolbar/font-size-toolbar-plugin";

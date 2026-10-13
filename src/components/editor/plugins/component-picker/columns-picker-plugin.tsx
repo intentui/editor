@@ -6,7 +6,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 
 import { RectangleGroupIcon, StopIcon, ViewColumnsIcon } from "@heroicons/react/16/solid";
 
-import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout";
+import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout-extension";
 import {
   type ComponentPickerItem,
   useComponentPickerItems,

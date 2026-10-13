@@ -10,7 +10,7 @@ import { twJoin } from "cn";
 import {
   SPEECH_TO_TEXT_COMMAND,
   SUPPORT_SPEECH_RECOGNITION,
-} from "@/components/editor/extensions/speech-to-text";
+} from "@/components/editor/extensions/speech-to-text-extension";
 import { Button } from "@/components/ui/button";
 import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 

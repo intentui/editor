@@ -3,7 +3,7 @@ import { COMMAND_PRIORITY_LOW, defineExtension } from "lexical";
 import { DRAG_DROP_PASTE } from "@lexical/rich-text";
 import { isMimeType, mediaFileReader } from "@lexical/utils";
 
-import { ImageExtension } from "@/components/editor/extensions/image";
+import { ImageExtension } from "@/components/editor/extensions/image-extension";
 import { INSERT_IMAGE_COMMAND } from "@/components/editor/nodes/image-node";
 
 const ACCEPTABLE_IMAGE_TYPES = ["image/", "image/heic", "image/heif", "image/gif", "image/webp"];

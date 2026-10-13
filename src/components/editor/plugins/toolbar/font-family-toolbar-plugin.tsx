@@ -4,7 +4,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { $patchStyleText } from "@lexical/selection";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
 import {
   ComboBox,
   ComboBoxContent,

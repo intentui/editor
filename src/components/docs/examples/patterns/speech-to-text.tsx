@@ -8,7 +8,7 @@ import { HistoryExtension } from "@lexical/history";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { SpeechToTextExtension } from "@/components/editor/extensions/speech-to-text";
+import { SpeechToTextExtension } from "@/components/editor/extensions/speech-to-text-extension";
 import { ActivityBar } from "@/components/editor/plugins/activitybar/activitybar-plugin";
 import { SpeechToTextPlugin } from "@/components/editor/plugins/activitybar/speech-to-text-plugin";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";

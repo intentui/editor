@@ -7,7 +7,7 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
 import { BackspaceIcon, TrashIcon } from "@heroicons/react/16/solid";
 
-import { clearFormatting } from "@/components/editor/extensions/format-state";
+import { clearFormatting } from "@/components/editor/extensions/format-state-extension";
 import { Button } from "@/components/ui/button";
 import { ToolbarGroup } from "@/components/ui/toolbar";
 import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";

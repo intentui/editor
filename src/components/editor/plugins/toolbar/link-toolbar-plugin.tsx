@@ -4,8 +4,8 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
 import { LinkIcon } from "@heroicons/react/16/solid";
 
-import { useFormatStateValue } from "@/components/editor/extensions/format-state";
-import { OPEN_LINK_EDITOR_COMMAND } from "@/components/editor/extensions/link";
+import { useFormatStateValue } from "@/components/editor/extensions/format-state-extension";
+import { OPEN_LINK_EDITOR_COMMAND } from "@/components/editor/extensions/link-extension";
 import { ToolbarGroup, ToolbarItem } from "@/components/ui/toolbar";
 import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";
 

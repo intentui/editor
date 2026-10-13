@@ -4,7 +4,7 @@ import {
   type BuiltinShortcutName,
   type ShortcutName,
   formatShortcut,
-} from "@/components/editor/extensions/shortcuts";
+} from "@/components/editor/extensions/shortcuts-extension";
 import { Button } from "@/components/ui/button";
 import { Keyboard } from "@/components/ui/keyboard";
 import { Dialog, DialogBody, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";

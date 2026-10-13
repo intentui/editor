@@ -17,8 +17,8 @@ import { CheckListExtension, ListExtension } from "@lexical/list";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { FormatStateExtension } from "@/components/editor/extensions/format-state";
-import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts";
+import { FormatStateExtension } from "@/components/editor/extensions/format-state-extension";
+import { ShortcutsExtension } from "@/components/editor/extensions/shortcuts-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { BlockFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/block-format-toolbar-plugin";
 import { ElementFormatToolbarPlugin } from "@/components/editor/plugins/toolbar/element-format-toolbar-plugin";

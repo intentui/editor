@@ -5,7 +5,7 @@ import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 
 import { ViewColumnsIcon } from "@heroicons/react/16/solid";
 
-import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout";
+import { INSERT_LAYOUT_COMMAND } from "@/components/editor/extensions/layout-extension";
 import { Button } from "@/components/ui/button";
 import { Menu, MenuItem, MenuTrigger } from "@/components/ui/menu";
 import { TooltipTrigger, Tooltip } from "@/components/ui/tooltip";

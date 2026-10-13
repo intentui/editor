@@ -16,7 +16,7 @@ import { InitialStateExtension } from "@lexical/extension";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { LayoutExtension } from "@/components/editor/extensions/layout";
+import { LayoutExtension } from "@/components/editor/extensions/layout-extension";
 import {
   $createLayoutContainerNode,
   $createLayoutItemNode,

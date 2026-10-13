@@ -42,7 +42,7 @@ import {
   NumberedListIcon,
 } from "@heroicons/react/16/solid";
 
-import { $getSelectedNode } from "@/components/editor/extensions/format-state";
+import { $getSelectedNode } from "@/components/editor/extensions/format-state-extension";
 import {
   ComboBox,
   ComboBoxContent,

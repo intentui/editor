@@ -17,7 +17,7 @@ import { $createLinkNode } from "@lexical/link";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { LinkExtension } from "@/components/editor/extensions/link";
+import { LinkExtension } from "@/components/editor/extensions/link-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { ContextMenuPlugin } from "@/components/editor/plugins/context-menu-plugin";
 import { editorTheme } from "@/components/editor/theme";

@@ -7,7 +7,7 @@ import { defineExtension } from "lexical";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { AutocompleteExtension } from "@/components/editor/extensions/autocomplete";
+import { AutocompleteExtension } from "@/components/editor/extensions/autocomplete-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { editorTheme } from "@/components/editor/theme";
 

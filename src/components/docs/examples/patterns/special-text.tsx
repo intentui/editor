@@ -16,7 +16,7 @@ import { InitialStateExtension } from "@lexical/extension";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { SpecialTextExtension } from "@/components/editor/extensions/special-text";
+import { SpecialTextExtension } from "@/components/editor/extensions/special-text-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { editorTheme } from "@/components/editor/theme";
 

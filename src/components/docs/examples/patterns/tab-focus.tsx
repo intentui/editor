@@ -16,7 +16,7 @@ import { InitialStateExtension } from "@lexical/extension";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { RichTextExtension } from "@lexical/rich-text";
 
-import { TabFocusExtension } from "@/components/editor/extensions/tab-focus";
+import { TabFocusExtension } from "@/components/editor/extensions/tab-focus-extension";
 import { ContentEditable } from "@/components/editor/plugins/content-editable";
 import { editorTheme } from "@/components/editor/theme";
 
